@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Home Sweet Home: and, but, so, because</title>
+<style>
+:root{--bg:#f6f1e9;--card:#fff;--tx:#23262b;--mut:#6b7078;--pri:#e0763a;--ok:#1f9d63;--bad:#d9453d;--bd:#e3dccf;--okb:#e0f5ea;--badb:#fbe5e3;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1a1714;--card:#25211d;--tx:#eeeae5;--mut:#a39d95;--pri:#f0925a;--ok:#4cc58c;--bad:#ff7d75;--bd:#38322b;--okb:#173a2b;--badb:#442221;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#1a1714;--card:#25211d;--tx:#eeeae5;--mut:#a39d95;--pri:#f0925a;--ok:#4cc58c;--bad:#ff7d75;--bd:#38322b;--okb:#173a2b;--badb:#442221;color-scheme:dark}
+*{box-sizing:border-box}html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--tx);font:17px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+main{max-width:560px;margin:0 auto;padding:18px 16px 40px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:18px;padding:20px;margin-top:14px}
+h1{font-size:28px;margin:6px 0 4px}h2{margin:0 0 6px;font-size:22px}
+.mut{color:var(--mut);font-size:15px}.top{display:flex;justify-content:space-between;font-size:14px;color:var(--mut);font-weight:600}
+.bar{height:8px;background:var(--bd);border-radius:9px;margin:8px 0;overflow:hidden}.bar i{display:block;height:100%;background:var(--pri);transition:width .3s}
+button,input{font:inherit}
+.btn{display:block;width:100%;padding:13px 16px;margin-top:10px;border:2px solid var(--bd);border-radius:14px;background:var(--card);color:var(--tx);cursor:pointer;font-weight:600;text-align:left}
+.btn small{font-weight:400;color:var(--mut);margin-left:6px}
+.btn:hover:not(:disabled){border-color:var(--pri)}
+.btn.main{background:var(--pri);border-color:var(--pri);color:#fff;text-align:center}
+.btn.ok{border-color:var(--ok);background:var(--okb)}.btn.bad{border-color:var(--bad);background:var(--badb)}
+.btn:disabled{cursor:default}
+input[type=text]{width:100%;padding:13px 14px;border:2px solid var(--bd);border-radius:14px;background:var(--card);color:var(--tx);margin-top:12px}
+input[type=text]:focus{outline:none;border-color:var(--pri)}
+.sent{font-size:22px;font-weight:600;margin:6px 0}.blank{display:inline-block;min-width:70px;border-bottom:3px solid var(--pri)}
+.spk{width:92px;height:92px;border-radius:50%;border:0;background:var(--pri);color:#fff;font-size:38px;cursor:pointer;display:block;margin:6px auto}
+.fb{margin-top:14px;padding:12px 14px;border-radius:14px;font-weight:600}.fb.ok{background:var(--okb);color:var(--ok)}.fb.bad{background:var(--badb);color:var(--bad)}
+.fb small{display:block;color:var(--tx);font-weight:400;margin-top:2px}
+.row{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:9px 0}
+.stars{font-size:34px;text-align:center;margin:8px 0}.big{font-size:46px;font-weight:800;text-align:center;line-height:1}
+.mi{font-size:15px;border-top:1px solid var(--bd);padding:7px 0}.mi b{color:var(--ok)}
+.two{display:flex;gap:10px}.two .btn{text-align:center}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;min-height:46px}
+.chip{padding:9px 13px;border:2px solid var(--bd);border-radius:12px;background:var(--card);color:var(--tx);cursor:pointer;font-weight:600}
+.tray{min-height:58px;border:2px dashed var(--bd);border-radius:14px;padding:6px;margin-top:10px}
+.tray .chip{border-color:var(--pri)}
+.key{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 0 0}.key div{background:var(--bg);border-radius:12px;padding:8px 12px;font-size:15px}.key b{font-size:18px}
+</style></head><body><main id="app"></main>
+<script>
+const B=`My flat is small, ___ it is very cozy.|but
+I like my kitchen ___ it is big and bright.|because
+We have a sofa ___ two armchairs in the living room.|and
+It is cold in the bedroom, ___ I close the window.|so
+I want a new table, ___ it is too expensive.|but
+The bathroom is dirty, ___ I clean it.|so
+I sleep in the small room ___ it is quiet.|because
+There is a big bed ___ a wardrobe in my bedroom.|and
+The flat is nice, ___ the rent is high.|but
+It is dark in the room, ___ I turn on the lamp.|so
+She likes the balcony ___ she can drink coffee there.|because
+We have a garden, ___ we have no trees.|but
+The fridge is empty, ___ I go to the shop.|so
+I can’t sleep ___ the neighbours are noisy.|because
+There are two chairs ___ a small table in the kitchen.|and
+My room is tidy ___ I clean it every day.|because
+The sofa is very old, ___ I want a new one.|so
+I like the flat, ___ it is far from my work.|but
+He lives on the fifth floor, ___ there is no lift.|but
+The window is open ___ it is hot in the room.|because
+We have a washing machine ___ a dryer.|and
+The kitchen is small, ___ we eat in the living room.|so
+Tom has a desk ___ a computer in his room.|and
+The house is big, ___ it is not expensive.|but
+My sister likes her room ___ it has a big mirror.|because
+The stairs are steep, ___ I walk slowly.|so
+I live with my parents ___ I have no money for rent.|because
+There is a shelf on the wall ___ some books on it.|and
+The carpet is soft, ___ the floor is cold.|but
+We need curtains ___ the sun is too bright.|because
+It is Sunday, ___ I stay at home and clean the flat.|so
+The living room is big ___ bright.|and
+I love my bed ___ it is very comfortable.|because
+The neighbours are nice, ___ the flat is noisy.|but
+It is very hot, ___ we open all the windows.|so
+She has a cat ___ a dog at home.|and
+I cook in the kitchen ___ eat in the living room.|and
+The lamp is broken, ___ I buy a new one.|so
+I don’t like the sofa ___ it is hard.|because
+We want a bigger flat, ___ we can’t pay for it.|but`.split("\n").map(l=>{const[t,a]=l.split("|");return{t,a}});
+const W=["and","but","so","because"],RU={and:"и",but:"но",so:"поэтому",because:"потому что"};
+const LV=[{n:"Listen & Choose",d:"Listen to the sentence. Which connecting word do you hear?",k:"lc",c:8},{n:"Choose the Word",d:"Pick the correct connecting word for the gap.",k:"ch",c:10},{n:"Build the Sentence",d:"Tap the words in the correct order.",k:"bs",c:6},{n:"Write the Word",d:"Type the missing word: and, but, so or because.",k:"wr",c:8},{n:"Listen & Type",d:"Listen and type the missing word.",k:"lt",c:6}];
+const $=s=>document.querySelector(s),sh=a=>[...a].sort(()=>Math.random()-.5),A=$("#app"),TTS="speechSynthesis"in window;
+const full=q=>q.t.replace("___",q.a),blank='<span class="blank"></span>';
+let S;
+function say(t){try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang="en-US";u.rate=.85;speechSynthesis.speak(u)}catch(e){}}
+const key=`<div class="key">${W.map(w=>`<div><b>${w}</b> — ${RU[w]}</div>`).join("")}</div>`;
+function home(){S={name:"",lv:0,res:[],mist:[],t0:0};
+A.innerHTML=`<h1>🏠 Home Sweet Home</h1><p class="mut">English game · rooms &amp; furniture · and, but, so, because · 5 levels</p>
+<div class="card"><p style="margin-top:0">Hi! Type your name and start.<br><span class="mut">Привет! Введи имя и начинай. В конце будет отчёт: сделай скриншот и отправь учителю.</span></p>
+${key}<input type="text" id="nm" placeholder="Your name" maxlength="30" autocomplete="off"><button class="btn main" id="go">Start game</button>
+<p class="mut" style="margin-bottom:0">🔊 Turn on the sound for the listening levels.</p></div>`;
+$("#go").onclick=()=>{S.name=$("#nm").value.trim()||"Student";S.t0=Date.now();S.pool=sh(B);S.off=0;lvl(0)};
+$("#nm").onkeydown=e=>{if(e.key=="Enter")$("#go").click()}}
+function lvl(n){S.lv=n;const L=LV[n];S.i=0;S.sc=0;S.qs=S.pool.slice(S.off,S.off+L.c);S.off+=L.c;
+A.innerHTML=`<div class="top"><span>Level ${n+1} of 5</span></div><div class="card"><h2>${L.n}</h2><p class="mut">${L.d}</p>${key}<button class="btn main" id="go">Let’s go!</button></div>`;
+$("#go").onclick=ask}
+const IN=ph=>`<input type="text" id="in" placeholder="${ph}" autocomplete="off" autocapitalize="off" spellcheck="false"><button class="btn main" id="ck">Check</button>`;
+function ask(){const L=LV[S.lv],q=S.qs[S.i],k=L.k;
+let h=`<div class="top"><span>Level ${S.lv+1} · ${L.n}</span><span>${S.i+1}/${S.qs.length}</span></div><div class="bar"><i style="width:${S.i/S.qs.length*100}%"></i></div><div class="card">`;
+const opts=W.map(w=>`<button class="btn" data-v="${w}">${w}<small>${RU[w]}</small></button>`).join("");
+if(k=="lc")h+=`<button class="spk" id="sp" aria-label="Play">🔊</button><p class="mut" style="text-align:center">${TTS?"Tap to listen again":"Sound is not available: "+full(q)}</p>`+opts;
+else if(k=="ch")h+=`<div class="sent">${q.t.replace("___",blank)}</div>`+opts;
+else if(k=="bs")h+=`<p class="mut" style="margin:0">Make a sentence:</p><div class="tray" id="tray"></div><div class="chips" id="chips"></div><button class="btn main" id="ck">Check</button>`;
+else if(k=="wr")h+=`<div class="sent">${q.t.replace("___",blank)}</div>`+IN("and / but / so / because");
+else h+=`<button class="spk" id="sp" aria-label="Play">🔊</button><div class="sent" style="text-align:center">${q.t.replace("___",blank)}</div>`+IN("Missing word");
+A.innerHTML=h+`<div id="fb"></div></div>`;
+if($("#sp")){$("#sp").onclick=()=>say(full(q));setTimeout(()=>say(full(q)),250)}
+document.querySelectorAll("[data-v]").forEach(b=>b.onclick=()=>{const v=b.dataset.v,ok=v==q.a;
+ document.querySelectorAll("[data-v]").forEach(x=>{x.disabled=true;if(x.dataset.v==q.a)x.classList.add("ok")});if(!ok)b.classList.add("bad");fin(ok,q.a,v,q)});
+if(k=="bs"){const ws=full(q).split(" "),order=sh(ws.map((w,i)=>i));let built=[];
+ const draw=()=>{const mk=(i,c)=>`<button class="chip" data-i="${i}" data-c="${c}">${ws[i]}</button>`;
+  $("#tray").innerHTML=built.map(i=>mk(i,"b")).join("");$("#chips").innerHTML=order.filter(i=>!built.includes(i)).map(i=>mk(i,"p")).join("");
+  document.querySelectorAll(".chip").forEach(b=>b.onclick=()=>{const i=+b.dataset.i;if(b.dataset.c=="p")built.push(i);else built=built.filter(x=>x!=i);draw()})};
+ draw();
+ $("#ck").onclick=()=>{if(built.length<ws.length)return;const mine=built.map(i=>ws[i]).join(" "),ok=mine==full(q);
+  document.querySelectorAll(".chip").forEach(b=>b.disabled=true);$("#ck").remove();fin(ok,full(q),mine,q)}}
+if($("#in")){const inp=$("#in");inp.focus();inp.onkeydown=e=>{if(e.key=="Enter")$("#ck").click()};
+ $("#ck").onclick=()=>{const v=inp.value.trim().toLowerCase();if(!v)return;inp.disabled=true;$("#ck").remove();fin(v==q.a,q.a,v,q)}}}
+function fin(ok,right,mine,q){const k=LV[S.lv].k;if(ok)S.sc++;else S.mist.push({lv:S.lv+1,q:k=="bs"?"Word order":q.t.replace("___","_____"),mine,right});
+$("#fb").innerHTML=`<div class="fb ${ok?"ok":"bad"}">${ok?"✓ Correct!":"✗ Not quite. Correct answer: "+right}<small>${full(q)}</small></div><button class="btn main" id="nx">${S.i+1<S.qs.length?"Next":"Finish level"}</button>`;
+if(k=="lc"||k=="lt")say(full(q));
+$("#nx").onclick=()=>{S.i++;if(S.i<S.qs.length)ask();else done()};$("#nx").focus()}
+function stars(p){return p>=90?"⭐⭐⭐":p>=60?"⭐⭐":"⭐"}
+function done(){const L=LV[S.lv],p=Math.round(S.sc/S.qs.length*100);S.res.push({n:L.n,sc:S.sc,max:S.qs.length,p});const last=S.lv==LV.length-1;
+A.innerHTML=`<div class="card"><h2>Level ${S.lv+1} complete!</h2><div class="stars">${stars(p)}</div><div class="big">${S.sc} / ${S.qs.length}</div><p class="mut" style="text-align:center">${p>=90?"Fantastic!":p>=60?"Good job!":"Keep practising — you can do it!"}</p><button class="btn main" id="nx">${last?"See my report":"Next level"}</button></div>`;
+$("#nx").onclick=()=>last?report():lvl(S.lv+1)}
+function report(){const ts=S.res.reduce((a,r)=>a+r.sc,0),tm=S.res.reduce((a,r)=>a+r.max,0),p=Math.round(ts/tm*100);
+const mins=Math.max(1,Math.round((Date.now()-S.t0)/60000)),dt=new Date().toLocaleString("en-GB",{dateStyle:"medium",timeStyle:"short"});
+const grade=p>=90?"Excellent! 🏆":p>=75?"Great work! 🎉":p>=60?"Good job! 👍":"Keep practising! 💪",m=S.mist.slice(0,6);
+A.innerHTML=`<div class="card" style="margin-top:0"><div class="mut">Home Sweet Home · and, but, so, because · Game report</div><h2 style="font-size:26px;margin-top:4px">${S.name.replace(/</g,"&lt;")}</h2><div class="mut">${dt} · ${mins} min</div>
+<div class="stars">${stars(p)}</div><div class="big">${p}%</div><p style="text-align:center;font-weight:700;margin:6px 0 12px">${grade}<br><span class="mut" style="font-weight:400">${ts} of ${tm} correct</span></p>
+${S.res.map((r,i)=>`<div class="row"><span>${i+1}. ${r.n}</span><b>${r.sc}/${r.max} ${stars(r.p)}</b></div><div class="bar" style="margin:0"><i style="width:${r.p}%"></i></div>`).join("")}
+${m.length?`<p class="mut" style="margin:14px 0 4px"><b>Review your mistakes:</b></p>`+m.map(x=>`<div class="mi">L${x.lv}: ${x.q}<br>You: ${x.mine} → <b>${x.right}</b></div>`).join("")+(S.mist.length>6?`<div class="mi mut">+ ${S.mist.length-6} more</div>`:""):`<p style="text-align:center;margin-bottom:0">No mistakes — perfect! 🌟</p>`}
+</div><p class="mut" style="text-align:center">📸 Take a screenshot of this page and send it to your teacher.</p>
+<div class="two"><button class="btn" id="cp">Copy text</button><button class="btn main" id="ag">Play again</button></div>`;
+$("#ag").onclick=home;
+$("#cp").onclick=()=>{const t=`Home Sweet Home — ${S.name}\n${dt}\nTotal: ${ts}/${tm} (${p}%)\n`+S.res.map((r,i)=>`L${i+1} ${r.n}: ${r.sc}/${r.max}`).join("\n");
+ try{navigator.clipboard.writeText(t).then(()=>{$("#cp").textContent="Copied ✓"},()=>{$("#cp").textContent="Not available"})}catch(e){$("#cp").textContent="Not available"}}}
+home();
+</script></body></html>
