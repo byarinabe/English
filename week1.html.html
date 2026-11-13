@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Passport to Banja Luka</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600&family=Nunito:wght@400;700;800&display=swap">
+<style>
+:root{--bg:#fff3f7;--card:#fff;--ink:#3b1f3a;--muted:#8a6a86;--line:#f3c9d9;--pink:#e5487f;--pink-t:#fff;--lilac:#8e6bd8;--gold:#f5b83d;--ok:#2f9e6a;--okbg:#e0f6ea;--bad:#c9363e;--badbg:#fde5e7;--cov:#5b3a8e;--cov-t:#fff;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1e1220;--card:#2b1b2e;--ink:#f8e9f1;--muted:#c7a4bd;--line:#4a2c4b;--pink:#ff7ba9;--pink-t:#3b0f20;--lilac:#b79cff;--gold:#f7c95c;--ok:#6fe0a5;--okbg:#1e3a2d;--bad:#ff9aa0;--badbg:#44222a;--cov:#3a2559;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#1e1220;--card:#2b1b2e;--ink:#f8e9f1;--muted:#c7a4bd;--line:#4a2c4b;--pink:#ff7ba9;--pink-t:#3b0f20;--lilac:#b79cff;--gold:#f7c95c;--ok:#6fe0a5;--okbg:#1e3a2d;--bad:#ff9aa0;--badbg:#44222a;--cov:#3a2559;color-scheme:dark}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.45 Nunito,ui-rounded,system-ui,-apple-system,"Segoe UI",sans-serif}
+button,input{font:inherit;color:inherit}
+button:focus-visible,input:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+h1,h2,h3{font-family:Fredoka,ui-rounded,system-ui,sans-serif;font-weight:600;margin:0}
+.wrap{max-width:560px;margin:0 auto;padding:18px 16px 44px}
+.sub{color:var(--muted);font-size:.93rem;margin:4px 0 0}
+.cover{background:var(--cov);color:var(--cov-t);border-radius:22px;padding:26px 22px;border:3px solid var(--gold);text-align:center}
+.cover h1{font-size:2rem;line-height:1.1;margin:8px 0 4px}
+.cover p{margin:10px 0}
+.cover .sub{color:var(--gold);font-weight:700}
+.cover label{display:block;margin:16px 0 6px;font-weight:700}
+.cover input{width:100%;padding:13px;border-radius:12px;border:0;background:#fff;color:#3b1f3a;text-align:center;font-size:1.1rem}
+.crest{font-size:2.6rem}
+.btn{border:0;border-radius:14px;padding:13px 18px;font-weight:800;cursor:pointer;background:var(--pink);color:var(--pink-t)}
+.cover .btn{margin-top:14px;width:100%;background:var(--gold);color:#3b1f3a}
+.btn.alt{background:transparent;color:var(--ink);border:2px solid var(--line)}
+.btn.big{width:100%;margin-top:16px;padding:16px}
+.row{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}.row .btn{flex:1 1 130px}
+.stamps{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px}
+.lvl{background:var(--card);border:2px dashed var(--line);border-radius:18px;padding:14px 10px;text-align:center;cursor:pointer;display:flex;flex-direction:column;gap:2px;align-items:center}
+.lvl:not(.off){border:2px solid var(--pink)}
+.lvl.done{background:var(--okbg);border-color:var(--ok)}
+.lvl.off{opacity:.55;cursor:default}
+.lvl .ic{font-size:1.9rem}.lvl b{font-family:Fredoka,ui-rounded,sans-serif;font-weight:600}.lvl small{color:var(--muted)}
+.st{color:var(--gold);letter-spacing:2px;font-size:1.1rem}
+.panel{background:var(--card);border:2px solid var(--line);border-radius:20px;padding:18px}
+.center{text-align:center}
+.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;font-family:Fredoka,ui-rounded,sans-serif}
+.back{background:none;border:0;color:var(--muted);cursor:pointer;padding:6px 0}
+.bar{height:8px;background:var(--line);border-radius:8px;overflow:hidden;margin-bottom:14px}.bar i{display:block;height:100%;background:var(--pink);transition:width .25s}
+.h{color:var(--muted);font-size:.9rem;margin-bottom:6px}
+.p{font-size:1.45rem;font-weight:800;line-height:1.3;margin-bottom:16px}
+.p u{display:inline-block;min-width:3.4ch;border-bottom:3px solid var(--gold);text-decoration:none;text-align:center;color:var(--pink)}
+.bub{background:var(--bg);border:2px solid var(--line);border-radius:18px 18px 18px 4px;padding:12px 14px;font-size:1.2rem}
+.opts{display:grid;gap:10px}
+.opt{border:2px solid var(--line);background:var(--bg);border-radius:14px;padding:13px;text-align:left;cursor:pointer;font-weight:700}
+.opt.ok{border-color:var(--ok);background:var(--okbg)}.opt.no{border-color:var(--bad);background:var(--badbg)}
+.fb{margin-top:12px;padding:11px 13px;border-radius:14px;font-weight:700}
+.fb.ok{background:var(--okbg);color:var(--ok)}.fb.no{background:var(--badbg);color:var(--bad)}.fb small{display:block;color:var(--ink);font-weight:400;margin-top:3px}
+.listen{display:flex;gap:10px;margin-bottom:14px}.listen .btn{flex:1;padding:18px 10px;font-size:1.05rem}
+.slot{min-height:62px;border:2px dashed var(--line);border-radius:14px;padding:8px;display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
+.words{display:flex;flex-wrap:wrap;gap:8px}
+.w{border:2px solid var(--line);background:var(--bg);border-radius:12px;padding:9px 13px;font-weight:800;cursor:pointer}.w.used{opacity:.25;pointer-events:none}
+.stamp{width:78px;height:78px;border:4px solid var(--pink);border-radius:50%;display:grid;place-items:center;font-size:2rem;color:var(--pink);transform:rotate(-9deg);margin:0 auto 10px}
+.pop{animation:pop .5s ease-out}
+@keyframes pop{from{transform:scale(2.2) rotate(-25deg);opacity:0}to{transform:scale(1) rotate(-9deg);opacity:1}}
+.stars{color:var(--gold);font-size:2rem;letter-spacing:4px}
+.fld{display:block;margin:12px 0 4px;font-weight:700}
+.in{width:100%;padding:12px;border-radius:12px;border:2px solid var(--line);background:var(--bg)}
+.pre{margin-top:14px;padding:12px;border-radius:14px;background:var(--bg);border:2px dashed var(--line);font-weight:700}
+.rep{background:var(--card);border:3px solid var(--lilac);border-radius:22px;padding:18px}
+.rh{display:flex;justify-content:space-between;align-items:center;gap:10px}.rh .stamp{margin:0;flex:0 0 auto;width:62px;height:62px;font-size:1.6rem}
+.bn{font-family:Fredoka,ui-rounded,sans-serif;font-size:2.6rem;color:var(--pink);line-height:1.1;margin-top:12px}.bn small{display:block;font:400 .9rem Nunito,sans-serif;color:var(--muted)}
+.rw{display:flex;justify-content:space-between;gap:8px;padding:7px 0;border-bottom:1px dashed var(--line)}
+.rep h3{margin:16px 0 4px;font-size:1.1rem}
+.rep ul{margin:4px 0;padding-left:18px}.rep li{margin:3px 0}
+.todo{margin-top:16px;padding:12px;border-radius:14px;background:var(--gold);color:#3b1f3a;font-weight:800}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap" id="app"></div>
+<script>
+function $(s){return document.querySelector(s)}
+function sh(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=a[i];a[i]=a[j];a[j]=t}return a}
+function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;")}
+var canSay=false;try{canSay=("speechSynthesis" in window)}catch(e){}
+function say(t,r){try{var u=new SpeechSynthesisUtterance(t);u.lang="en-US";u.rate=r||.9;speechSynthesis.cancel();speechSynthesis.speak(u)}catch(e){}}
+
+var LVD=[{n:"Check-in",s:"Слова и фразы",i:"🧳"},{n:"Boarding",s:"Слушаем",i:"🎧"},{n:"Passport control",s:"Present Simple",i:"🛂"},{n:"Gate",s:"Собери предложение",i:"✈️"},{n:"Café & dorm",s:"Диалоги",i:"☕"},{n:"Banja Luka",s:"Финал: босс",i:"💖"}];
+var V=[["surname","фамилия"],["to come from","быть родом из"],["to study","учиться"],["to live","жить"],["a little","немного"],["subject","предмет"],["Nice to meet you.","Приятно познакомиться."],["Where are you from?","Откуда ты?"],["Could you repeat that, please?","Повторите, пожалуйста."],["Could you speak more slowly?","Говорите помедленнее."]];
+var LS=[["Where do you live?","Where do you leave?","Where are you from?"],["She studies economics.","He studies economics.","She studies English."],["I live in a small city.","I like a small city.","I love a small city."],["Could you repeat that, please?","Could you speak slowly, please?","Could you help me, please?"],["Do you speak English?","Do you study English?","Does she speak English?"],["It’s nice to meet you.","It’s nice to see you.","It was nice to meet you."]];
+var G=[["I ___ in a small city.","live","lives","living","Для I и you глагол без -s."],["She ___ English at university.","studies","study","studys","Для he/she/it добавляем -s: study → studies."],["We ___ coffee in the morning.","drink","drinks","drinking","С we глагол без -s."],["He ___ speak Serbian.","doesn’t","don’t","isn’t","Для he/she/it: doesn’t + глагол."],["___ you like coffee?","Do","Does","Are","С you вопрос начинаем с Do."],["___ she live here?","Does","Do","Is","С she вопрос начинаем с Does."],["They ___ in the dormitory.","live","lives","living","С they глагол без -s."],["My friend ___ in Banja Luka.","lives","live","is live","My friend = she/he: live → lives."],["I ___ speak Serbian.","don’t","doesn’t","am not","С I отрицание: don’t + глагол."],["Where ___ he study?","does","do","is","С he вопрос: does + he + глагол."]];
+var B=[["Where do you live?","Где ты живёшь?"],["I study English every day.","Я учу английский каждый день."],["She doesn’t speak Serbian.","Она не говорит по-сербски."],["Do you like coffee?","Ты любишь кофе?"],["My friend lives in Banja Luka.","Моя подруга живёт в Баня-Луке."],["What does he study?","Что он изучает?"]];
+var D=[["Do you speak Serbian?","No, I don’t. I speak a little.","No, I’m not.","Yes, I does.","Do/don’t: I don’t speak."],["Where do you live?","I live in the dormitory.","I lives in the dormitory.","I am live in the dormitory.","С I глагол без -s."],["What do you study?","I study economics.","I’m study economics.","I am at economics.","После I нужен глагол: I study."],["Do you like Banja Luka?","Yes, I do. It’s a nice city.","Yes, I like.","Yes, I does.","Короткий ответ: Yes, I do."],["Does your friend speak English?","Yes, she does.","Yes, she do.","Yes, she is.","С she: Yes, she does."],["Hey! Where are you from and what do you study?","Sorry, could you speak more slowly, please?","Nice to meet you too.","I’m a student, thanks.","Если не поняла: просим говорить медленнее."],["Nice to meet you!","Nice to meet you too!","Thank you, I’m fine.","I’m meet you too.","На Nice to meet you отвечаем: Nice to meet you too!"]];
+
+function qV(){return V.map(function(p,i){var en=i%2===0,d=sh(V.filter(function(x){return x!==p})).slice(0,2).map(function(x){return en?x[1]:x[0]});return{k:"c",h:en?"Как переводится?":"Как сказать по-английски?",p:en?p[0]:p[1],o:[en?p[1]:p[0]].concat(d),n:p[0]+" — "+p[1]}})}
+function qL(){return LS.map(function(x){return{k:"l",h:"Что ты услышала?",p:x[0],o:x.slice()}})}
+function qG(){return G.map(function(x){return{k:"c",h:"Выбери правильный вариант",p:x[0],o:[x[1],x[2],x[3]],n:x[4],g:1}})}
+function qB(){return B.map(function(x){return{k:"b",h:"Собери предложение: "+x[1],p:x[0],hint:x[1]}})}
+function qD(){return D.map(function(x){return{k:"c",h:"Что ответить?",p:x[0],o:[x[1],x[2],x[3]],n:x[4],d:1}})}
+function makeQ(n){
+  if(n===0)return sh(qV());if(n===1)return sh(qL());if(n===2)return sh(qG());if(n===3)return sh(qB());if(n===4)return sh(qD());
+  return sh(sh(qG()).slice(0,4).concat(sh(qD()).slice(0,3),sh(qV()).slice(0,2),sh(qL()).slice(0,1),sh(qB()).slice(0,1)))
+}
+
+var S={name:"",lv:{},intro:"",tmp:null},L=0,Q=[],qi=0,first=0,tot=0,miss=[],t0=0,ans=[],pool=[],busy=false;
+
+function cover(){
+  $("#app").innerHTML='<div class="cover"><div class="crest">💖</div><h1>Passport to Banja Luka</h1><p class="sub">Week 1 · About me</p><p>Домашняя игра из 6 уровней: слова, аудирование, Present Simple и финальный босс. В конце ты получишь отчёт. Сделай его скриншот и отправь преподавателю.</p><label for="nm">Как тебя зовут?</label><input id="nm" autocomplete="off" maxlength="30" placeholder="Имя"><button class="btn" onclick="begin()">Получить паспорт</button></div>'
+}
+function begin(){var v=$("#nm").value.trim();if(!v){$("#nm").focus();return}S.name=v;map()}
+function map(){
+  var h='<h2>Привет, '+esc(S.name)+'!</h2><p class="sub">Проходи уровни по порядку: каждый даёт штамп в паспорте.</p><div class="stamps">';
+  LVD.forEach(function(d,i){var r=S.lv[i],open=i===0||S.lv[i-1];h+='<button class="lvl'+(r?' done':'')+(open?'':' off')+'" '+(open?'onclick="startLevel('+i+')"':'disabled')+'><span class="ic">'+(open?d.i:'🔒')+'</span><b>'+d.n+'</b><small>'+d.s+'</small>'+(r?'<span class="st">'+"★".repeat(r.s)+"☆".repeat(3-r.s)+'</span>':'')+'</button>'});
+  h+='</div>';if(S.lv[5])h+='<button class="btn big" onclick="report()">Открыть мой отчёт</button>';
+  $("#app").innerHTML=h;window.scrollTo(0,0)
+}
+function startLevel(n){L=n;Q=makeQ(n);qi=0;first=0;tot=Q.length;miss=[];t0=Date.now();show()}
+
+function show(){
+  if(qi>=Q.length)return endLevel();
+  var q=Q[qi];busy=false;ans=[];
+  if(!q.so)q.so=sh([0,1,2]);
+  var h='<div class="top"><button class="back" onclick="map()">← Карта</button><span>'+LVD[L].i+' '+LVD[L].n+'</span></div><div class="bar"><i style="width:'+Math.round(qi/Q.length*100)+'%"></i></div><div class="h">'+q.h+(q.retry?' (повторим ещё раз)':'')+'</div>';
+  if(q.k==="l"){
+    h+=canSay?'<div class="listen"><button class="btn" onclick="say(Q[qi].o[0],.9)">▶ Слушать</button><button class="btn alt" onclick="say(Q[qi].o[0],.6)">🐢 Медленно</button></div>':'<div class="fb no">Озвучка не работает в этом браузере. Открой игру в Chrome или Safari. Пока вот текст: '+esc(q.o[0])+'</div>'
+  }else if(q.k==="b"){
+    pool=sh(q.p.split(" ").map(function(w,i){return{w:w,i:i}}));
+    h+='<div id="bz"></div>';
+  }else{
+    var t=esc(q.p).replace("___",'<u id="bl">&nbsp;</u>');
+    h+=q.d?'<div class="bub p">'+t+'</div>':'<div class="p">'+t+'</div>';
+  }
+  if(q.k!=="b"){h+='<div class="opts">'+q.so.map(function(ix,k){return '<button class="opt" onclick="pickO('+k+')">'+esc(q.o[ix])+'</button>'}).join("")+'</div>'}
+  h+='<div id="fb"></div>';
+  $("#app").innerHTML=h;
+  if(q.k==="b")drawB();
+  if(q.k==="l")setTimeout(function(){say(q.o[0],.9)},300)
+}
+function feedback(ok,fix,note){
+  var q=Q[qi];busy=true;
+  if(!q.retry){if(ok)first++;else miss.push({p:q.k==="l"?"Аудирование":q.k==="b"?q.hint:q.p.replace("___","…"),a:fix})}
+  if(!ok&&!q.retry)Q.push(Object.assign({},q,{retry:true,so:null}));
+  $("#fb").innerHTML='<div class="fb '+(ok?'ok':'no')+'">'+(ok?'Верно!':'Правильный ответ: '+esc(fix))+(note?'<small>'+esc(note)+'</small>':'')+'</div><button class="btn big" onclick="qi++;show()">Дальше</button>'
+}
+function pickO(k){
+  if(busy)return;var q=Q[qi],ok=q.so[k]===0,bs=document.querySelectorAll(".opt");
+  bs.forEach(function(b,i){b.disabled=true;if(q.so[i]===0)b.classList.add("ok");else if(i===k)b.classList.add("no")});
+  var fix=q.g?q.p.replace("___",q.o[0]):q.o[0];
+  if(q.g&&$("#bl"))$("#bl").textContent=q.o[0];
+  feedback(ok,fix,q.n)
+}
+function drawB(){
+  var q=Q[qi];if(busy)return;
+  $("#bz").innerHTML='<div class="slot">'+ans.map(function(o,k){return '<button class="w" onclick="unW('+k+')">'+esc(o.w)+'</button>'}).join("")+'</div><div class="words">'+pool.map(function(o,k){return '<button class="w'+(ans.indexOf(o)>-1?' used':'')+'" onclick="addW('+k+')">'+esc(o.w)+'</button>'}).join("")+'</div><div class="row"><button class="btn" onclick="chkB()">Проверить</button><button class="btn alt" onclick="ans=[];drawB()">Сбросить</button></div>'
+}
+function addW(k){if(busy)return;if(ans.indexOf(pool[k])<0){ans.push(pool[k]);drawB()}}
+function unW(k){if(busy)return;ans.splice(k,1);drawB()}
+function chkB(){
+  if(busy)return;var q=Q[qi];if(ans.length<pool.length){$("#fb").innerHTML='<div class="fb no">Поставь все слова в строку.</div>';return}
+  var s=ans.map(function(o){return o.w}).join(" ");$("#bz").innerHTML='<div class="slot">'+esc(s)+'</div>';
+  if(canSay)say(q.p,.9);
+  feedback(s===q.p,q.p,"")
+}
+
+function endLevel(){
+  var pct=Math.round(first/tot*100),s=pct>=90?3:pct>=70?2:1,r={c:first,t:tot,s:s,ms:Date.now()-t0,m:miss};
+  if(L===5){S.tmp=r;return intro()}
+  S.lv[L]=r;
+  $("#app").innerHTML='<div class="panel center"><div class="stamp pop">'+LVD[L].i+'</div><h2>'+LVD[L].n+' пройден!</h2><div class="stars">'+"★".repeat(s)+"☆".repeat(3-s)+'</div><p>С первого раза верно: '+first+' из '+tot+' ('+pct+'%)</p><p class="sub">'+(miss.length?'Ошибки мы повторили в конце уровня. Они попадут в отчёт.':'Без единой ошибки!')+'</p><div class="row"><button class="btn" onclick="map()">На карту</button><button class="btn alt" onclick="startLevel('+L+')">Ещё раз</button></div></div>';
+  window.scrollTo(0,0)
+}
+
+var F=[["co","Я из… (страна)","Russia"],["ci","Я живу в… (город)","Moscow"],["st","Я изучаю… (предмет)","economics"],["li","Мне нравится… (по-английски)","music"]];
+function intro(){
+  var h='<div class="panel"><h2>Финал: расскажи о себе</h2><p class="sub">Заполни по-английски. Получится короткий рассказ на Present Simple.</p>';
+  F.forEach(function(f){h+='<label class="fld" for="'+f[0]+'">'+f[1]+'</label><input class="in" id="'+f[0]+'" maxlength="40" placeholder="'+f[2]+'" oninput="prev()" autocomplete="off">'});
+  h+='<div class="pre" id="pv"></div><p class="sub" id="er"></p><button class="btn big" onclick="fin()">Получить отчёт</button></div>';
+  $("#app").innerHTML=h;prev();window.scrollTo(0,0)
+}
+function val(id){return $("#"+id).value.trim()}
+function mkIntro(){return "Hi! My name is "+S.name+". I’m from "+(val("co")||"…")+". I live in "+(val("ci")||"…")+". I study "+(val("st")||"…")+". I like "+(val("li")||"…")+"."}
+function prev(){$("#pv").textContent=mkIntro()}
+function fin(){
+  for(var i=0;i<F.length;i++){if(!val(F[i][0])){$("#er").textContent="Заполни все поля, чтобы получить отчёт.";$("#"+F[i][0]).focus();return}}
+  S.intro=mkIntro();S.lv[5]=S.tmp;report()
+}
+
+function repD(){
+  var c=0,t=0,ms=0,rows=[],ms2=[];
+  LVD.forEach(function(d,i){var r=S.lv[i];if(!r)return;c+=r.c;t+=r.t;ms+=r.ms;rows.push({n:d.i+" "+d.n+" · "+d.s,v:Math.round(r.c/r.t*100)+"% "+"★".repeat(r.s)});r.m.forEach(function(m){ms2.push(m)})});
+  return{c:c,t:t,pct:t?Math.round(c/t*100):0,min:Math.max(1,Math.round(ms/60000)),rows:rows,miss:ms2,date:new Date().toLocaleDateString("ru-RU")}
+}
+function report(){
+  var d=repD(),h='<div class="rep"><div class="rh"><div><h2>Паспорт готов, '+esc(S.name)+'!</h2><p class="sub">Week 1 · About me · '+d.date+'</p></div><div class="stamp">✓</div></div>';
+  h+='<div class="bn">'+d.pct+'%<small>верно с первого раза: '+d.c+' из '+d.t+' · время в игре: '+d.min+' мин</small></div><h3>Уровни</h3>';
+  d.rows.forEach(function(r){h+='<div class="rw"><span>'+esc(r.n)+'</span><b>'+r.v+'</b></div>'});
+  h+='<h3>Над чем ещё поработать</h3>';
+  if(d.miss.length){h+='<ul>';d.miss.slice(0,8).forEach(function(m){h+='<li>'+esc(m.p)+' → <b>'+esc(m.a)+'</b></li>'});h+='</ul>'+(d.miss.length>8?'<p class="sub">И ещё ошибок: '+(d.miss.length-8)+'</p>':'')}
+  else h+='<p>Ошибок с первого раза не было, отличная работа!</p>';
+  h+='<h3>Мой рассказ</h3><p>'+esc(S.intro)+'</p><div class="todo">1) Сделай скриншот этого экрана и отправь преподавателю. 2) Запиши голосовое: прочитай свой рассказ вслух.</div></div>';
+  h+='<div class="row"><button class="btn alt" onclick="cp()">Скопировать отчёт</button><button class="btn alt" onclick="map()">На карту</button></div><p class="sub center" id="cpm"></p>';
+  $("#app").innerHTML=h;window.scrollTo(0,0)
+}
+function cp(){
+  var d=repD(),t="Passport to Banja Luka, Week 1\n"+S.name+", "+d.date+"\nВерно с первого раза: "+d.c+" из "+d.t+" ("+d.pct+"%), время: "+d.min+" мин\n";
+  d.rows.forEach(function(r){t+=r.n+": "+r.v+"\n"});
+  if(d.miss.length){t+="Ошибки:\n";d.miss.forEach(function(m){t+="- "+m.p+" → "+m.a+"\n"})}
+  t+="Рассказ: "+S.intro;
+  var ok=false;try{var a=document.createElement("textarea");a.value=t;document.body.appendChild(a);a.select();ok=document.execCommand("copy");document.body.removeChild(a)}catch(e){}
+  $("#cpm").textContent=ok?"Отчёт скопирован.":"Не получилось скопировать. Сделай скриншот."
+}
+cover();
+</script>
+</body>
+</html>
