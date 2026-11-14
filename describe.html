@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="ru"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Describe a Person: Game</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&family=Pacifico&display=swap" rel="stylesheet">
+<style>
+:root{--b1:#ffe3f1;--b2:#e9ddff;--card:#fff;--ink:#4a2545;--pink:#ff5fa2;--lil:#a77bff;--ok:#2fbf8f;--bad:#ff5a6e;--soft:#fff0f8;--line:#ffc2de;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--b1:#2a1030;--b2:#1d1840;--card:#3a2145;--ink:#ffe9f6;--soft:#4a2a58;--line:#7a3b78;color-scheme:dark}}
+:root[data-theme="dark"]{--b1:#2a1030;--b2:#1d1840;--card:#3a2145;--ink:#ffe9f6;--soft:#4a2a58;--line:#7a3b78;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;background:linear-gradient(160deg,var(--b1),var(--b2));color:var(--ink);font-family:Fredoka,"Trebuchet MS",sans-serif;font-size:17px}
+#app{max-width:540px;margin:0 auto;padding:18px 16px 40px;position:relative;z-index:1}
+h1{font-family:Pacifico,cursive;color:var(--pink);font-weight:400;font-size:32px;text-align:center;margin:6px 0 0}
+.sub{text-align:center;margin:4px 0 14px;opacity:.85}
+input,textarea{width:100%;padding:12px 14px;border:2px solid var(--line);border-radius:16px;background:var(--card);color:var(--ink);font:inherit;margin-bottom:10px}
+textarea{min-height:230px;resize:vertical}
+button{font:inherit;color:var(--ink);cursor:pointer}
+.map{display:grid;gap:10px;margin-bottom:14px}
+.lv{display:grid;grid-template-columns:46px 1fr auto;grid-template-areas:"e t s" "e d s";align-items:center;column-gap:10px;text-align:left;background:var(--card);border:2px solid var(--line);border-radius:20px;padding:10px 14px;box-shadow:0 4px 0 var(--line)}
+.lv:disabled{opacity:.5;cursor:not-allowed}
+.lv .e{grid-area:e;font-size:34px}.lv b{grid-area:t}.lv small{grid-area:d;opacity:.75}.lv .s{grid-area:s;color:#ffb300;letter-spacing:1px}
+.big{width:100%;padding:14px;border:0;border-radius:20px;background:linear-gradient(90deg,var(--pink),var(--lil));color:#fff;font-weight:600;font-size:18px;box-shadow:0 4px 0 rgba(120,40,120,.35);margin-top:10px}
+.ghost{background:var(--card);color:var(--ink);border:2px solid var(--line);box-shadow:none}
+.top{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.top button{border:2px solid var(--line);background:var(--card);border-radius:14px;padding:6px 12px}
+.bar{flex:1;height:14px;background:var(--card);border:2px solid var(--line);border-radius:10px;overflow:hidden}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--pink),var(--lil));transition:width .4s}
+.card{background:var(--card);border:2px solid var(--line);border-radius:26px;padding:20px 16px;text-align:center;box-shadow:0 6px 0 var(--line)}
+.w{font-size:25px;font-weight:600;margin:10px 0;line-height:1.35}.w u{color:var(--pink);text-decoration:none;border-bottom:4px dashed var(--pink);padding:0 8px}
+.ru{font-size:17px;opacity:.85}
+.sp{border:0;background:var(--soft);border-radius:50%;width:44px;height:44px;font-size:20px;margin-top:4px}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+.opts button,.tl{padding:13px 8px;font-size:19px;font-weight:600;border:2px solid var(--line);background:var(--card);border-radius:18px;box-shadow:0 3px 0 var(--line)}
+.opts button.ok,.fb.ok{background:var(--ok);color:#fff;border-color:var(--ok)}
+.opts button.bad,.fb.bad{background:var(--bad);color:#fff;border-color:var(--bad)}
+.fb{margin-top:14px;padding:12px 14px;border-radius:18px;text-align:left}
+.zone{min-height:62px;display:flex;flex-wrap:wrap;gap:8px;padding:10px;border:2px dashed var(--pink);border-radius:18px;margin-top:12px;justify-content:center}
+.bank{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px;justify-content:center}
+.tl{padding:8px 12px;font-size:18px}
+.stars{font-size:42px;color:#ffb300;letter-spacing:4px;text-align:center}
+.ck{display:grid;gap:6px;text-align:left;margin:8px 0;font-size:16px}
+.ck span{padding:6px 10px;border-radius:12px;background:var(--soft)}.ck .y{background:var(--ok);color:#fff}
+.rep{background:var(--card);border:3px dashed var(--pink);border-radius:26px;padding:18px;text-align:center}
+.rep table{width:100%;margin:10px 0;border-collapse:collapse}.rep td{padding:6px 4px;border-bottom:1px dashed var(--line);text-align:left}.rep td:last-child{text-align:right;color:#ffb300}
+.fl{position:fixed;top:-40px;pointer-events:none;z-index:0;animation:fall linear forwards}
+@keyframes fall{to{transform:translateY(115vh) rotate(360deg)}}
+@keyframes flo{50%{transform:translateY(-14px)}}
+.bg{position:fixed;z-index:0;opacity:.5;pointer-events:none;animation:flo 5s ease-in-out infinite}
+</style></head><body><div id="app"></div>
+<script>
+const STEPS=["1 · Who is he?","2 · Life & hobbies","3 · Looks & character","4 · Plans & opinion"];
+const GR="Gradable (tall, caring, understanding) → very / quite / extremely. Strong words (brilliant, amazing, wild) → absolutely / completely.";
+// q for choice: [sentence with ___, answer, options, note]; sort: [sentence, answer step, note]; build: [sentence, Russian]
+const L=[
+{t:"Заполни пропуск",e:"🌸",d:"Фразы из текста про дядю Джо",k:"c",q:[
+["Of all my relatives, I like my uncle the ___.","best",["best","most","better"],"I like … the best — «больше всего нравится»."],
+["He’s my mother’s much ___ brother.","younger",["younger","young","youngest"],"Сравнение двух людей: younger."],
+["He was only nine ___ I was born.","when",["when","while","after"],"when + Past Simple: когда я родилась."],
+["He’s more like a big brother ___ an uncle.","than",["than","that","as"],"more … than — «скорее … чем»."],
+["He is always such good ___ to be with.","fun",["fun","funny","fan"],"good fun — существительное: «весело»."],
+["He shares a flat ___ three other actors.","with",["with","to","at"],"share … with — делить с кем-то."],
+["He’s passionate ___ his music.","about",["about","of","for"],"passionate about — увлечён."],
+["He works ___ a waiter.","as",["as","like","for"],"work as + профессия."]]},
+{t:"Усилители и внешность",e:"💄",d:"quite / extremely / absolutely",k:"c",q:[
+["He’s ___ tall.","quite",["quite","absolutely","completely"],GR],
+["He’s ___ caring.","extremely",["extremely","absolutely","completely"],GR],
+["He’s ___ brilliant!","absolutely",["absolutely","very","quite"],GR],
+["The party was ___ amazing!","absolutely",["absolutely","very","quite"],GR],
+["He’s ___ understanding of someone my age.","very",["very","absolutely","completely"],GR],
+["He’s ___ talented, but not famous yet.","quite",["quite","absolutely","completely"],GR],
+["He’s tall and really good-___.","looking",["looking","looked","look"],"good-looking — красивый."],
+["He works as a ___-time DJ.","part",["part","half","small"],"part-time — на подработке."]]},
+{t:"Собери фразу",e:"🧩",d:"Расставь слова по порядку",k:"b",q:[
+["He studied at a drama school in Liverpool.","Учился в театральной школе в Ливерпуле"],
+["He shares a flat with three other would-be actors.","Живёт в квартире с тремя начинающими актёрами"],
+["He’s passionate about his music.","Он увлечён своей музыкой"],
+["He’s had lots of auditions.","У него было много прослушиваний"],
+["One day he’ll be a highly-successful actor.","Однажды он станет очень успешным актёром"],
+["I can talk to him about all kinds of problems.","С ним можно говорить о любых проблемах"]]},
+{t:"Какой это абзац?",e:"🗂️",d:"Определи шаг рассказа",k:"s",q:[
+["He was only nine when I was born.",0,"Шаг 1: родство и возраст."],
+["He is in his mid-20s now.",0,"Шаг 1: возраст."],
+["He works as a waiter and a part-time DJ.",1,"Шаг 2: работа и жизнь."],
+["He studied at a drama school in Liverpool.",1,"Шаг 2: учёба и жизнь."],
+["He’s quite tall with sandy-coloured hair.",2,"Шаг 3: внешность."],
+["He’s an extremely caring person.",2,"Шаг 3: характер."],
+["He’s had lots of auditions.",3,"Шаг 4: планы и карьера."],
+["I’m sure that one day he’ll be a successful actor.",3,"Шаг 4: будущее."]]},
+{t:"Босс: опиши человека",e:"👑",d:"Напиши свой рассказ в 4 абзаца",k:"w",q:[]}];
+const CK=[["Шаг 1: кто это (Of all my…, is my…, mid-20s)",/of all my|is my|years old|mid-|early-|late-|more like/i],
+["Шаг 2: жизнь (works as, studied, shares a flat…)",/works as|studied|moved to|shares a flat|lives in|passionate about|keen on|hobby/i],
+["Шаг 3: внешность и характер (tall, hair, caring…)",/tall|short|hair|eyes|good-looking|caring|kind|understanding|funny|generous/i],
+["Шаг 4: планы (one day, wants to, I’m sure…)",/one day|wants to|dream|plans to|hopes to|i[’']m sure|will be|[’']ll be/i],
+["Усилитель (really, quite, extremely, absolutely…)",/really|quite|extremely|absolutely|completely|particularly|very/i],
+["Связка (but, so, also, and then)",/\b(but|so|also|and then)\b/i],
+["Не меньше 60 слов",null]];
+const $=s=>document.getElementById(s),h=s=>$("app").innerHTML=s;
+const shuf=a=>a.map(x=>[Math.random(),x]).sort((a,b)=>a[0]-b[0]).map(x=>x[1]);
+let S={name:"",st:[0,0,0,0,0]},G={};
+try{const d=JSON.parse(localStorage.getItem("dpg"));if(d){S.name=d.name||"";S.st=d.st||S.st}}catch(e){}
+const save=()=>{try{localStorage.setItem("dpg",JSON.stringify(S))}catch(e){}};
+function say(t){try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang="en-GB";u.rate=.85;speechSynthesis.speak(u)}catch(e){}}
+function beep(ok){try{const c=new(window.AudioContext||window.webkitAudioContext)(),o=c.createOscillator(),g=c.createGain();o.connect(g);g.connect(c.destination);o.frequency.value=ok?660:220;if(ok)o.frequency.setValueAtTime(880,c.currentTime+.1);g.gain.setValueAtTime(.15,c.currentTime);g.gain.exponentialRampToValueAtTime(.001,c.currentTime+.3);o.start();o.stop(c.currentTime+.3)}catch(e){}}
+function rain(arr,n){for(let i=0;i<n;i++){const s=document.createElement("span");s.className="fl";s.textContent=arr[i%arr.length];s.style.left=Math.random()*100+"vw";s.style.fontSize=18+Math.random()*20+"px";s.style.animationDuration=2+Math.random()*2.5+"s";s.style.animationDelay=Math.random()*.8+"s";document.body.appendChild(s);setTimeout(()=>s.remove(),5500)}}
+["✨","💖","🎀","🌸","⭐","🦋"].forEach((e,i)=>{const s=document.createElement("span");s.className="bg";s.textContent=e;s.style.left=(8+i*17)+"vw";s.style.top=(10+(i*29)%75)+"vh";s.style.fontSize="26px";s.style.animationDelay=i*.7+"s";document.body.appendChild(s)});
+
+function home(){const tot=S.st.reduce((a,b)=>a+b,0);
+h(`<h1>Describe a Person</h1><p class="sub">Как рассказать о человеке: 4 шага и фразы-клише 🎀</p>
+<input id="nm" placeholder="Твоё имя" maxlength="20" value="${S.name}">
+<div class="map">${L.map((l,i)=>{const lk=i&&!S.st[i-1];return `<button class="lv" ${lk?"disabled":""} onclick="start(${i})"><span class="e">${lk?"🔒":l.e}</span><b>${i+1}. ${l.t}</b><small>${l.d}</small><span class="s">${"★".repeat(S.st[i])+"☆".repeat(3-S.st[i])}</span></button>`}).join("")}</div>
+<button class="big" onclick="report()">🎀 Мой отчёт · ${tot}/15 ★</button>`)}
+
+function start(i){const n=$("nm");if(n){S.name=n.value.trim();save()}
+G={l:i,q:shuf(L[i].q.map(x=>({x,r:0}))),n:L[i].q.length,m:0};L[i].k==="w"?write():ask()}
+
+function head(){return `<div class="top"><button onclick="home()">⬅</button><div class="bar"><i style="width:${(G.n-G.q.length)/G.n*100}%"></i></div><span>💔 ${G.m}</span></div>`}
+function ask(){if(!G.q.length)return fin();const l=L[G.l],c=G.q[0],x=c.x;G.a=false;let body;
+if(l.k==="b"){G.bank=shuf(x[0].split(" ").map((w,i)=>({w,i})));G.ans=[];return build(x)}
+if(l.k==="s")body=`<div class="w">${x[0]}</div><div class="ru">Какой это шаг рассказа?</div><div class="opts">${STEPS.map((s,i)=>`<button data-p="${i}" onclick="pick(${i})">${s}</button>`).join("")}</div>`;
+else body=`<div class="w">${x[0].replace("___","<u>?</u>")}</div><div class="opts">${shuf(x[2]).map(o=>`<button data-p="${o}" onclick="pick('${o}')">${o}</button>`).join("")}</div>`;
+h(`${head()}<div class="card"><div class="ru">${l.e} ${l.t}</div>${body}<div id="fb"></div></div>`)}
+
+function pick(p){if(G.a)return;const l=L[G.l],x=G.q[0].x,ans=l.k==="s"?x[1]:x[1];G.a=true;const ok=p===ans;
+document.querySelectorAll(".opts button").forEach(b=>{if(b.dataset.p==String(ans))b.classList.add("ok");else if(b.dataset.p==String(p))b.classList.add("bad")});
+settle(ok,l.k==="s"?x[0]:x[0].replace("___",x[1]),l.k==="s"?x[2]:x[3])}
+
+function build(x){const l=L[G.l];
+h(`${head()}<div class="card"><div class="ru">${l.e} ${l.t}</div><div class="w" style="font-size:20px">${x[1]}</div>
+<div class="zone">${G.ans.map((t,j)=>`<button class="tl" onclick="untap(${j})">${t.w}</button>`).join("")}</div>
+<div class="bank">${G.bank.map((t,j)=>`<button class="tl" onclick="tap(${j})">${t.w}</button>`).join("")}</div>
+<button class="big" onclick="chk()">Проверить ✨</button><div id="fb"></div></div>`)}
+function tap(j){if(G.a)return;G.ans.push(G.bank.splice(j,1)[0]);build(G.q[0].x)}
+function untap(j){if(G.a)return;G.bank.push(G.ans.splice(j,1)[0]);build(G.q[0].x)}
+function chk(){if(G.a||G.bank.length)return;G.a=true;const x=G.q[0].x;settle(G.ans.map(t=>t.w).join(" ")===x[0],x[0],"Порядок: кто → что делает → детали.")}
+
+function settle(ok,txt,note){G.a=true;const c=G.q[0];beep(ok);
+if(ok)G.q.shift();else{G.m++;G.q.shift();if(!c.r){c.r=1;G.q.push(c)}}
+$("fb").innerHTML=`<div class="fb ${ok?"ok":"bad"}">${ok?"💖 Верно!":"🙈 Почти!"} <b>${txt}</b><br><small>${note}</small></div><button class="big" onclick="ask()">Дальше →</button>`;
+setTimeout(()=>say(txt),250)}
+
+function score(t){const w=t.trim().split(/\s+/).filter(Boolean).length;return CK.map(([n,r])=>r?r.test(t):w>=60)}
+function write(){h(`<div class="top"><button onclick="home()">⬅</button><b>👑 Босс: опиши человека</b></div>
+<div class="card"><div class="ru">Напиши о человеке, которого хорошо знаешь: 4 абзаца по 4 шагам. Подсказки: Of all my…, He works as…, He’s quite tall with…, I’m sure that one day…</div>
+<textarea id="tx" placeholder="My … is …" oninput="live()"></textarea><div class="ck" id="ck"></div>
+<button class="big" onclick="done()">Готово ✨</button></div>`);live()}
+function live(){const r=score($("tx").value);$("ck").innerHTML=CK.map((c,i)=>`<span class="${r[i]?"y":""}">${r[i]?"✅":"⬜"} ${c[0]}</span>`).join("")}
+function done(){const r=score($("tx").value).filter(Boolean).length;if(r<3)return $("ck").insertAdjacentHTML("beforebegin","<p>Добавь ещё пару шагов из списка 🎀</p>");
+G.m=7-r;G.n=1;G.q=[];fin(r>=7?3:r>=5?2:1)}
+
+function fin(s0){const s=s0||(G.m<=1?3:G.m<=3?2:1);S.st[G.l]=Math.max(S.st[G.l],s);save();rain(["🎉","💖","⭐","🌸","🎀"],36);beep(true);
+const nx=G.l<L.length-1;
+h(`<h1>Уровень пройден!</h1><div class="stars">${"★".repeat(s)+"☆".repeat(3-s)}</div>
+<p class="sub">${L[G.l].k==="w"?"Выполнено пунктов: "+(7-G.m)+" из 7":"Ошибок: "+G.m}. ${s==3?"Просто звезда! 🌟":s==2?"Очень хорошо! 💪":"Пройдено! Попробуй ещё раз за 3 звезды 🎀"}</p>
+${nx?`<button class="big" onclick="start(${G.l+1})">Следующий уровень →</button>`:`<button class="big" onclick="report()">🏆 Мой отчёт</button>`}
+<button class="big ghost" onclick="start(${G.l})">🔁 Ещё раз</button><button class="big ghost" onclick="home()">🏠 К уровням</button>`)}
+
+function report(){const tot=S.st.reduce((a,b)=>a+b,0),d=new Date().toLocaleDateString("ru-RU");
+h(`<div class="rep"><h1>Мой отчёт</h1><div>${S.name||"Ученица"} · ${d}</div>
+<table>${L.map((l,i)=>`<tr><td>${l.e} ${i+1}. ${l.t}</td><td>${"★".repeat(S.st[i])+"☆".repeat(3-S.st[i])}</td></tr>`).join("")}</table>
+<b>Всего: ${tot} из 15 ★</b><p class="sub">📸 Сделай скриншот и отправь учителю</p></div>
+<button class="big ghost" onclick="home()">🏠 К уровням</button>`);if(tot==15)rain(["🏆","💖","🎉"],30)}
+home();
+</script></body></html>
