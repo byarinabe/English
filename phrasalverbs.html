@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Phrasal Quest: домашнее задание</title>
+<style>
+:root{--bg:#e8f4ff;--bgimg:linear-gradient(160deg,#dff1ff,#efe6ff);--card:#fff;--ink:#15193a;--mute:#5b6288;--acc:#7c3aed;--acc2:#06b6d4;--hl:#d9480f;--ok:#16a34a;--bad:#dc2626;--line:#d9d6f5;--glow:rgba(124,58,237,.18);box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;--bg:#0b1026;--bgimg:linear-gradient(160deg,#0b1026,#1c0f3f);--card:#141a3a;--ink:#eef1ff;--mute:#9aa3d6;--acc:#a78bfa;--acc2:#22d3ee;--hl:#ffd93d;--ok:#4ade80;--bad:#f87171;--line:#2b3470;--glow:rgba(34,211,238,.25)}}
+:root[data-theme="dark"]{color-scheme:dark;--bg:#0b1026;--bgimg:linear-gradient(160deg,#0b1026,#1c0f3f);--card:#141a3a;--ink:#eef1ff;--mute:#9aa3d6;--acc:#a78bfa;--acc2:#22d3ee;--hl:#ffd93d;--ok:#4ade80;--bad:#f87171;--line:#2b3470;--glow:rgba(34,211,238,.25)}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background-color:var(--bg);background-image:var(--bgimg);background-attachment:fixed;color:var(--ink);font:18px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;min-height:100vh}
+.wrap{max-width:640px;margin:0 auto;padding:16px}
+.hud{margin-bottom:12px}
+.map{display:flex;gap:4px;margin-bottom:10px}
+.map i{flex:1;height:10px;border-radius:6px;background:var(--line)}
+.map i.d{background:var(--ok)}
+.map i.c{background:var(--acc);box-shadow:0 0 8px var(--acc)}
+.row{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+.pill{background:var(--card);border:2px solid var(--line);border-radius:999px;padding:4px 14px;font-weight:800}
+.card{background:var(--card);border:2px solid var(--line);border-radius:20px;padding:20px;margin-bottom:12px;box-shadow:0 0 22px var(--glow)}
+.center{text-align:center}
+h1,h2{margin:0 0 8px;text-transform:uppercase;letter-spacing:.03em}
+p{margin:8px 0}
+b{font-weight:900;color:var(--hl)}
+.lab{color:var(--mute);font-size:14px;text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px}
+.prompt{font-size:22px;font-weight:700;margin-bottom:12px}
+.sub{color:var(--mute);margin:-4px 0 12px}
+.big{font-size:34px;font-weight:900;margin:4px 0}
+.bigE{font-size:64px;line-height:1.1}
+.hit{animation:shk .4s}
+@keyframes shk{20%{transform:translateX(-10px)}60%{transform:translateX(10px)}}
+.btn{background:linear-gradient(90deg,var(--acc),var(--acc2));color:#fff;border:0;border-radius:14px;padding:12px 22px;font:inherit;font-weight:900;text-transform:uppercase;letter-spacing:.04em;cursor:pointer;margin-top:10px;box-shadow:0 4px 0 rgba(0,0,0,.3)}
+.btn:active:not(:disabled){transform:translateY(3px);box-shadow:0 1px 0 rgba(0,0,0,.3)}
+.btn:disabled{opacity:.4;cursor:default}
+.opt{display:block;width:100%;text-align:left;padding:14px;margin:8px 0;border:2px solid var(--line);border-radius:14px;background:var(--card);color:var(--ink);font:inherit;cursor:pointer}
+.opt:hover:not(:disabled){border-color:var(--acc2)}
+.opt.ok,.zone.ok{border-color:var(--ok);background:rgba(22,163,74,.18)}
+.opt.bad,.zone.bad{border-color:var(--bad);background:rgba(220,38,38,.14)}
+.opt:disabled{color:var(--ink);cursor:default}
+.zone{min-height:56px;border:2px dashed var(--line);border-radius:14px;padding:8px;display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
+.pool{display:flex;flex-wrap:wrap;gap:8px}
+.chip{border:2px solid var(--acc);background:var(--card);color:var(--ink);border-radius:10px;padding:8px 12px;font:inherit;cursor:pointer}
+.inp{width:100%;box-sizing:border-box;padding:12px;font:inherit;border:2px solid var(--line);border-radius:12px;background:var(--card);color:var(--ink)}
+.say{border:0;background:transparent;font-size:22px;cursor:pointer;padding:0 4px}
+.fb{min-height:24px;font-weight:800;margin-top:8px}
+.hp{height:16px;border-radius:99px;background:var(--line);overflow:hidden;margin:6px 0 14px}
+.hp i{display:block;height:100%;background:linear-gradient(90deg,var(--bad),#f59e0b);transition:width .4s}
+.vc{border:2px solid var(--line);border-radius:14px;padding:12px 14px;margin:10px 0;cursor:pointer;background:var(--bg)}
+.vc.open{border-color:var(--acc2)}
+.vh{display:flex;justify-content:space-between;align-items:center}
+.vv{font-size:24px;font-weight:900}
+.vb{margin-top:6px}
+.vt{font-weight:800;color:var(--acc)}
+.vs{font-size:19px;margin:4px 0}
+.scroll{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:15px;margin:10px 0}
+th,td{text-align:left;padding:6px 4px;border-bottom:1px solid var(--line)}
+th{color:var(--mute);font-weight:600}
+.mi{font-size:15px;margin:6px 0;text-align:left}
+.mi b{color:var(--bad)}
+.foot{color:var(--mute);font-size:14px;margin-top:10px}
+</style>
+</head>
+<body>
+<div class="wrap" id="app"></div>
+<script>
+var $=function(s){return document.querySelector(s)};
+function mk(t,c,x){var e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e}
+function R(t,c,x){var e=mk(t,c);x.split("**").forEach(function(s,i){if(s)e.append(i%2?mk("b",0,s):document.createTextNode(s))});return e}
+function strip(s){return s.replace(/\*\*/g,"")}
+function sh(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.random()*(i+1)|0;var t=a[i];a[i]=a[j];a[j]=t}return a}
+function each(box,f){[].forEach.call(box.children,f)}
+
+var V=[
+["lie down","прилечь, лечь","Yes, I think I need to **lie down** for a while.","Да, думаю, мне нужно немного прилечь."],
+["grow up","вырасти","Well, I was born in Manchester, but I **grew up** here.","Ну, я родился(лась) в Манчестере, но вырос(ла) здесь."],
+["call back","перезвонить","That’s OK. I can **call** you **back** this afternoon.","Ничего страшного. Я могу перезвонить вам во второй половине дня."],
+["come over","зайти в гости","Well, would you like to **come over** for dinner?","Ну, не хотите ли зайти к нам на ужин?"],
+["fill out","заполнить (анкету)","Thank you. Now can you **fill** this form **out**, please?","Спасибо. Теперь вы не могли бы заполнить эту форму?"],
+["try on","примерить","Could I **try** it **on**?","Можно мне это примерить?"]
+];
+var G=[
+["Yes, I think I need to **lie** ___ for a while.","down"],
+["Well, I was born in Manchester, but I **grew** ___ here.","up"],
+["That’s OK. I can **call** you ___ this afternoon.","back"],
+["Well, would you like to **come** ___ for dinner?","over"],
+["Thank you. Now can you **fill** this form ___, please?","out"],
+["Could I **try** it ___?","on"]
+];
+var PART=["down","up","back","over","out","on"];
+var SIT=[["Ты устал(а) и хочешь немного прилечь.",0],["Ты рассказываешь, где провёл(а) детство.",1],["Ты не можешь говорить сейчас и обещаешь перезвонить позже.",2],["Ты приглашаешь друга к себе на ужин.",3],["Тебе нужно заполнить анкету.",4],["В магазине ты хочешь примерить куртку.",5]];
+var BOSS=[["I’m so tired. I need to ___ for a while.",0],["Can you ___ me this afternoon? I’m busy now.",2],["Would you like to ___ for dinner tonight?",3],["Please ___ this form with your name.",4],["Can I ___ these jeans in the shop?",5],["When I ___, I want to be a pilot.",1]];
+function oth(i,f){return sh([0,1,2,3,4,5].filter(function(k){return k!==i})).slice(0,3).map(function(k){return V[k][f]})}
+function six(f){return[0,1,2,3,4,5].map(f)}
+
+var LV=[
+{t:"1. Что значит?",d:"Прочитай или послушай предложение (🔊) и выбери значение фразового глагола. 1 XP.",p:1,f:function(){return six(function(i){return{t:"c",lab:"Что значит?",prompt:V[i][0],sub:V[i][2],say:V[i][2],ans:V[i][1],opts:oth(i,1),v:i}})}},
+{t:"2. Найди перевод",d:"Выбери английское предложение, которое соответствует русскому. 1 XP.",p:1,f:function(){return six(function(i){return{t:"c",lab:"Как это по-английски?",prompt:V[i][3],ans:V[i][2],opts:oth(i,2),v:i}})}},
+{t:"3. Вставь частицу",d:"Выбери частицу, которая нужна фразовому глаголу. 2 XP.",p:2,f:function(){return six(function(i){return{t:"c",lab:"Вставь частицу",prompt:G[i][0],sub:V[i][3],ans:G[i][1],opts:sh(PART.filter(function(p){return p!==G[i][1]})).slice(0,3),v:i}})}},
+{t:"4. Собери предложение",d:"Собери предложение из слов по порядку. 2 XP.",p:2,f:function(){return six(function(i){return{t:"b",prompt:V[i][3],ans:strip(V[i][2]),v:i}})}},
+{t:"5. Ситуации",d:"Выбери фразовый глагол, который подходит к ситуации. 3 XP.",p:3,f:function(){return SIT.map(function(s){return{t:"c",lab:"Ситуация",prompt:s[0],ans:V[s[1]][0],opts:oth(s[1],0),v:s[1]}})}}
+];
+
+var S,LOG;
+function reset(){S={score:0,streak:0,lv:-1,ans:0,t0:Date.now(),n:0,d:0,name:"",hearts:3,bh:6,bt:1,be:0}}
+function speak(t){try{speechSynthesis.cancel();var u=new SpeechSynthesisUtterance(t);u.lang="en-US";u.rate=.9;speechSynthesis.speak(u)}catch(e){}}
+
+function hud(){var d=mk("div","hud"),m=mk("div","map"),r=mk("div","row");
+ for(var i=0;i<7;i++)m.append(mk("i",i<S.lv+1?"d":i===S.lv+1?"c":""));
+ r.append(mk("span","pill","⚡ "+S.score+" XP"),mk("span","pill","🔥 "+S.streak));
+ if(S.lv===5)r.append(mk("span","pill","❤️".repeat(S.hearts)+"🖤".repeat(3-S.hearts)));
+ else if(S.n)r.append(mk("span","pill","🎯 "+S.d+"/"+S.n));
+ d.append(m,r);return d}
+function app(){var a=$("#app");a.replaceChildren.apply(a,[hud()].concat([].slice.call(arguments)));window.scrollTo(0,0)}
+function refreshHud(){$(".hud").replaceWith(hud())}
+function gain(p){S.streak++;var g=p+(S.streak>=3?1:0);S.score+=g;return g}
+function nextBtn(f,l){var b=mk("button","btn",l||"Дальше →");b.onclick=f;return b}
+
+function start(){var n=S?S.name:"";reset();LOG=[];var c=mk("div","card center");
+ c.append(mk("div","bigE","⚔️"),mk("h1",0,"Phrasal Quest"),mk("p",0,"Выучи 6 фразовых глаголов, пройди 5 уровней и победи босса! Ошибки возвращаются, чтобы ты их закрепил(а). В конце появится отчёт: сделай скриншот и отправь учителю."),mk("p","lab","Имя героя"));
+ var inp=mk("input","inp");inp.type="text";inp.placeholder="Как тебя зовут?";inp.value=n;
+ var b=mk("button","btn","Начать игру");
+ b.onclick=function(){if(!inp.value.trim()){inp.focus();return}S.name=inp.value.trim();S.t0=Date.now();lex()};
+ c.append(inp,document.createElement("br"),b);app(c)}
+
+function lex(){S.lv=-1;S.n=0;var c=mk("div","card"),seen=0,go=mk("button","btn","Открой все карточки");go.disabled=true;
+ c.append(mk("h2",0,"🃏 Лексика"),mk("p",0,"Нажми на каждую карточку, чтобы увидеть перевод и пример. Открой все 6!"));
+ V.forEach(function(v){var k=mk("div","vc"),h=mk("div","vh"),st=mk("span",0,"🔒"),body=mk("div","vb"),open=false;
+  h.append(mk("span","vv",v[0]),st);k.append(h,body);
+  k.onclick=function(){if(open)return;open=true;seen++;st.textContent="✅";k.classList.add("open");
+   var s=mk("button","say","🔊");s.onclick=function(e){e.stopPropagation();speak(strip(v[2]))};
+   body.append(mk("div","vt","= "+v[1]),R("div","vs",v[2]),mk("div","sub",v[3]),s);
+   if(seen===6){go.disabled=false;go.textContent="Всё запомнил! В бой →"}};
+  c.append(k)});
+ go.onclick=function(){S.lv=0;intro()};c.append(go);app(c)}
+
+function intro(){if(S.lv===5){bossIntro();return}
+ var v=LV[S.lv],c=mk("div","card center");
+ S.q=sh(v.f()).map(function(x){return{x:x,w:[]}});S.n=S.q.length;S.d=0;
+ var b=mk("button","btn","Поехали!");b.onclick=ask;
+ c.append(mk("h2",0,"Уровень "+v.t),mk("p",0,v.d),mk("p","lab","Заданий: "+S.n),b);app(c)}
+
+function ask(){if(!S.q.length){S.lv++;intro();return}
+ var r=S.q[0];(r.x.t==="c"?choice:build)(r)}
+
+function done(r,ok,pick,fb,c){var v=LV[S.lv],first=!r.w.length,fin=false,g;S.ans++;
+ if(ok){if(first)g=gain(v.p);else{S.streak=0;g=1;S.score+=1}
+  fb.textContent="✅ Верно! +"+g+" XP"+(first&&S.streak>=3?" 🔥 бонус за серию":"");fin=true}
+ else{S.streak=0;r.w.push(strip(pick));
+  if(r.w.length<2){S.q.push(S.q.shift());fb.textContent="❌ Не то. Это задание вернётся ещё раз."}
+  else{fb.textContent="❌ Правильный ответ: "+strip(r.x.ans);fin=true}}
+ if(fin){LOG.push({lv:S.lv,v:r.x.v,p:strip(r.x.prompt),a:strip(r.x.ans),w:r.w,ok:ok});S.q.shift();S.d++}
+ refreshHud();c.append(nextBtn(ask))}
+
+function choice(r){var x=r.x,c=mk("div","card"),p=R("div","prompt",x.prompt);c.append(mk("div","lab",x.lab));
+ if(x.say&&window.speechSynthesis){var s=mk("button","say","🔊");s.onclick=function(){speak(strip(x.say))};p.append(" ",s)}
+ c.append(p);if(x.sub)c.append(R("div","sub",x.sub));
+ var box=mk("div"),fb=mk("div","fb"),lock=false;
+ sh([x.ans].concat(x.opts)).forEach(function(t){var b=R("button","opt",t);
+  b.onclick=function(){if(lock)return;lock=true;var ok=t===x.ans;b.classList.add(ok?"ok":"bad");each(box,function(y){y.disabled=true});done(r,ok,t,fb,c)};
+  box.append(b)});
+ c.append(box,fb);app(c)}
+
+function build(r){var x=r.x,pool=sh(x.ans.split(" ").map(function(w,i){return{w:w,i:i}})),ans=[],fin=false;
+ var c=mk("div","card"),zone=mk("div","zone"),pl=mk("div","pool"),fb=mk("div","fb"),chk=mk("button","btn","Проверить");
+ c.append(mk("div","lab","Собери предложение"),mk("div","prompt",x.prompt));
+ function chip(t,f){var b=mk("button","chip",t.w);b.onclick=function(){if(!fin)f()};return b}
+ function draw(){
+  zone.replaceChildren.apply(zone,ans.map(function(t){return chip(t,function(){ans=ans.filter(function(y){return y!==t});pool.push(t);draw()})}));
+  pl.replaceChildren.apply(pl,pool.map(function(t){return chip(t,function(){pool=pool.filter(function(y){return y!==t});ans.push(t);draw()})}));
+  chk.disabled=pool.length>0}
+ chk.onclick=function(){fin=true;var a=ans.map(function(t){return t.w}).join(" "),ok=a===x.ans;zone.classList.add(ok?"ok":"bad");chk.remove();done(r,ok,a,fb,c)};
+ c.append(zone,pl,fb,chk);app(c);draw()}
+
+function bossIntro(){S.hearts=3;S.bh=6;S.n=0;S.br=sh(BOSS);var c=mk("div","card center"),b=mk("button","btn","В бой! ⚔️");b.onclick=bossAsk;
+ c.append(mk("div","bigE","🐉"),mk("h2",0,"Босс: Фразозавр"),mk("p",0,"Вставляй правильные фразовые глаголы. Верный ответ отнимает у босса жизнь, ошибка стоит сердечка. Если сердечки кончатся, бой начнётся заново. Отчёт появится после победы!"),b);app(c)}
+
+function bossAsk(){var q=S.br[6-S.bh],ans=V[q[1]][0],c=mk("div","card"),hp=mk("div","hp"),bar=mk("i"),em=mk("div","bigE","🐉");
+ bar.style.width=(S.bh/6*100)+"%";hp.append(bar);
+ c.append(em,mk("div","lab","Фразозавр"),hp,mk("div","prompt",q[0]));
+ var box=mk("div"),fb=mk("div","fb"),lock=false;
+ sh([ans].concat(oth(q[1],0))).forEach(function(t){var b=mk("button","opt",t);
+  b.onclick=function(){if(lock)return;S.ans++;
+   if(t===ans){lock=true;b.classList.add("ok");S.bh--;bar.style.width=(S.bh/6*100)+"%";em.classList.add("hit");
+    fb.textContent="💥 Попал! +"+gain(5)+" XP";each(box,function(y){y.disabled=true});
+    c.append(nextBtn(function(){if(S.bh<=0)finish();else bossAsk()},S.bh<=0?"Победа! Показать отчёт →":null))}
+   else{b.classList.add("bad");b.disabled=true;S.streak=0;S.be++;S.hearts--;LOG.push({lv:5,v:q[1],p:q[0],a:ans,w:[t],ok:false});
+    if(S.hearts<=0){lock=true;each(box,function(y){y.disabled=true});fb.textContent="💀 Сердечки закончились. Бой начнётся заново.";
+     c.append(nextBtn(function(){S.bt++;S.hearts=3;S.bh=6;S.br=sh(BOSS);bossAsk()},"Реванш →"))}
+    else fb.textContent="❌ Минус сердечко! Попробуй другой ответ."}
+   refreshHud()};
+  box.append(b)});
+ c.append(box,fb);app(c)}
+
+function finish(){S.lv=6;S.n=0;
+ var el=Math.round((Date.now()-S.t0)/1000),tot=0,fst=0,td=function(t){return mk("td",0,t)};
+ var tb=mk("table"),hr=mk("tr"),r0=mk("tr");["Раздел","Задания","С 1-й попытки","Ошибок"].forEach(function(h){hr.append(mk("th",0,h))});tb.append(hr);
+ r0.append(td("0. Лексика"),td("✅ 6/6 карточек"),td("—"),td("—"));tb.append(r0);
+ LV.forEach(function(v,k){var it=LOG.filter(function(e){return e.lv===k}),f=it.filter(function(e){return!e.w.length}).length,
+  er=it.reduce(function(a,e){return a+e.w.length},0),pl=v.f().length,tr=mk("tr");
+  tot+=it.length;fst+=f;
+  tr.append(td(v.t),td((it.length>=pl?"✅ ":"⚠️ ")+it.length+"/"+pl),td(f+" из "+it.length),td(er));tb.append(tr)});
+ var br=mk("tr");br.append(td("6. Босс"),td("✅ побеждён"),td("попыток: "+S.bt),td(S.be));tb.append(br);
+ var mis=LOG.filter(function(e){return e.w.length}),c=mk("div","card center"),rep=mk("div"),weak=[];
+ mis.forEach(function(e){var n=V[e.v][0];if(weak.indexOf(n)<0)weak.push(n)});
+ var pct=tot?Math.round(fst/tot*100):0,id=Date.now().toString(36).slice(-5).toUpperCase();
+ rep.append(mk("h2",0,"📋 Отчёт о домашнем задании"),mk("div","lab","Phrasal Quest · lie down, grow up, call back, come over, fill out, try on"),
+  mk("p","big",S.name),mk("div","lab",new Date().toLocaleString("ru-RU",{dateStyle:"short",timeStyle:"short"})+" · время: "+Math.floor(el/60)+" мин "+el%60+" с · ответов: "+S.ans),
+  mk("p","big","⚡ "+S.score+" XP · "+pct+"%"),mk("div","lab","очки · верно с первой попытки"));
+ var sc=mk("div","scroll");sc.append(tb);rep.append(sc);
+ if(mis.length){rep.append(mk("div","lab","Повторить: "+weak.join(", ")));
+  mis.slice(0,6).forEach(function(e){var m=mk("div","mi");m.append(mk("span",0,e.p+" → "),mk("b",0,e.w[0]),mk("span",0," · верно: "+e.a));rep.append(m)});
+  if(mis.length>6)rep.append(mk("div","mi","…и ещё заданий с ошибками: "+(mis.length-6)))}
+ else rep.append(mk("p",0,"🏆 Без единой ошибки!"));
+ rep.append(mk("div","foot","Отчёт № "+id+" · лексика, 5 уровней и босс пройдены ✅"));
+ c.append(rep);app(c,mk("p","foot center","Сделай скриншот этого экрана и отправь учителю."))}
+
+reset();LOG=[];start();
+</script>
+</body>
+</html>
