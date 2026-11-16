@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Character &amp; Feelings</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600&family=Nunito:wght@400;700;800&display=swap">
+<style>
+:root{--bg:#fff3f7;--card:#fff;--ink:#3b1f3a;--muted:#8a6a86;--line:#f3c9d9;--pink:#e5487f;--pink-t:#fff;--lilac:#8e6bd8;--gold:#f5b83d;--ok:#2f9e6a;--okbg:#e0f6ea;--bad:#c9363e;--badbg:#fde5e7;--cov:#5b3a8e;--cov-t:#fff;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1e1220;--card:#2b1b2e;--ink:#f8e9f1;--muted:#c7a4bd;--line:#4a2c4b;--pink:#ff7ba9;--pink-t:#3b0f20;--lilac:#b79cff;--gold:#f7c95c;--ok:#6fe0a5;--okbg:#1e3a2d;--bad:#ff9aa0;--badbg:#44222a;--cov:#3a2559;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#1e1220;--card:#2b1b2e;--ink:#f8e9f1;--muted:#c7a4bd;--line:#4a2c4b;--pink:#ff7ba9;--pink-t:#3b0f20;--lilac:#b79cff;--gold:#f7c95c;--ok:#6fe0a5;--okbg:#1e3a2d;--bad:#ff9aa0;--badbg:#44222a;--cov:#3a2559;color-scheme:dark}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.45 Nunito,ui-rounded,system-ui,-apple-system,"Segoe UI",sans-serif}
+button,input{font:inherit;color:inherit}
+button:focus-visible,input:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+h1,h2,h3{font-family:Fredoka,ui-rounded,system-ui,sans-serif;font-weight:600;margin:0}
+.wrap{max-width:560px;margin:0 auto;padding:18px 16px 44px}
+.sub{color:var(--muted);font-size:.93rem;margin:4px 0 0}
+.cover{background:var(--cov);color:var(--cov-t);border-radius:22px;padding:26px 22px;border:3px solid var(--gold);text-align:center}
+.cover h1{font-size:2rem;line-height:1.1;margin:8px 0 4px}
+.cover p{margin:10px 0}
+.cover .sub{color:var(--gold);font-weight:700}
+.cover label{display:block;margin:16px 0 6px;font-weight:700}
+.cover input{width:100%;padding:13px;border-radius:12px;border:0;background:#fff;color:#3b1f3a;text-align:center;font-size:1.1rem}
+.crest{font-size:2.6rem}
+.btn{border:0;border-radius:14px;padding:13px 18px;font-weight:800;cursor:pointer;background:var(--pink);color:var(--pink-t)}
+.cover .btn{margin-top:14px;width:100%;background:var(--gold);color:#3b1f3a}
+.btn.alt{background:transparent;color:var(--ink);border:2px solid var(--line)}
+.btn.big{width:100%;margin-top:16px;padding:16px}
+.row{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}.row .btn{flex:1 1 130px}
+.stamps{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px}
+.lvl{background:var(--card);border:2px dashed var(--line);border-radius:18px;padding:14px 10px;text-align:center;cursor:pointer;display:flex;flex-direction:column;gap:2px;align-items:center}
+.lvl:not(.off){border:2px solid var(--pink)}
+.lvl.done{background:var(--okbg);border-color:var(--ok)}
+.lvl.off{opacity:.55;cursor:default}
+.lvl .ic{font-size:1.9rem}.lvl b{font-family:Fredoka,ui-rounded,sans-serif;font-weight:600}.lvl small{color:var(--muted)}
+.st{color:var(--gold);letter-spacing:2px;font-size:1.1rem}
+.panel{background:var(--card);border:2px solid var(--line);border-radius:20px;padding:18px}
+.center{text-align:center}
+.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;font-family:Fredoka,ui-rounded,sans-serif}
+.back{background:none;border:0;color:var(--muted);cursor:pointer;padding:6px 0}
+.bar{height:8px;background:var(--line);border-radius:8px;overflow:hidden;margin-bottom:14px}.bar i{display:block;height:100%;background:var(--pink);transition:width .25s}
+.h{color:var(--muted);font-size:.9rem;margin-bottom:6px}
+.p{font-size:1.45rem;font-weight:800;line-height:1.3;margin-bottom:16px}
+.p u{display:inline-block;min-width:3.4ch;border-bottom:3px solid var(--gold);text-decoration:none;text-align:center;color:var(--pink)}
+.bub{background:var(--bg);border:2px solid var(--line);border-radius:18px 18px 18px 4px;padding:12px 14px;font-size:1.2rem}
+.opts{display:grid;gap:10px}
+.opt{border:2px solid var(--line);background:var(--bg);border-radius:14px;padding:13px;text-align:left;cursor:pointer;font-weight:700}
+.opt.ok{border-color:var(--ok);background:var(--okbg)}.opt.no{border-color:var(--bad);background:var(--badbg)}
+.fb{margin-top:12px;padding:11px 13px;border-radius:14px;font-weight:700}
+.fb.ok{background:var(--okbg);color:var(--ok)}.fb.no{background:var(--badbg);color:var(--bad)}.fb small{display:block;color:var(--ink);font-weight:400;margin-top:3px}
+.listen{display:flex;gap:10px;margin-bottom:14px}.listen .btn{flex:1;padding:18px 10px;font-size:1.05rem}
+.slot{min-height:62px;border:2px dashed var(--line);border-radius:14px;padding:8px;display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
+.words{display:flex;flex-wrap:wrap;gap:8px}
+.w{border:2px solid var(--line);background:var(--bg);border-radius:12px;padding:9px 13px;font-weight:800;cursor:pointer}.w.used{opacity:.25;pointer-events:none}
+.stamp{width:78px;height:78px;border:4px solid var(--pink);border-radius:50%;display:grid;place-items:center;font-size:2rem;color:var(--pink);transform:rotate(-9deg);margin:0 auto 10px}
+.pop{animation:pop .5s ease-out}
+@keyframes pop{from{transform:scale(2.2) rotate(-25deg);opacity:0}to{transform:scale(1) rotate(-9deg);opacity:1}}
+.stars{color:var(--gold);font-size:2rem;letter-spacing:4px}
+.fld{display:block;margin:12px 0 4px;font-weight:700}
+.in{width:100%;padding:12px;border-radius:12px;border:2px solid var(--line);background:var(--bg)}
+.pre{margin-top:14px;padding:12px;border-radius:14px;background:var(--bg);border:2px dashed var(--line);font-weight:700}
+.rep{background:var(--card);border:3px solid var(--lilac);border-radius:22px;padding:18px}
+.rh{display:flex;justify-content:space-between;align-items:center;gap:10px}.rh .stamp{margin:0;flex:0 0 auto;width:62px;height:62px;font-size:1.6rem}
+.bn{font-family:Fredoka,ui-rounded,sans-serif;font-size:2.6rem;color:var(--pink);line-height:1.1;margin-top:12px}.bn small{display:block;font:400 .9rem Nunito,sans-serif;color:var(--muted)}
+.rw{display:flex;justify-content:space-between;gap:8px;padding:7px 0;border-bottom:1px dashed var(--line)}
+.rep h3{margin:16px 0 4px;font-size:1.1rem}
+.rep ul{margin:4px 0;padding-left:18px}.rep li{margin:3px 0}
+.todo{margin-top:16px;padding:12px;border-radius:14px;background:var(--gold);color:#3b1f3a;font-weight:800}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap" id="app"></div>
+<script>
+function $(s){return document.querySelector(s)}
+function sh(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=a[i];a[i]=a[j];a[j]=t}return a}
+function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;")}
+var canSay=false;try{canSay=("speechSynthesis" in window)}catch(e){}
+function say(t,r){try{var u=new SpeechSynthesisUtterance(t);u.lang="en-US";u.rate=r||.9;speechSynthesis.cancel();speechSynthesis.speak(u)}catch(e){}}
+// [word, ru, context sentence, distractor1, distractor2, type: c=character, s=state]
+var W=[
+["friendly","дружелюбный","My roommate smiles and says hello to everybody. She is ___.","tired","nervous","c"],
+["shy","застенчивый","Ana never talks to new people. She is ___.","busy","excited","c"],
+["quiet","тихий, спокойный","Marko doesn’t speak much in class. He is ___.","funny","busy","c"],
+["funny","смешной, с чувством юмора","He tells jokes and everybody laughs. He is ___.","tired","shy","c"],
+["kind","добрый","My grandmother helps everyone. She is very ___.","busy","nervous","c"],
+["curious","любознательный","My sister asks a lot of questions about everything. She is ___.","tired","quiet","c"],
+["hard-working","трудолюбивый","He studies every day and never stops. He is ___.","funny","shy","c"],
+["patient","терпеливый","The teacher explains again and again. He is ___.","nervous","excited","c"],
+["happy","счастливый, довольный","It’s my birthday today! I’m ___.","tired","nervous","s"],
+["tired","уставший","I go to bed at 2 a.m. every night. I’m always ___.","happy","curious","s"],
+["nervous","взволнованный, нервничающий","I have an exam tomorrow. I’m ___.","funny","kind","s"],
+["excited","в предвкушении (о приятном волнении)","I travel to Banja Luka next week! I’m ___.","tired","quiet","s"],
+["busy","занятой","I have three classes, a meeting and work today. I’m very ___.","happy","kind","s"]
+];
+var RN=["Слова","Подставь слово","Скажи вслух"];
+var R=0,Q=[],qi=0,sc=0,tot=0,miss=[],busy=false;
+function home(){
+  $("#app").innerHTML='<div class="cover"><div class="crest">💬</div><h1>Character &amp; Feelings</h1><p class="sub">13 слов: характер и состояние</p><p>Три раунда: выбери слово, подставь его в предложение и скажи его вслух. В конце получишь результат со словами для повторения.</p><button class="btn" onclick="play()">Играть</button></div>'
+}
+function play(){R=0;sc=0;tot=0;miss=[];round(0)}
+function round(n){
+  R=n;qi=0;busy=false;
+  if(n===0)Q=sh(W).slice(0,7).map(function(w){var o=[w[0]].concat(sh(W.filter(function(x){return x!==w})).slice(0,2).map(function(x){return x[0]}));return{k:"c",h:"Как сказать по-английски?",p:w[1],o:o,w:w}});
+  if(n===1)Q=sh(W).slice(0,8).map(function(w){return{k:"c",h:"Выбери слово, которое подходит",p:w[2],o:[w[0],w[3],w[4]],w:w,g:1}});
+  if(n===2)Q=sh(W).slice(0,5).map(function(w){return{k:"s",w:w}});
+  show()
+}
+function show(){
+  if(qi>=Q.length){return R<2?roundEnd():end()}
+  var q=Q[qi];busy=false;
+  var h='<div class="top"><button class="back" onclick="home()">← Выйти</button><span>Раунд '+(R+1)+' из 3 · '+RN[R]+'</span></div><div class="bar"><i style="width:'+Math.round(qi/Q.length*100)+'%"></i></div>';
+  if(q.k==="c"){
+    q.so=sh([0,1,2]);
+    h+='<div class="h">'+q.h+'</div><div class="p">'+esc(q.p).replace("___",'<u id="bl">&nbsp;</u>')+'</div><div class="opts">'+q.so.map(function(ix,k){return '<button class="opt" onclick="pickO('+k+')">'+esc(q.o[ix])+'</button>'}).join("")+'</div><div id="fb"></div>'
+  }else{
+    var w=q.w,ex=w[5]==="s"?"I’m very "+w[0]+" today.":"My friend is very "+w[0]+".";
+    q.ex=ex;
+    h+='<div class="h">Скажи вслух предложение со словом</div><div class="p" style="text-align:center">'+esc(w[0])+'<div class="sub">'+esc(w[1])+'</div></div><div class="pre" style="margin-bottom:12px">Пример: '+esc(ex)+'</div><div class="row">'+(canSay?'<button class="btn alt" onclick="say(Q[qi].ex)">▶ Послушать пример</button>':'')+'<button class="btn" onclick="said()">Я сказала</button></div>'
+  }
+  $("#app").innerHTML=h
+}
+function pickO(k){
+  if(busy)return;busy=true;var q=Q[qi],ok=q.so[k]===0,bs=document.querySelectorAll(".opt");
+  bs.forEach(function(b,i){b.disabled=true;if(q.so[i]===0)b.classList.add("ok");else if(i===k)b.classList.add("no")});
+  tot++;if(ok)sc++;else miss.push(q.w);
+  if(q.g&&$("#bl"))$("#bl").textContent=q.o[0];
+  if(q.g&&canSay)say(q.p.replace("___",q.o[0]));
+  $("#fb").innerHTML='<div class="fb '+(ok?'ok':'no')+'">'+(ok?'Верно!':'Правильный ответ: '+esc(q.o[0]))+'<small>'+esc(q.w[0])+' — '+esc(q.w[1])+'</small></div><button class="btn big" onclick="qi++;show()">Дальше</button>'
+}
+function said(){tot++;sc++;qi++;show()}
+function roundEnd(){
+  $("#app").innerHTML='<div class="panel center"><div class="stamp pop">'+(R+1)+'</div><h2>Раунд '+(R+1)+' пройден!</h2><p class="sub">Дальше: '+RN[R+1]+'</p><button class="btn big" onclick="round('+(R+1)+')">Продолжить</button></div>'
+}
+function end(){
+  var pct=Math.round(sc/tot*100),s=pct>=90?3:pct>=70?2:1,seen={},list=[];
+  miss.forEach(function(w){if(!seen[w[0]]){seen[w[0]]=1;list.push(w)}});
+  var h='<div class="panel center"><div class="stamp pop">💬</div><h2>Игра пройдена!</h2><div class="stars">'+"★".repeat(s)+"☆".repeat(3-s)+'</div><p>Верно с первого раза: '+sc+' из '+tot+' ('+pct+'%)</p>';
+  h+=list.length?'<p class="sub" style="margin-top:12px">Повтори эти слова:</p>'+list.map(function(w){return '<div class="rw" style="text-align:left"><b>'+esc(w[0])+'</b><span>'+esc(w[1])+'</span></div>'}).join(""):'<p class="sub">Без единой ошибки!</p>';
+  h+='<div class="row"><button class="btn" onclick="play()">Ещё раз</button></div></div>';
+  $("#app").innerHTML=h
+}
+home();
+</script>
+</body>
+</html>
