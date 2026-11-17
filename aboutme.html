@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="ru"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>About me: new words</title>
+<style>
+:root{--bg:#f3f6fb;--card:#fff;--tx:#14213d;--mu:#5a6780;--ac:#2457d6;--on:#fff;--ok:#15803d;--no:#c62828;--ln:#d9e1ef;--hi:#fff1c2;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;--bg:#0f1626;--card:#18233b;--tx:#edf2fc;--mu:#a3b0c8;--ac:#8fb0ff;--on:#0b1220;--ok:#4ade80;--no:#ff8a8a;--ln:#2a3957;--hi:#4a3d12}}
+:root[data-theme="dark"]{color-scheme:dark;--bg:#0f1626;--card:#18233b;--tx:#edf2fc;--mu:#a3b0c8;--ac:#8fb0ff;--on:#0b1220;--ok:#4ade80;--no:#ff8a8a;--ln:#2a3957;--hi:#4a3d12}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:18px/1.5 "Trebuchet MS","Segoe UI",system-ui,-apple-system,sans-serif}
+main{max-width:760px;margin:0 auto;padding:16px}
+h1{margin:.2em 0 0;font-size:30px}h2{margin:.5em 0 .2em;font-size:24px}h3{margin:1em 0 .3em}
+.mu{color:var(--mu);font-size:15px;margin:.2em 0}
+.xp{display:inline-block;background:var(--hi);color:var(--tx);border-radius:20px;padding:2px 14px;font-weight:700;margin-top:6px}
+nav{display:flex;gap:6px;overflow-x:auto;padding:10px 0}
+button,select{font:inherit;cursor:pointer}
+button:disabled{opacity:.5;cursor:not-allowed}
+nav button,.btn,.tile{border:2px solid var(--ac);background:var(--card);color:var(--ac);border-radius:12px;padding:8px 14px;white-space:nowrap}
+nav button.on,.btn{background:var(--ac);color:var(--on)}
+.btn.alt{background:var(--card);color:var(--ac)}
+.tile.no{border-color:var(--no);color:var(--no)}
+.st[hidden]{display:none}.st>.btn{margin-top:16px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.card{border:2px solid var(--ln);background:var(--card);color:var(--tx);border-radius:16px;padding:10px;text-align:center;font:inherit}
+.card .em{font-size:38px}.card .w{font-weight:700}
+.card .ru,.card .ex{color:var(--mu);font-size:15px;display:none}
+.card.open .ru,.card.open .ex{display:block}.card.open{border-color:var(--ac)}
+.card.done{border-color:var(--ok);opacity:.55}.card.no{border-color:var(--no)}
+.big{font-size:22px;font-weight:600;margin:.5em 0}.big.no{color:var(--no)}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:8px 0}
+input,select{padding:8px;border:2px solid var(--ln);border-radius:10px;background:var(--bg);color:var(--tx);max-width:100%}
+input{font:inherit;width:160px}
+.res{background:var(--card);border-left:6px solid var(--ac);border-radius:12px;padding:10px 16px;margin:12px 0;font-size:20px}
+.rep{background:var(--card);border:3px solid var(--ok);border-radius:16px;padding:12px 18px}
+.ok{color:var(--ok)}ul{padding-left:22px}
+</style></head><body><main>
+<h1>About me: new words ⭐</h1>
+<p class="mu">Домашнее задание 1 · 33 слова и фразы уровня A2 · уровни открываются по порядку</p>
+<div class="xp" id="xp">⭐ 0</div>
+<nav id="nav"></nav>
+
+<section class="st"><h2>Learn</h2>
+<p class="mu">Открой все 33 карточки: услышишь слово и пример. Пока не откроешь все, дальше не пустит.</p>
+<p class="big" id="lp">Открыто: 0 / 33</p>
+<div id="tabs" class="row"></div><div id="cards" class="grid"></div></section>
+
+<section class="st"><h2>Match</h2>
+<p class="mu">Найди пары: слово и перевод. Нужно пройти 3 раунда.</p>
+<div id="mt"></div></section>
+
+<section class="st"><h2>Quiz</h2><div id="qz"></div></section>
+
+<section class="st"><h2>My profile</h2>
+<p class="mu">Заполни все поля, и получится рассказ о тебе.</p>
+<div id="pf"></div>
+<div class="res" id="res"></div>
+<div class="row"><button class="btn alt" id="hear">🔊 Listen</button></div>
+<h3>Устное задание</h3>
+<ul><li>Расскажи свой рассказ вслух три раза, не читая с экрана.</li>
+<li>В начале следующего урока расскажи его учителю и ответь на вопросы.</li></ul></section>
+
+<section class="st"><h2>Boss 😈</h2>
+<p class="mu">10 вопросов: перевод, слова на слух и написание. У тебя 3 жизни.</p>
+<div id="bs"></div></section>
+
+<section class="st"><h2>Report 🏅</h2>
+<div class="rep" id="rp"></div></section>
+
+<script>
+const $=s=>document.querySelector(s),E=(t,c,h)=>{const e=document.createElement(t);if(c)e.className=c;if(h!=null)e.textContent=h;return e};
+const sh=a=>[...a].sort(()=>Math.random()-.5);
+const say=t=>{try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang="en-GB";u.rate=.85;speechSynthesis.speak(u)}catch(e){}};
+let xpv=0;const xp=n=>{xpv+=n;$("#xp").textContent="⭐ "+xpv};
+const S={q:0,b:0},ok=[];
+const G=["Character","Feelings","Looks","I’m into…"];
+const W=[
+[0,"🦁","brave","смелый","A brave boy is not afraid."],
+[0,"🧠","clever","умный","She is clever. She likes puzzles."],
+[0,"🔍","curious","любознательный","I am curious. I ask a lot of questions."],
+[0,"🎨","creative","творческий","He is creative. He draws and makes things."],
+[0,"🙈","shy","застенчивый","She is shy with new people."],
+[0,"🙏","polite","вежливый","A polite boy says please and thank you."],
+[0,"🏃","sporty","спортивный","I am sporty. I play football every day."],
+[0,"🦥","lazy","ленивый","My cat is lazy. It sleeps all day."],
+[0,"🤝","helpful","отзывчивый","He is helpful. He helps his friends."],
+[0,"🤫","quiet","тихий","She is quiet in class."],
+[1,"🤩","excited","взволнован (от радости)","I am excited about my new school."],
+[1,"😬","nervous","нервничаю","I am nervous before a test."],
+[1,"🏆","proud","гордый","I am proud. I won the game!"],
+[1,"🥱","bored","скучающий","I am bored. Nothing is happening."],
+[1,"😟","worried","обеспокоенный","He is worried about the test."],
+[1,"😲","surprised","удивлённый","I am surprised. It is a big cake!"],
+[1,"😌","calm","спокойный","I am calm. I am not afraid."],
+[2,"📏","tall","высокий","My dad is tall."],
+[2,"🧍","short","невысокий","My friend is short."],
+[2,"🌀","curly hair","кудрявые волосы","She has got curly hair."],
+[2,"➖","straight hair","прямые волосы","I have got straight hair."],
+[2,"🌑","dark hair","тёмные волосы","He has got dark hair."],
+[2,"🌞","fair hair","светлые волосы","My sister has got fair hair."],
+[2,"🤎","brown eyes","карие глаза","I have got brown eyes."],
+[2,"💙","blue eyes","голубые глаза","She has got blue eyes."],
+[2,"👓","glasses","очки","He wears glasses."],
+[3,"💪","I’m good at…","я хорошо умею…","I’m good at football."],
+[3,"🔭","I’m interested in…","я интересуюсь…","I’m interested in space."],
+[3,"🤩","I’m crazy about…","я обожаю…","I’m crazy about computer games."],
+[3,"😨","I’m afraid of…","я боюсь…","I’m afraid of spiders."],
+[3,"🌍","I come from…","я родом из…","I come from Russia."],
+[3,"🗣️","I speak… and I’m learning…","я говорю на… и учу…","I speak Russian and I’m learning Spanish."],
+[3,"🎂","I was born in…","я родился в… (фраза целиком)","I was born in Russia."]
+];
+const names=["Learn","Match","Quiz","My profile","Boss","Report"],secs=[...document.querySelectorAll(".st")];
+function nav(){[...$("#nav").children].forEach((b,i)=>{const lk=i>0&&!ok[i-1];b.disabled=lk;b.textContent=(lk?"🔒 ":ok[i]?"✅ ":"")+(i+1)+". "+names[i]})}
+function go(i){if(i>0&&!ok[i-1])return;secs.forEach((s,k)=>s.hidden=k!==i);[...$("#nav").children].forEach((b,k)=>b.classList.toggle("on",k===i));if(i===5)report();window.scrollTo(0,0)}
+function fin(i){if(ok[i])return;ok[i]=1;nav();if(i<5){const b=E("button","btn","Дальше: "+names[i+1]+" →");b.onclick=()=>go(i+1);secs[i].append(b)}}
+names.forEach((n,i)=>{const b=E("button");b.onclick=()=>go(i);$("#nav").append(b)});nav();
+
+const seen=new Set();let gi=0;
+function learn(){const c=$("#cards");c.replaceChildren();
+W.filter(w=>w[0]===gi).forEach(([g,e,w,r,x])=>{const k=E("button","card");k.append(E("div","em",e),E("div","w",w),E("div","ru",r),E("div","ex",x));if(seen.has(w))k.classList.add("open");
+k.onclick=()=>{k.classList.add("open");say(w+". "+x);seen.add(w);$("#lp").textContent="Открыто: "+seen.size+" / "+W.length;if(seen.size===W.length)fin(0)};c.append(k)})}
+G.forEach((n,i)=>{const b=E("button","btn alt",n);b.onclick=()=>{gi=i;learn()};$("#tabs").append(b)});learn();
+
+let rd=0;
+function match(){const b=$("#mt");b.replaceChildren();
+const set=sh(W).slice(0,6),tiles=[];
+set.forEach(w=>{tiles.push({k:w[2],t:w[2],en:1});tiles.push({k:w[2],t:w[3],en:0})});
+let sel=null,left=6;const g=E("div","grid"),msg=E("p","big");
+sh(tiles).forEach(t=>{const x=E("button","card",t.t);x.onclick=()=>{
+if(x.disabled||(sel&&sel.x===x))return;if(t.en)say(t.t);
+if(!sel){sel={t,x};x.classList.add("open");return}
+const o=sel;sel=null;
+if(o.t.k===t.k&&o.t.en!==t.en){[x,o.x].forEach(y=>{y.disabled=true;y.classList.remove("open");y.classList.add("done")});xp(5);
+if(--left===0){rd++;msg.classList.add("ok");if(rd>=3){msg.textContent="Уровень пройден! 🎉";fin(1)}else{msg.textContent="Раунд "+rd+" из 3 готов 🎉 ";const n=E("button","btn","Следующий раунд");n.onclick=match;msg.append(n)}}}
+else{x.classList.add("no");setTimeout(()=>{x.classList.remove("no");o.x.classList.remove("open")},600)}};g.append(x)});
+b.append(E("p","mu","Раунд "+(rd+1)+" из 3"),g,msg)}
+match();
+
+function run(b,items,o){let i=0,sc=0,lv=o.lives||0;
+const end=()=>{b.replaceChildren();const lost=o.lives&&lv<=0;b.append(E("p","big",lost?"Босс победил 😈 Попробуй ещё раз":"Готово: "+sc+" из "+items.length+" с первого раза ✅"));
+if(lost){const r=E("button","btn","Ещё раз");r.onclick=()=>run(b,o.mk(),o);b.append(r)}else o.done(sc,lv)};
+const draw=()=>{b.replaceChildren();if(i>=items.length||(o.lives&&lv<=0))return end();
+const [s,a,op,m]=items[i];let miss=false;const hd=E("p","mu",(i+1)+" / "+items.length+(o.lives?"  "+"❤️".repeat(lv):""));
+const p=E("p","big",s),row=E("div","row"),full=s.includes("___")?s.replace("___",a):a,shown=s.includes("___")?full:(s&&op?s+" → "+a:a);
+const nx=()=>{const n=E("button","btn","Дальше");n.onclick=()=>{i++;draw()};row.replaceChildren(n)};
+const good=()=>{if(!miss){sc++;xp(o.lives?15:10)}p.textContent="✅ "+shown;p.classList.add("ok");say(full);nx()};
+const bad=x=>{miss=true;if(o.lives){lv--;p.textContent="❌ "+shown;p.classList.add("no");say(full);nx()}else if(x)x.classList.add("no")};
+const chk=(v,x)=>v.trim().toLowerCase()===a.toLowerCase()?good():bad(x);
+if(m==="hear"){const h=E("button","btn alt","🔊 Listen");h.onclick=()=>say(a);row.append(h);say(a)}
+if(op)row.append(...sh(op).map(t=>{const x=E("button","tile",t);x.onclick=()=>chk(t,x);return x}));
+else{const inp=E("input");inp.placeholder="…";const c=E("button","btn","Check");c.onclick=()=>chk(inp.value,null);row.append(inp,c)}
+b.append(hd,p,row)};draw()}
+
+const Q=[
+["He is not afraid of anything. He is ___.","brave",["brave","shy","lazy"]],
+["She asks many questions. She likes to learn. She is ___.","curious",["curious","quiet","calm"]],
+["I don’t talk much with new people. I am ___.","shy",["shy","proud","creative"]],
+["He always says please and thank you. He is ___.","polite",["polite","sporty","bored"]],
+["She draws, paints and makes things. She is ___.","creative",["creative","lazy","worried"]],
+["It is my first day at a new school. I feel a little ___.","nervous",["nervous","proud","bored"]],
+["I won the game! I am so ___.","proud",["proud","worried","quiet"]],
+["Nothing is happening. I am ___.","bored",["bored","excited","helpful"]],
+["I play sport every day. I am ___.","sporty",["sporty","lazy","shy"]],
+["My uncle is two metres. He is very ___.","tall",["tall","short","calm"]],
+["Her hair goes round and round. She has got ___ hair.","curly",["curly","straight","blue"]],
+["I can’t see the board. I need ___.","glasses",["glasses","brown eyes","fair hair"]],
+["I play football very well. I am ___ football.","good at",["good at","afraid of","interested in"]],
+["I love computer games a lot. I am ___ computer games.","crazy about",["crazy about","afraid of","good at"]]
+];
+run($("#qz"),Q,{done:s=>{S.q=s;fin(2)}});
+
+const F={},pf=$("#pf"),nm=g=>W.filter(w=>w[0]===g).map(w=>w[2]),K=["n","c1","c2","h","e","g","i","cr","fe"];let story="";
+const out=()=>{const f=k=>F[k]||"…";story="Hi! My name is "+f("n")+". I am "+f("c1")+" and "+f("c2")+". I have got "+f("h")+" hair and "+f("e")+" eyes. I am good at "+f("g")+". I am interested in "+f("i")+". I am crazy about "+f("cr")+". I feel "+f("fe")+" about my new school.";$("#res").textContent=story;if(K.every(k=>F[k]))fin(3);return story};
+const sel=(k,l,a)=>{const r=E("div","row"),s=E("select");s.append(new Option("…",""),...a.map(x=>new Option(x,x)));s.onchange=()=>{F[k]=s.value;out()};r.append(E("span","",l),s);pf.append(r)};
+const inp=(k,l,p)=>{const r=E("div","row"),i=E("input");i.placeholder=p;i.oninput=()=>{F[k]=i.value.trim();out()};r.append(E("span","",l),i);pf.append(r)};
+inp("n","My name is","Maksim");
+sel("c1","I am",nm(0));sel("c2","and",nm(0));
+sel("h","I have got … hair",["curly","straight","dark","fair"]);
+sel("e","and … eyes",["brown","blue","green","grey"]);
+inp("g","I am good at","football");inp("i","I am interested in","space");inp("cr","I am crazy about","computer games");
+sel("fe","I feel … about my new school",nm(1));
+$("#hear").onclick=()=>say(out());out();
+
+const mk=()=>sh(W).slice(0,10).map((w,i)=>{const o=[w,...sh(W.filter(x=>x!==w)).slice(0,3)].map(x=>x[2]);
+return i%3===1&&w[0]<3?[w[1]+" "+w[3],w[2],null]:i%3===2?["",w[2],o,"hear"]:[w[1]+" "+w[3],w[2],o]});
+run($("#bs"),mk(),{lives:3,mk,done:(s,l)=>{S.b=l;xp(50);fin(4)}});
+
+function report(){const R=$("#rp");R.replaceChildren(E("h3","","🏅 Report: About me, new words"),
+E("p","",(F.n||"…")+" · "+new Date().toLocaleDateString("ru-RU")),
+E("p","","✅ Learn 33 / 33 · ✅ Match 3 / 3 · ✅ Quiz "+S.q+" / 14 · ✅ Profile · ✅ Boss "+"❤️".repeat(S.b)+" · ⭐ "+xpv),
+E("p","res",story),
+E("p","","Устное задание: расскажи свой рассказ вслух и в начале следующего урока расскажи его учителю."),
+E("p","mu","Сделай скриншот этого экрана и пришли учителю."))}
+go(0);
+</script></main></body></html>
