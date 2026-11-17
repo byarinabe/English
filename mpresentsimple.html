@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="ru"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Present Simple game</title>
+<style>
+:root{--bg:#f3f6fb;--card:#fff;--tx:#14213d;--mu:#5a6780;--ac:#2457d6;--on:#fff;--ok:#15803d;--no:#c62828;--ln:#d9e1ef;--hi:#fff1c2;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;--bg:#0f1626;--card:#18233b;--tx:#edf2fc;--mu:#a3b0c8;--ac:#8fb0ff;--on:#0b1220;--ok:#4ade80;--no:#ff8a8a;--ln:#2a3957;--hi:#4a3d12}}
+:root[data-theme="dark"]{color-scheme:dark;--bg:#0f1626;--card:#18233b;--tx:#edf2fc;--mu:#a3b0c8;--ac:#8fb0ff;--on:#0b1220;--ok:#4ade80;--no:#ff8a8a;--ln:#2a3957;--hi:#4a3d12}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:18px/1.5 "Trebuchet MS","Segoe UI",system-ui,-apple-system,sans-serif}
+main{max-width:760px;margin:0 auto;padding:16px}
+h1{margin:.2em 0 0;font-size:30px}h2{margin:.5em 0 .2em;font-size:24px}h3{margin:1em 0 .3em}
+.mu{color:var(--mu);font-size:15px;margin:.2em 0}
+.xp{display:inline-block;background:var(--hi);color:var(--tx);border-radius:20px;padding:2px 14px;font-weight:700;margin-top:6px}
+nav{display:flex;gap:6px;overflow-x:auto;padding:10px 0}
+button{font:inherit;cursor:pointer}
+button:disabled{opacity:.5;cursor:not-allowed}
+nav button,.btn,.tile{border:2px solid var(--ac);background:var(--card);color:var(--ac);border-radius:12px;padding:8px 14px;white-space:nowrap}
+nav button.on,.btn{background:var(--ac);color:var(--on)}
+.btn.alt{background:var(--card);color:var(--ac)}
+.tile.no{border-color:var(--no);color:var(--no)}.tile.alt{border-color:var(--ln);color:var(--tx)}
+.st[hidden]{display:none}.st>.btn{margin-top:16px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px}
+.card{border:2px solid var(--ln);background:var(--card);color:var(--tx);border-radius:16px;padding:10px;text-align:center;font:inherit}
+.card .em{font-size:36px}.card .w{font-weight:700}
+.card .ru,.card .ex{color:var(--mu);font-size:15px;display:none}
+.card.open .ru,.card.open .ex{display:block}.card.open{border-color:var(--ac)}
+.big{font-size:22px;font-weight:600;margin:.5em 0}.big.no{color:var(--no)}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:8px 0}
+input{font:inherit;padding:8px;border:2px solid var(--ln);border-radius:10px;background:var(--bg);color:var(--tx);max-width:100%;width:160px}
+.line{min-height:56px;border:2px dashed var(--ln);border-radius:12px;padding:8px;display:flex;flex-wrap:wrap;gap:8px}
+.res{background:var(--card);border-left:6px solid var(--ac);border-radius:12px;padding:10px 16px;margin:12px 0}
+.rep{background:var(--card);border:3px solid var(--ok);border-radius:16px;padding:12px 18px}
+.ok{color:var(--ok)}ul{padding-left:22px}
+</style></head><body><main>
+<h1>Present Simple game 🎮</h1>
+<p class="mu">to be · do / does · предложения и ответы · уровни открываются по порядку</p>
+<div class="xp" id="xp">⭐ 0</div>
+<nav id="nav"></nav>
+
+<section class="st"><h2>Learn</h2>
+<p class="mu">Открой все 23 карточки: правила и 16 глаголов. Пока не откроешь все, дальше не пустит.</p>
+<p class="big" id="lp">Открыто: 0 / 23</p>
+<div id="tabs" class="row"></div><div id="cards" class="grid"></div></section>
+
+<section class="st"><h2>Endings</h2><p class="mu">Выбери правильную форму глагола: -s, -es, -ies.</p><div id="q1"></div></section>
+
+<section class="st"><h2>am / is / are · do / does</h2><p class="mu">Выбери нужное слово.</p><div id="q2"></div></section>
+
+<section class="st"><h2>Build</h2>
+<p class="mu">Собери предложение из слов. Нажми на слово в рамке, чтобы убрать его.</p><div id="q3"></div></section>
+
+<section class="st"><h2>Answers</h2>
+<p class="mu">Выбери правильный ответ на вопрос.</p><div id="q4"></div>
+<h3>Устное задание</h3>
+<ul><li>Ответь вслух на все 8 вопросов полными фразами, как будто тебя спрашивают на интервью.</li>
+<li>В начале следующего урока ответишь на эти вопросы учителю.</li></ul></section>
+
+<section class="st"><h2>Boss 😈</h2>
+<p class="mu">10 вопросов из всех уровней. У тебя 3 жизни.</p><div id="bs"></div></section>
+
+<section class="st"><h2>Report 🏅</h2><div class="rep" id="rp"></div></section>
+
+<script>
+const $=s=>document.querySelector(s),E=(t,c,h)=>{const e=document.createElement(t);if(c)e.className=c;if(h!=null)e.textContent=h;return e};
+const sh=a=>[...a].sort(()=>Math.random()-.5);
+const say=t=>{try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang="en-GB";u.rate=.85;speechSynthesis.speak(u)}catch(e){}};
+let xpv=0;const xp=n=>{xpv+=n;$("#xp").textContent="⭐ "+xpv};
+const S={e:0,a:0,k:0,b:0},ok=[];
+const G=["Rules","Verbs"];
+const W=[
+[0,"🅰️","to be","I am · you, we, they are · he, she, it is","I am ten. She is my friend. We are happy."],
+[0,"➕","he / she + -s","к глаголу добавь -s","He plays football. She likes tennis."],
+[0,"⚡","-es","после -ch, -sh, -s, -o: watches, washes, goes, does","She watches TV. He goes to school."],
+[0,"🔁","study → studies","-y после согласной меняется на -ies","He studies English."],
+[0,"🚫","don’t / doesn’t","после них глагол без -s","I don’t play. He doesn’t play."],
+[0,"❓","Do / Does …?","I, you, we, they: Do. He, she, it: Does","Do you play? Does he play?"],
+[0,"💬","short answers","Yes, I do. / No, he doesn’t. / Yes, I am.","Do you like pizza? Yes, I do."],
+[1,"⚽","play → plays","играть","He plays football."],
+[1,"❤️","like → likes","нравиться","She likes pizza."],
+[1,"😍","love → loves","обожать","He loves computer games."],
+[1,"📺","watch → watches","смотреть","She watches TV."],
+[1,"🚶","go → goes","идти, ходить","He goes to school."],
+[1,"🏠","live → lives","жить","She lives in Spain."],
+[1,"✋","have → has","иметь","He has a dog."],
+[1,"🍕","eat → eats","есть (еду)","She eats an apple."],
+[1,"🥤","drink → drinks","пить","He drinks water."],
+[1,"📖","read → reads","читать","She reads books."],
+[1,"✏️","draw → draws","рисовать","He draws pictures."],
+[1,"🏊","swim → swims","плавать","She swims on Sunday."],
+[1,"🏃","run → runs","бегать","He runs in the park."],
+[1,"📚","study → studies","учиться","She studies English."],
+[1,"🗣️","speak → speaks","говорить","He speaks Russian."],
+[1,"🤝","help → helps","помогать","She helps her mum."]
+];
+const names=["Learn","Endings","am / is / are · do / does","Build","Answers","Boss","Report"],secs=[...document.querySelectorAll(".st")],L=names.length-1;
+function nav(){[...$("#nav").children].forEach((b,i)=>{const lk=i>0&&!ok[i-1];b.disabled=lk;b.textContent=(lk?"🔒 ":ok[i]?"✅ ":"")+(i+1)+". "+names[i]})}
+function go(i){if(i>0&&!ok[i-1])return;secs.forEach((s,k)=>s.hidden=k!==i);[...$("#nav").children].forEach((b,k)=>b.classList.toggle("on",k===i));if(i===L)report();window.scrollTo(0,0)}
+function fin(i){if(ok[i])return;ok[i]=1;nav();if(i<L){const b=E("button","btn","Дальше: "+names[i+1]+" →");b.onclick=()=>go(i+1);secs[i].append(b)}}
+names.forEach((n,i)=>{const b=E("button");b.onclick=()=>go(i);$("#nav").append(b)});nav();
+
+const seen=new Set();let gi=0;
+function learn(){const c=$("#cards");c.replaceChildren();
+W.filter(w=>w[0]===gi).forEach(([g,e,w,r,x])=>{const k=E("button","card");k.append(E("div","em",e),E("div","w",w),E("div","ru",r),E("div","ex",x));if(seen.has(w))k.classList.add("open");
+k.onclick=()=>{k.classList.add("open");say(x);seen.add(w);$("#lp").textContent="Открыто: "+seen.size+" / "+W.length;if(seen.size===W.length)fin(0)};c.append(k)})}
+G.forEach((n,i)=>{const b=E("button","btn alt",n);b.onclick=()=>{gi=i;learn()};$("#tabs").append(b)});learn();
+
+function run(b,items,o){let i=0,sc=0,lv=o.lives||0;
+const end=()=>{b.replaceChildren();const lost=o.lives&&lv<=0;b.append(E("p","big",lost?"Босс победил 😈 Попробуй ещё раз":"Готово: "+sc+" из "+items.length+" с первого раза ✅"));
+if(lost){const r=E("button","btn","Ещё раз");r.onclick=()=>run(b,o.mk(),o);b.append(r)}else o.done(sc,lv)};
+const draw=()=>{b.replaceChildren();if(i>=items.length||(o.lives&&lv<=0))return end();
+const [s,a,op]=items[i];let miss=false;const hd=E("p","mu",(i+1)+" / "+items.length+(o.lives?"  "+"❤️".repeat(lv):""));
+const p=E("p","big",s),row=E("div","row"),full=s.includes("___")?s.replace("___",a):a,shown=s.includes("___")?full:s+" → "+a;
+const nx=()=>{const n=E("button","btn","Дальше");n.onclick=()=>{i++;draw()};row.replaceChildren(n)};
+const good=()=>{if(!miss){sc++;xp(o.lives?15:10)}p.textContent="✅ "+shown;p.classList.add("ok");say(full);nx()};
+const bad=x=>{miss=true;if(o.lives){lv--;p.textContent="❌ "+shown;p.classList.add("no");say(full);nx()}else x.classList.add("no")};
+row.append(...sh(op).map(t=>{const x=E("button","tile",t);x.onclick=()=>t===a?good():bad(x);return x}));
+b.append(hd,p,row)};draw()}
+
+const E1=[
+["He ___ football every day.","plays",["play","plays","playing"]],
+["She ___ TV after school.","watches",["watchs","watches","watch"]],
+["My dad ___ to work.","goes",["go","goes","gos"]],
+["They ___ in Spain.","live",["live","lives","living"]],
+["My sister ___ English.","studies",["studys","studies","study"]],
+["I ___ tennis on Sunday.","play",["play","plays","playes"]],
+["Max ___ a dog.","has",["have","has","haves"]],
+["She ___ Spanish and Russian.","speaks",["speak","speaks","speaking"]],
+["We ___ pizza on Friday.","eat",["eat","eats","eating"]],
+["He ___ a lot of books.","reads",["read","reads","reades"]],
+["The boy ___ pictures.","draws",["draw","draws","drawes"]],
+["My friend ___ computer games.","loves",["love","loves","loving"]]];
+const A1=[
+["I ___ ten years old.","am",["am","is","are"]],
+["She ___ from Spain.","is",["am","is","are"]],
+["They ___ happy.","are",["is","are","do"]],
+["___ you like football?","Do",["Do","Does","Are"]],
+["___ he play tennis?","Does",["Do","Does","Is"]],
+["I ___ like spiders.","don’t",["don’t","doesn’t","aren’t"]],
+["She ___ like tennis.","doesn’t",["don’t","doesn’t","isn’t"]],
+["___ your friend from Russia?","Is",["Is","Does","Do"]],
+["We ___ go to school on Sunday.","don’t",["don’t","doesn’t","aren’t"]],
+["He ___ tired.","is",["do","is","does"]],
+["___ they speak English?","Do",["Do","Does","Are"]],
+["He doesn’t ___ football.","play",["play","plays","playing"]],
+["My mum ___ in a shop.","works",["work","works","is work"]]];
+const Q1=[
+["Do you play football?","Yes, I do.",["Yes, I do.","Yes, I am.","Yes, I play."]],
+["Does your friend like tennis?","No, he doesn’t.",["No, he doesn’t.","No, he don’t.","No, he isn’t."]],
+["Are you from Spain?","No, I’m not.",["No, I’m not.","No, I don’t.","No, I amn’t."]],
+["What do you do after school?","I play football.",["I play football.","I plays football.","I am play football."]],
+["Where does she live?","She lives in Spain.",["She lives in Spain.","She live in Spain.","She is live in Spain."]],
+["Is he ten?","Yes, he is.",["Yes, he is.","Yes, he does.","Yes, he has."]],
+["Do they speak English?","Yes, they do.",["Yes, they do.","Yes, they are.","Yes, they does."]],
+["What does he like?","He likes computer games.",["He likes computer games.","He like computer games.","He is like computer games."]]];
+run($("#q1"),E1,{done:s=>{S.e=s;fin(1)}});
+run($("#q2"),A1,{done:s=>{S.a=s;fin(2)}});
+
+const P=[["Он играет в футбол.","He plays football."],["Она не любит теннис.","She doesn’t like tennis."],["Ты говоришь по-испански?","Do you speak Spanish?"],["Он живёт в Испании?","Does he live in Spain?"],["Я не устал.","I am not tired."],["Мы не ходим в школу в воскресенье.","We don’t go to school on Sunday."],["Мой друг смотрит телевизор каждый день.","My friend watches TV every day."],["Ты из России?","Are you from Russia?"]];
+let i3=0;
+function q3(){const b=$("#q3");b.replaceChildren();
+if(i3>=P.length){b.append(E("p","big","Все предложения собраны! 🎉"));fin(3);return}
+const [ru,en]=P[i3],ws=en.split(" "),got=[],line=E("div","line"),pool=E("div","row"),msg=E("p","big");
+const tiles=sh(ws.map((w,k)=>({w,k})));
+const draw=()=>{
+line.replaceChildren(...got.map(t=>{const x=E("button","tile",t.w);x.onclick=()=>{got.splice(got.indexOf(t),1);draw()};return x}));
+pool.replaceChildren(...tiles.filter(t=>!got.includes(t)).map(t=>{const x=E("button","tile alt",t.w);x.onclick=()=>{got.push(t);draw()};return x}));
+msg.textContent="";msg.className="big";
+if(got.length===ws.length){if(got.map(t=>t.w).join(" ")===en){msg.textContent="✅ "+en+" ";msg.classList.add("ok");say(en);xp(10);const n=E("button","btn","Дальше");n.onclick=()=>{i3++;q3()};msg.append(n)}else msg.textContent="Почти. Попробуй ещё раз 🙂"}};
+draw();b.append(E("p","mu",(i3+1)+" / "+P.length),E("p","big",ru),line,pool,msg)}
+q3();
+
+run($("#q4"),Q1,{done:s=>{S.k=s;fin(4)}});
+
+const mk=()=>sh([...E1,...A1,...Q1]).slice(0,10);
+run($("#bs"),mk(),{lives:3,mk,done:(s,l)=>{S.b=l;xp(50);fin(5)}});
+
+function report(){$("#rp").replaceChildren(E("h3","","🏅 Report: Present Simple game"),
+E("p","",new Date().toLocaleDateString("ru-RU")),
+E("p","","✅ Learn 23 / 23 · ✅ Endings "+S.e+" / "+E1.length+" · ✅ am / is / are · do / does "+S.a+" / "+A1.length+" · ✅ Build "+P.length+" / "+P.length+" · ✅ Answers "+S.k+" / "+Q1.length+" · ✅ Boss "+"❤️".repeat(S.b)+" · ⭐ "+xpv),
+E("p","","Устное задание: ответь вслух на 8 вопросов из уровня Answers; в начале следующего урока ответишь на них учителю."),
+E("p","mu","Сделай скриншот этого экрана и пришли учителю."))}
+go(0);
+</script></main></body></html>
