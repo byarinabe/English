@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Daily Routine & University Life — English Lesson</title>
+<style>
+:root{--ink:#203047;--muted:#65758b;--teal:#287f80;--teal2:#e5f3f1;--coral:#e58c70;--cream:#fbfaf6;--line:#e2e8eb;--white:#fff;--shadow:0 12px 35px #23384a12}
+*{box-sizing:border-box}body{margin:0;background:var(--cream);color:var(--ink);font:16px/1.55 Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}
+button{font:inherit;cursor:pointer} .wrap{max-width:1100px;margin:auto;padding:24px 18px 60px}
+header{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:20px}.brand{font-size:13px;font-weight:800;letter-spacing:.13em;color:var(--teal)}.tag{border:1px solid var(--line);background:white;border-radius:999px;padding:7px 12px;font-size:12px;color:var(--muted)}
+.hero{background:linear-gradient(125deg,#e6f3f0,#f7eee8);border-radius:26px;padding:34px;display:grid;grid-template-columns:1.4fr .6fr;gap:20px;align-items:center;margin-bottom:22px}.eyebrow{font-size:12px;letter-spacing:.15em;text-transform:uppercase;font-weight:800;color:var(--teal)}h1{font-size:clamp(32px,5vw,54px);line-height:1.06;margin:12px 0;color:#203047}.hero p{color:#526478;max-width:600px}.hero-art{font-size:100px;text-align:center}
+nav{display:flex;gap:8px;flex-wrap:wrap;margin:20px 0 14px}.navbtn,.btn{border:1px solid var(--line);background:white;color:var(--ink);border-radius:12px;padding:10px 15px;font-weight:700}.navbtn.active,.btn.primary{background:var(--teal);border-color:var(--teal);color:white}.progress{height:5px;background:#e7ecec;border-radius:9px;overflow:hidden;margin-bottom:20px}.progress span{display:block;height:100%;background:var(--coral);width:14.28%;transition:.2s}
+.panel{background:white;border:1px solid var(--line);border-radius:22px;padding:clamp(20px,4vw,34px);box-shadow:var(--shadow);min-height:440px}.section-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;margin-bottom:20px}.kicker{color:var(--teal);font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}h2{font-size:clamp(25px,4vw,36px);line-height:1.15;margin:7px 0 8px}h3{font-size:19px;margin:22px 0 10px}.sub{color:var(--muted);margin:0}.chip{display:inline-block;background:var(--teal2);color:#246c6d;border-radius:999px;padding:5px 10px;font-size:12px;font-weight:700}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.card{border:1px solid var(--line);border-radius:15px;padding:16px;background:#fff}.card h3{margin:0 0 8px;font-size:17px}.muted{color:var(--muted)}.vocab-tabs,.actions{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0}.vocab-tabs button,.actions button{border:1px solid var(--line);border-radius:10px;background:white;padding:9px 13px;font-weight:700}.vocab-tabs button.active{background:var(--teal2);border-color:#a8d1cb;color:#226d6e}
+.wordlist{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}.word{display:flex;justify-content:space-between;gap:12px;padding:11px 13px;border:1px solid var(--line);border-radius:11px}.word b{font-size:14px}.word span{font-size:14px;color:var(--muted);text-align:right}
+.note{background:#f1f7f6;border-left:4px solid var(--teal);border-radius:10px;padding:14px 16px;margin:16px 0}.example{background:#f8f8f6;border-radius:11px;padding:12px 14px;margin:8px 0}.example strong{color:var(--teal)}
+table{border-collapse:collapse;width:100%;margin:12px 0}th,td{text-align:left;padding:11px;border-bottom:1px solid var(--line)}th{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.exercise{border:1px solid var(--line);border-radius:15px;padding:16px;margin:12px 0}.options{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.options button{background:white;border:1px solid var(--line);padding:9px 13px;border-radius:10px}.options button.chosen{background:var(--teal2);border-color:var(--teal)}.feedback{margin-top:10px;font-size:14px;font-weight:700}.good{color:#25805f}.bad{color:#b45c43}
+.timegrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.timecard{background:#fbfcfc;border:1px solid var(--line);border-radius:14px;padding:16px;text-align:center}.time{font-size:29px;font-weight:850;color:var(--teal)}.clock{width:112px;height:112px;border:4px solid var(--ink);border-radius:50%;margin:10px auto;position:relative;background:white}.clock:before{content:"";position:absolute;left:52px;top:19px;height:36px;width:4px;background:var(--ink);border-radius:4px;transform-origin:bottom;transform:rotate(0deg)}.clock:after{content:"";position:absolute;left:52px;top:34px;height:22px;width:4px;background:var(--coral);border-radius:4px;transform-origin:bottom;transform:rotate(90deg)}
+.prompt{padding:14px;border:1px solid var(--line);border-radius:12px;margin:8px 0}.prompt b{display:block;color:var(--teal);font-size:13px;text-transform:uppercase;letter-spacing:.06em}
+.speakingbox{background:linear-gradient(130deg,#f0f7f5,#fff7f1);border-radius:16px;padding:20px;margin-top:14px}.speakingbox p{margin:6px 0}
+footer{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:16px}.footer-note{font-size:12px;color:var(--muted)}
+.hidden{display:none!important}
+@media(max-width:700px){.hero{grid-template-columns:1fr;padding:25px}.hero-art{display:none}.grid,.timegrid{grid-template-columns:1fr 1fr}.wordlist{grid-template-columns:1fr}.panel{min-height:0}.navbtn{font-size:13px;padding:8px 10px}}
+@media(max-width:430px){.grid,.timegrid{grid-template-columns:1fr}.word{align-items:flex-start;flex-direction:column;gap:2px}.word span{text-align:left}}
+@media print{body{background:white}.wrap{max-width:none;padding:0}.hero{break-inside:avoid}.panel{box-shadow:none}.nav,nav,footer{display:none!important}.section{display:block!important;page-break-after:always}.hero-art{display:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header><div class="brand">ENGLISH · STUDENT EXCHANGE</div><div class="tag">A1–A2 · Lesson A · 50 min</div></header>
+<section class="hero">
+<div><div class="eyebrow">Unit 2 · Daily routine</div><h1>Daily Routine<br>& University Life</h1><p>Говорим о повседневной жизни, учёбе, расписании и свободном времени. Учимся говорить, <b>что</b> делаем, <b>как часто</b> и <b>во сколько</b>.</p><span class="chip">Vocabulary · Grammar · Speaking</span></div>
+<div class="hero-art" aria-hidden="true">☀️📚</div>
+</section>
+<nav id="nav">
+<button class="navbtn active" data-page="0">Start</button><button class="navbtn" data-page="1">Vocabulary</button><button class="navbtn" data-page="2">Frequency</button><button class="navbtn" data-page="3">Telling the time</button><button class="navbtn" data-page="4">Practice</button><button class="navbtn" data-page="5">Speaking</button><button class="navbtn" data-page="6">Homework</button>
+</nav>
+<div class="progress"><span id="bar"></span></div>
+
+<main>
+<section class="panel section" data-section="0">
+<div class="section-head"><div><div class="kicker">01 · Lesson overview</div><h2>Today’s learning goals</h2><p class="sub">К концу урока ты сможешь:</p></div><span class="chip">50 minutes</span></div>
+<div class="grid">
+<div class="card"><h3>📖 Vocabulary</h3><p class="muted">Использовать выражения о рутине, университете и свободном времени.</p></div>
+<div class="card"><h3>🔁 Frequency</h3><p class="muted">Говорить, как часто ты выполняешь разные действия.</p></div>
+<div class="card"><h3>🕒 Telling the time</h3><p class="muted">Называть время цифровым и разговорным способом.</p></div>
+</div>
+<div class="note"><b>Warm-up · 5 min</b><p>Начни с короткого разговора о себе и прошлой теме:</p><p>How are you today? · How was your week? · What did you do yesterday? · What do you usually do in your free time? · What are you studying at university? · Why are you going to study abroad?</p></div>
+<p class="muted">Переход к теме: «Сегодня представим, что ты уже приехала на учёбу по обмену. Как проходит твой обычный день?»</p>
+</section>
+
+<section class="panel section hidden" data-section="1">
+<div class="section-head"><div><div class="kicker">02 · Vocabulary · 12 min</div><h2>Daily Routine & University</h2><p class="sub">Учи выражения целиком, а не отдельные слова.</p></div><span class="chip">Tap a category</span></div>
+<div class="vocab-tabs"><button class="active" data-cat="routine">Daily routine</button><button data-cat="uni">University life</button><button data-cat="free">Free time</button></div>
+<div class="wordlist" id="words"></div>
+<div class="note"><b>Make it personal</b><p>Выбери 3–4 выражения и составь собственные предложения.</p><p><i>I usually wake up at 7. / I attend classes five days a week. / I hang out with my friends at weekends.</i></p></div>
+</section>
+
+<section class="panel section hidden" data-section="2">
+<div class="section-head"><div><div class="kicker">03 · Grammar · 7 min</div><h2>Adverbs of Frequency</h2><p class="sub">Как часто ты что-то делаешь?</p></div><span class="chip">Present Simple upgrade</span></div>
+<div class="grid">
+<div class="card"><h3>always</h3><p class="muted">всегда</p></div><div class="card"><h3>usually / normally</h3><p class="muted">обычно</p></div><div class="card"><h3>often</h3><p class="muted">часто</p></div><div class="card"><h3>sometimes</h3><p class="muted">иногда</p></div><div class="card"><h3>occasionally</h3><p class="muted">время от времени</p></div><div class="card"><h3>rarely</h3><p class="muted">редко</p></div><div class="card"><h3>hardly ever</h3><p class="muted">почти никогда</p></div><div class="card"><h3>never</h3><p class="muted">никогда</p></div>
+</div>
+<h3>Word order · Порядок слов</h3>
+<div class="grid">
+<div class="example"><b>Перед основным глаголом</b><p>I <strong>usually wake up</strong> at 7.</p><p>She <strong>often studies</strong> in the library.</p><p>We <strong>sometimes have</strong> lectures in the morning.</p></div>
+<div class="example"><b>После глагола to be</b><p>I am <strong>usually</strong> tired.</p><p>She is <strong>always</strong> busy.</p><p>They are <strong>sometimes</strong> late.</p></div>
+</div>
+<h3>Expressions of frequency</h3>
+<table><tr><th>Expression</th><th>Example</th></tr><tr><td>every day</td><td>I study every day.</td></tr><tr><td>once a week</td><td>I swim once a week.</td></tr><tr><td>twice a week</td><td>I have English twice a week.</td></tr><tr><td>three times a week</td><td>I go to the gym three times a week.</td></tr><tr><td>every other day</td><td>I exercise every other day.</td></tr></table>
+<div class="note"><b>Quick speaking</b><p>Закончи предложения: I always… / I usually… / I sometimes… / I hardly ever… / I never…</p>Спроси: <i>How often do you study English?</i></div>
+</section>
+
+<section class="panel section hidden" data-section="3">
+<div class="section-head"><div><div class="kicker">04 · Telling the time · 10 min</div><h2>What time is it?</h2><p class="sub">Сначала цифровой способ, затем традиционный вариант с past и to.</p></div><span class="chip">+ 7 min game</span></div>
+<h3>Digital time</h3>
+<div class="timegrid">
+<div class="timecard"><div class="time">7:00</div><b>seven o’clock</b></div><div class="timecard"><div class="time">7:05</div><b>seven oh five</b></div><div class="timecard"><div class="time">7:10</div><b>seven ten</b></div><div class="timecard"><div class="time">7:15</div><b>seven fifteen</b></div><div class="timecard"><div class="time">7:30</div><b>seven thirty</b></div><div class="timecard"><div class="time">7:45</div><b>seven forty-five</b></div><div class="timecard"><div class="time">8:20</div><b>eight twenty</b></div><div class="timecard"><div class="time">9:55</div><b>nine fifty-five</b></div><div class="timecard"><div class="time">12:00</div><b>twelve o’clock / noon</b></div>
+</div>
+<h3>Traditional way</h3>
+<div class="grid">
+<div class="card"><h3>PAST · после часа</h3><p><b>7:05</b> — five past seven</p><p><b>7:10</b> — ten past seven</p><p><b>7:15</b> — quarter past seven</p><p><b>7:30</b> — half past seven</p></div>
+<div class="card"><h3>TO · до следующего часа</h3><p><b>7:35</b> — twenty-five to eight</p><p><b>7:45</b> — quarter to eight</p><p><b>7:50</b> — ten to eight</p><p><b>7:55</b> — five to eight</p></div>
+</div>
+<div class="note"><b>Remember</b><p><b>quarter</b> = 15 минут · <b>half</b> = 30 минут.</p><p>Цифровой вариант тоже естественный: <i>seven forty-five</i>.</p><p><b>Useful question:</b> What time do your classes start? — They start at 9 a.m.</p></div>
+<div class="example"><b>Game time!</b><p>Теперь проведи свою готовую игру на 7 минут. Проси ученицу назвать время двумя способами, если получается.</p></div>
+</section>
+
+<section class="panel section hidden" data-section="4">
+<div class="section-head"><div><div class="kicker">05 · Controlled practice · 6 min</div><h2>Let’s practise!</h2><p class="sub">Выбери правильный ответ. Сразу увидишь объяснение.</p></div><span class="chip" id="score">0 / 8</span></div>
+<div id="quiz"></div>
+<div class="actions"><button class="btn" id="prevq">← Previous</button><button class="btn primary" id="nextq">Next →</button></div>
+<div class="note"><b>После каждого ответа</b><p>Попроси ученицу объяснить, почему выбран именно этот вариант, или составить собственный пример.</p></div>
+</section>
+
+<section class="panel section hidden" data-section="5">
+<div class="section-head"><div><div class="kicker">06 · Guided Speaking · 8 min</div><h2>My Typical University Day</h2><p class="sub">Сначала ответь на вопросы, затем объедини ответы в небольшой рассказ.</p></div><span class="chip">Speaking challenge</span></div>
+<div class="grid">
+<div class="card"><h3>☀️ Morning</h3><p>What time do you usually wake up?</p><p>What do you do after waking up?</p><p>What time do you leave home?</p></div>
+<div class="card"><h3>📚 At university</h3><p>What time do your classes start?</p><p>How many lectures or seminars do you have?</p><p>Do you take notes during classes?</p></div>
+<div class="card"><h3>🌿 After classes</h3><p>What do you usually do after classes?</p><p>How often do you meet your friends?</p><p>Do you study in the library?</p></div>
+</div>
+<div class="speakingbox"><h3 style="margin-top:0">Build your story</h3><p><b>In the morning:</b> I usually wake up at… First, I… Then, I…</p><p><b>At university:</b> My classes start at… I usually attend… I often…</p><p><b>After classes:</b> I usually… I sometimes…</p><p><b>In the evening:</b> I… I go to bed at…</p></div>
+<div class="note"><b>Speaking challenge</b><p>Используй минимум 5 выражений из новой лексики, 3 наречия частотности и 3 указания времени.</p><p><b>Exchange student question:</b> What do you think your typical day will look like in Banja Luka?</p></div>
+</section>
+
+<section class="panel section hidden" data-section="6">
+<div class="section-head"><div><div class="kicker">07 · Wrap-up</div><h2>Homework</h2><p class="sub">Небольшая самостоятельная практика после занятия.</p></div><span class="chip">After the lesson</span></div>
+<div class="card"><h3>1. Vocabulary</h3><p>Выучи 20–25 выражений с урока. Составь собственные примеры.</p></div>
+<div class="card" style="margin-top:10px"><h3>2. Grammar</h3><p>Составь 10 предложений с наречиями и выражениями частотности: always, usually, often, sometimes, rarely, never, once/twice a week, every day.</p></div>
+<div class="card" style="margin-top:10px"><h3>3. Speaking · Voice message</h3><p>Запиши голосовое сообщение на 1,5–2 минуты на тему <b>My Typical University Day</b>.</p><p>Используй время по часам и минимум 4 выражения частотности.</p></div>
+<div class="note"><b>Teacher’s feedback</b><p>После рассказа запиши повторяющиеся ошибки. Не перебивай ученицу, исправляя каждую ошибку во время речи.</p></div>
+</section>
+</main>
+<footer><span class="footer-note">English for Student Exchange · Lesson materials</span><div class="actions" style="margin:0"><button class="btn" id="back">← Back</button><button class="btn primary" id="forward">Continue →</button></div></footer>
+</div>
+<script>
+const vocab={
+routine:[["wake up","просыпаться"],["get up","вставать с кровати"],["get dressed","одеваться"],["have breakfast","завтракать"],["brush my teeth","чистить зубы"],["take a shower","принимать душ"],["leave home","выходить из дома"],["get home","возвращаться домой"],["have lunch","обедать"],["have dinner","ужинать"],["go to bed","ложиться спать"],["fall asleep","засыпать"]],
+uni:[["attend classes","посещать занятия"],["have lectures","посещать лекции"],["have seminars","посещать семинары"],["take notes","делать записи"],["take an exam","сдавать экзамен"],["pass an exam","успешно сдать экзамен"],["do homework","делать домашнюю работу"],["work on an assignment","работать над заданием"],["prepare for an exam","готовиться к экзамену"],["hand in an assignment","сдавать задание"],["miss a class","пропустить занятие"],["study in the library","заниматься в библиотеке"]],
+free:[["meet friends","встречаться с друзьями"],["hang out with friends","проводить время с друзьями"],["go for a walk","гулять"],["go to the gym","ходить в спортзал"],["relax after classes","отдыхать после занятий"],["spend time online","проводить время в интернете"],["have a part-time job","работать неполный день"],["spend time with family","проводить время с семьёй"]]
+};
+let cat="routine",page=0,q=0,answers={};
+const questions=[
+{q:"I ___ wake up at 7. (usually)",o:["usually","am usually","usually am"],a:0,e:"Наречие ставится перед основным глаголом: I usually wake up."},
+{q:"She is ___ tired after lectures. (often)",o:["often","often is","often be"],a:0,e:"С глаголом to be наречие ставится после него: She is often tired."},
+{q:"I wake up ___ 7:30.",o:["in","on","at"],a:2,e:"AT используется с конкретным временем."},
+{q:"My classes start ___ the morning.",o:["in","on","at"],a:0,e:"IN the morning — устойчивое выражение."},
+{q:"I go to the gym twice ___ week.",o:["in a","a","at"],a:1,e:"Правильно: twice a week."},
+{q:"7:45 can also be said as…",o:["quarter past seven","quarter to eight","half past seven"],a:1,e:"45 минут — это четверть до следующего часа."},
+{q:"I ___ skip classes. (never)",o:["never","am never","never am"],a:0,e:"Never ставится перед основным глаголом skip."},
+{q:"My lecture is ___ Monday afternoon.",o:["at","in","on"],a:2,e:"ON используется с днями недели и сочетаниями вроде Monday afternoon."}
+];
+function showWords(){document.getElementById("words").innerHTML=vocab[cat].map(x=>`<div class="word"><b>${x[0]}</b><span>${x[1]}</span></div>`).join("");document.querySelectorAll("[data-cat]").forEach(b=>b.classList.toggle("active",b.dataset.cat===cat))}
+document.querySelectorAll("[data-cat]").forEach(b=>b.addEventListener("click",()=>{cat=b.dataset.cat;showWords()}));showWords();
+function renderQuiz(){let p=questions[q],selected=answers[q];document.getElementById("quiz").innerHTML=`<div class="exercise"><span class="chip">Question ${q+1} of ${questions.length}</span><h3>${p.q}</h3><div class="options">${p.o.map((o,i)=>`<button class="${selected===i?'chosen':''}" data-answer="${i}">${String.fromCharCode(65+i)}. ${o}</button>`).join("")}</div>${selected!==undefined?`<div class="feedback ${selected===p.a?'good':'bad'}">${selected===p.a?'Correct!':'Not quite. Correct answer: '+p.o[p.a]}<p class="muted" style="font-weight:400">${p.e}</p></div>`:""}</div>`;document.querySelectorAll("[data-answer]").forEach(b=>b.addEventListener("click",()=>{answers[q]=Number(b.dataset.answer);renderQuiz()}));document.getElementById("score").textContent=questions.filter((x,i)=>answers[i]===x.a).length+" / "+questions.length;document.getElementById("prevq").disabled=q===0;document.getElementById("nextq").textContent=q===questions.length-1?"Restart quiz":"Next →"}
+document.getElementById("prevq").onclick=()=>{q=Math.max(0,q-1);renderQuiz()};document.getElementById("nextq").onclick=()=>{if(q===questions.length-1){q=0;answers={}}else q++;renderQuiz()};renderQuiz();
+function go(n){page=Math.max(0,Math.min(6,n));document.querySelectorAll("[data-section]").forEach(s=>s.classList.toggle("hidden",Number(s.dataset.section)!==page));document.querySelectorAll("[data-page]").forEach(b=>b.classList.toggle("active",Number(b.dataset.page)===page));document.getElementById("bar").style.width=((page+1)/7*100)+"%";document.getElementById("back").disabled=page===0;document.getElementById("forward").disabled=page===6;window.scrollTo({top:0,behavior:"smooth"})}
+document.querySelectorAll("[data-page]").forEach(b=>b.addEventListener("click",()=>go(Number(b.dataset.page))));document.getElementById("back").onclick=()=>go(page-1);document.getElementById("forward").onclick=()=>go(page+1);
+</script>
+</body></html>
