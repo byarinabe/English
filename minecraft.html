@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Minecraft: be going to</title>
+<style>
+:root{--bg:#9bd3ff;--bgimg:linear-gradient(#9bd3ff,#e3f5ff);--card:#f2e3c6;--ink:#2b1d0e;--mute:#6b5638;--acc:#4e9a2d;--acc2:#2f6b17;--hl:#b4440b;--ok:#2e8b2e;--bad:#c62828;--line:#8b6b3e;--g1:#6bbf59;--g2:#5aab49;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;--bg:#0e1a2b;--bgimg:linear-gradient(#0e1a2b,#16283f);--card:#3b2c1a;--ink:#f3e7cf;--mute:#c2a878;--acc:#6fbf4a;--acc2:#3f8f26;--hl:#ffd24d;--ok:#6fe36f;--bad:#ff7a7a;--line:#7a5a30;--g1:#3f7f35;--g2:#38722f}}
+:root[data-theme="dark"]{color-scheme:dark;--bg:#0e1a2b;--bgimg:linear-gradient(#0e1a2b,#16283f);--card:#3b2c1a;--ink:#f3e7cf;--mute:#c2a878;--acc:#6fbf4a;--acc2:#3f8f26;--hl:#ffd24d;--ok:#6fe36f;--bad:#ff7a7a;--line:#7a5a30;--g1:#3f7f35;--g2:#38722f}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background-color:var(--bg);background-image:var(--bgimg);background-attachment:fixed;color:var(--ink);font:18px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;min-height:100vh}
+.wrap{max-width:560px;margin:0 auto;padding:12px}
+.hud{margin-bottom:10px}
+.row{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin-bottom:6px}
+.pill{background:var(--card);border:3px solid var(--line);padding:2px 10px;font-weight:800}
+.card{background:var(--card);border:4px solid var(--line);padding:18px;margin-bottom:12px}
+.center{text-align:center}
+h1,h2{margin:0 0 8px;text-transform:uppercase;letter-spacing:.04em}
+p{margin:8px 0}
+b{font-weight:900;color:var(--hl)}
+.lab{color:var(--mute);font-size:14px;text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px}
+.prompt{font-size:22px;font-weight:700;margin-bottom:10px}
+.sub{color:var(--mute);margin:-4px 0 10px}
+.big{font-size:32px;font-weight:900;margin:4px 0}
+.bigE{font-size:60px;line-height:1.1}
+.hit{animation:shk .4s}
+@keyframes shk{20%{transform:translateX(-10px)}60%{transform:translateX(10px)}}
+.btn{background:var(--acc);color:#fff;border:3px solid var(--acc2);padding:12px 20px;font:inherit;font-weight:900;text-transform:uppercase;letter-spacing:.04em;cursor:pointer;margin-top:10px;box-shadow:0 4px 0 var(--acc2)}
+.btn:active:not(:disabled){transform:translateY(3px);box-shadow:0 1px 0 var(--acc2)}
+.btn:disabled{opacity:.4}
+.opt{display:block;width:100%;text-align:left;padding:12px;margin:8px 0;border:3px solid var(--line);background:var(--bg);color:var(--ink);font:inherit;cursor:pointer}
+.opt:hover:not(:disabled){border-color:var(--acc)}
+.opt.ok,.zone.ok{border-color:var(--ok);background:rgba(46,139,46,.25)}
+.opt.bad,.zone.bad{border-color:var(--bad);background:rgba(198,40,40,.2)}
+.opt:disabled{color:var(--ink);cursor:default}
+.zone{min-height:56px;border:3px dashed var(--line);padding:8px;display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
+.pool{display:flex;flex-wrap:wrap;gap:8px}
+.chip{border:3px solid var(--acc2);background:var(--bg);color:var(--ink);padding:8px 12px;font:inherit;cursor:pointer}
+.fb{min-height:24px;font-weight:800;margin-top:8px}
+.hp{height:16px;background:var(--line);margin:6px 0 12px}
+.hp i{display:block;height:100%;background:var(--bad);transition:width .4s}
+.grid{display:grid;grid-template-columns:repeat(7,1fr);border:4px solid var(--line)}
+.cell{aspect-ratio:1;display:flex;align-items:center;justify-content:center;font-size:clamp(22px,8vw,40px);background:var(--g1)}
+.cell.b{background:var(--g2)}
+.pad{display:grid;grid-template-columns:repeat(3,72px);grid-template-areas:". u ." "l d r";gap:8px;justify-content:center;margin-top:14px}
+.pb{height:60px;font-size:24px;border:3px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer;box-shadow:0 4px 0 var(--line)}
+.pb:active{transform:translateY(3px);box-shadow:none}
+.u{grid-area:u}.l{grid-area:l}.d{grid-area:d}.r{grid-area:r}
+.inp{width:100%;box-sizing:border-box;padding:12px;font:inherit;border:3px solid var(--line);background:var(--bg);color:var(--ink)}
+.scroll{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:15px;margin:10px 0}
+th,td{text-align:left;padding:6px 4px;border-bottom:2px solid var(--line)}
+th{color:var(--mute);font-weight:600}
+.mi{font-size:15px;margin:6px 0;text-align:left}
+.mi b{color:var(--bad)}
+.foot{color:var(--mute);font-size:14px;margin-top:10px}
+</style>
+</head>
+<body>
+<div class="wrap" id="app"></div>
+<script>
+var $=function(s){return document.querySelector(s)};
+function mk(t,c,x){var e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e}
+function R(t,c,x){var e=mk(t,c);x.split("**").forEach(function(s,i){if(s)e.append(i%2?mk("b",0,s):document.createTextNode(s))});return e}
+function strip(s){return s.replace(/\*\*/g,"")}
+function sh(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.random()*(i+1)|0;var t=a[i];a[i]=a[j];a[j]=t}return a}
+function each(box,f){[].forEach.call(box.children,f)}
+function nb(l,f){var b=mk("button","btn",l);b.onclick=f;return b}
+
+var MAP=["T..S..D",".C...T.","S.....T",".......","T.S...C",".D...S.","......."];
+var TILE={T:"🌳",S:"🪨",D:"💎",C:"🐄"};
+var KIND={T:{inv:"🪵",n:"Дерево 🌳",max:4,lab:"Собери предложение"},S:{inv:"🪨",n:"Камень 🪨",max:4,lab:"Вставь am / is / are"},D:{inv:"💎",n:"Алмаз 💎",max:2,lab:"Выбери верное предложение"},C:{inv:"🥛",n:"Корова 🐄",max:2,lab:"Собери вопрос"}};
+function tasks(){return{
+T:sh([["Я собираюсь построить дом.","I am going to build a house."],["Он собирается сделать кирку.","He is going to make a pickaxe."],["Мы собираемся построить мост.","We are going to build a bridge."],["Она собирается посадить деревья.","She is going to plant trees."]]).map(function(a){return{t:"b",prompt:a[0],ans:a[1]}}),
+S:sh([["My brother ___ **going to** mine stone.","Мой брат собирается добывать камень.","is",["am","are"]],["They ___ **going to** build a castle.","Они собираются построить замок.","are",["am","is"]],["I ___ **going to** find a cave.","Я собираюсь найти пещеру.","am",["is","are"]],["My friends ___ **going to** play Minecraft tonight.","Мои друзья собираются сегодня играть в Minecraft.","are",["am","is"]]]).map(function(a){return{t:"c",prompt:a[0],sub:a[1],ans:a[2],opts:a[3]}}),
+D:sh([["Я не собираюсь отдавать алмаз.","I am not **going to** give the diamond.",["I not **going to** give the diamond.","I don’t **going to** give the diamond."]],["Он не собирается копать здесь.","He isn’t **going to** dig here.",["He doesn’t **going to** dig here.","He isn’t **go to** dig here."]]]).map(function(a){return{t:"c",prompt:a[0],ans:a[1],opts:a[2]}}),
+C:sh([["Ты собираешься покормить корову?","Are you going to feed the cow?"],["Она собирается подоить корову?","Is she going to milk the cow?"]]).map(function(a){return{t:"b",prompt:a[0],ans:a[1]}})}}
+var BS=[
+["Смотри! Крипер сейчас взорвётся!","Look! The creeper is **going to** explode!","Look! The creeper are **going to** explode!","Look! The creeper is going explode!"],
+["Мы собираемся победить крипера.","We are **going to** beat the creeper.","We is **going to** beat the creeper.","We **going to** beat the creeper."],
+["Он не собирается убегать.","He isn’t **going to** run away.","He doesn’t **going to** run away.","He aren’t **going to** run away."],
+["Ты собираешься использовать меч?","Are you **going to** use the sword?","Do you **going to** use the sword?","Are you **go to** use the sword?"],
+["Я не собираюсь сдаваться.","I am not **going to** give up.","I isn’t **going to** give up.","I don’t **going to** give up."],
+["Что ты собираешься делать?","What are you **going to** do?","What you are **going to** do?","What do you **going to** do?"]];
+
+var S,LOG;
+function reset(){S={score:0,streak:0,ans:0,t0:Date.now(),name:"",hearts:3,bh:6,bt:1,be:0,boss:false,mode:"",inv:{T:0,S:0,D:0,C:0},map:MAP.map(function(r){return r.split("")}),px:3,py:3,pool:tasks()};LOG=[]}
+function gain(p){S.streak++;var g=p+(S.streak>=3?1:0);S.score+=g;return g}
+
+function hud(){var d=mk("div","hud"),r=mk("div","row"),r2=mk("div","row");
+ r.append(mk("span","pill","⚡ "+S.score+" XP"),mk("span","pill","🔥 "+S.streak));
+ if(S.boss)r.append(mk("span","pill","❤️".repeat(S.hearts)+"🖤".repeat(3-S.hearts)));
+ else["T","S","D","C"].forEach(function(k){r2.append(mk("span","pill",KIND[k].inv+" "+S.inv[k]+"/"+KIND[k].max))});
+ d.append(r,r2);return d}
+function app(){S.mode="";var a=$("#app");a.replaceChildren.apply(a,[hud()].concat([].slice.call(arguments)));window.scrollTo(0,0)}
+function refreshHud(){$(".hud").replaceWith(hud())}
+
+function start(){var n=S?S.name:"";reset();var c=mk("div","card center");
+ c.append(mk("div","bigE","⛏️"),mk("h1",0,"Minecraft: going to"),mk("p",0,"Ходи по миру, ломай блоки и отвечай на задания. Когда всё добудешь, появится Крипер! В конце будет отчёт: сделай скриншот и отправь учителю."),mk("p","lab","Имя героя"));
+ var inp=mk("input","inp");inp.type="text";inp.placeholder="Как тебя зовут?";inp.value=n;
+ c.append(inp,document.createElement("br"),nb("Начать игру",function(){if(!inp.value.trim()){inp.focus();return}S.name=inp.value.trim();S.t0=Date.now();lesson()}));app(c)}
+
+function lesson(){var c=mk("div","card");c.append(mk("h2",0,"🧠 Правило"),mk("p",0,"be going to = собираться что-то сделать."));
+ ["I **am going to** build a house.","He / She / It **is going to** dig.","We / You / They **are going to** play.","Нет: I **am not** / he **isn’t** / we **aren’t** + **going to** run.","Вопрос: **Are you going to** swim?"].forEach(function(l){var p=R("p",0,l);p.style.fontSize="19px";c.append(p)});
+ c.append(nb("Понятно! В мир ⛏️",world));app(c)}
+
+function world(){
+ if(S.map.every(function(r){return r.every(function(t){return t==="."})})){bossIntro();return}
+ var g=mk("div","grid"),p=mk("div","pad"),h=mk("p","lab center","Иди к блоку и упрись в него, чтобы сломать!");
+ for(var y=0;y<7;y++)for(var x=0;x<7;x++)g.append(mk("div","cell"+((x+y)%2?" b":""),x===S.px&&y===S.py?"🧑":TILE[S.map[y][x]]||""));
+ [["▲",0,-1,"u"],["◀",-1,0,"l"],["▼",0,1,"d"],["▶",1,0,"r"]].forEach(function(a){var b=mk("button","pb "+a[3],a[0]);b.onclick=function(){mv(a[1],a[2])};p.append(b)});
+ app(h,g,p);S.mode="w"}
+function mv(dx,dy){var x=S.px+dx,y=S.py+dy;if(x<0||y<0||x>6||y>6)return;var t=S.map[y][x];
+ if(t!=="."){bump(t,x,y);return}S.px=x;S.py=y;world()}
+document.addEventListener("keydown",function(e){if(S.mode!=="w")return;var m={ArrowUp:[0,-1],ArrowDown:[0,1],ArrowLeft:[-1,0],ArrowRight:[1,0]}[e.key];if(m){e.preventDefault();mv(m[0],m[1])}});
+
+function bump(k,x,y){ask({x:S.pool[k].shift(),w:[],k:k,bx:x,by:y})}
+function ask(r){(r.x.t==="c"?choice:build)(r)}
+function head(r){var c=mk("div","card");c.append(mk("div","lab","⛏️ Ломаем: "+KIND[r.k].n+" · "+KIND[r.k].lab));return c}
+
+function judge(r,ok,pick,fb,c){var first=!r.w.length,fin=false,g;S.ans++;
+ if(ok){if(first)g=gain(2);else{S.streak=0;g=1;S.score++}
+  fb.textContent="✅ Верно! +"+g+" XP"+(first&&S.streak>=3?" 🔥 бонус за серию":"");fin=true}
+ else{S.streak=0;r.w.push(strip(pick));
+  if(r.w.length<2){fb.textContent="💥 Блок не поддался! Попробуй ещё раз.";c.append(nb("Ещё раз ⛏️",function(){ask(r)}))}
+  else{fb.textContent="❌ Правильно: "+strip(r.x.ans);fin=true}}
+ if(fin){LOG.push({k:r.k,p:strip(r.x.prompt),a:strip(r.x.ans),w:r.w,ok:ok});S.map[r.by][r.bx]=".";S.inv[r.k]++;c.append(nb(ok?"Забрать "+KIND[r.k].inv:"Дальше →",world))}
+ refreshHud()}
+
+function choice(r){var x=r.x,c=head(r),box=mk("div"),fb=mk("div","fb"),lock=false;
+ c.append(R("div","prompt",x.prompt));if(x.sub)c.append(mk("div","sub",x.sub));
+ sh([x.ans].concat(x.opts)).forEach(function(t){var b=R("button","opt",t);
+  b.onclick=function(){if(lock)return;lock=true;var ok=t===x.ans;b.classList.add(ok?"ok":"bad");each(box,function(y){y.disabled=true});judge(r,ok,t,fb,c)};
+  box.append(b)});
+ c.append(box,fb);app(c)}
+
+function build(r){var x=r.x,pool=sh(x.ans.split(" ").map(function(w,i){return{w:w,i:i}})),ans=[],fin=false;
+ var c=head(r),zone=mk("div","zone"),pl=mk("div","pool"),fb=mk("div","fb"),chk=mk("button","btn","Проверить");
+ c.append(mk("div","prompt",x.prompt));
+ function chip(t,f){var b=mk("button","chip",t.w);b.onclick=function(){if(!fin)f()};return b}
+ function draw(){
+  zone.replaceChildren.apply(zone,ans.map(function(t){return chip(t,function(){ans=ans.filter(function(y){return y!==t});pool.push(t);draw()})}));
+  pl.replaceChildren.apply(pl,pool.map(function(t){return chip(t,function(){pool=pool.filter(function(y){return y!==t});ans.push(t);draw()})}));
+  chk.disabled=pool.length>0}
+ chk.onclick=function(){fin=true;var a=ans.map(function(t){return t.w}).join(" "),ok=a===x.ans;zone.classList.add(ok?"ok":"bad");chk.remove();judge(r,ok,a,fb,c)};
+ c.append(zone,pl,fb,chk);app(c);draw()}
+
+function bossIntro(){S.boss=true;S.hearts=3;S.bh=6;S.br=sh(BS);var c=mk("div","card center");
+ c.append(mk("div","bigE","💥"),mk("h2",0,"Появился Крипер!"),mk("p",0,"Выбирай правильное предложение с going to. Верный ответ отнимает у Крипера жизнь, ошибка стоит сердечка. Если сердечки кончатся, бой начнётся заново. Отчёт появится после победы!"),nb("В бой! ⚔️",bossAsk));app(c)}
+
+function bossAsk(){var q=S.br[6-S.bh],c=mk("div","card"),hp=mk("div","hp"),bar=mk("i"),em=mk("div","bigE","🟩");
+ bar.style.width=(S.bh/6*100)+"%";hp.append(bar);
+ c.append(em,mk("div","lab","Крипер"),hp,mk("div","prompt",q[0]));
+ var box=mk("div"),fb=mk("div","fb"),lock=false;
+ sh([q[1],q[2],q[3]]).forEach(function(t){var b=R("button","opt",t);
+  b.onclick=function(){if(lock)return;S.ans++;
+   if(t===q[1]){lock=true;b.classList.add("ok");S.bh--;bar.style.width=(S.bh/6*100)+"%";em.classList.add("hit");
+    fb.textContent="💥 Попал! +"+gain(3)+" XP";each(box,function(y){y.disabled=true});
+    c.append(nb(S.bh<=0?"Победа! Показать отчёт →":"Дальше →",function(){if(S.bh<=0)finish();else bossAsk()}))}
+   else{b.classList.add("bad");b.disabled=true;S.streak=0;S.be++;S.hearts--;LOG.push({k:"B",p:q[0],a:strip(q[1]),w:[strip(t)],ok:false});
+    if(S.hearts<=0){lock=true;each(box,function(y){y.disabled=true});fb.textContent="💀 Сердечки закончились. Бой начнётся заново.";
+     c.append(nb("Реванш →",function(){S.bt++;S.hearts=3;S.bh=6;S.br=sh(BS);bossAsk()}))}
+    else fb.textContent="❌ Минус сердечко! Попробуй другой ответ."}
+   refreshHud()};
+  box.append(b)});
+ c.append(box,fb);app(c)}
+
+function finish(){S.boss=false;
+ var el=Math.round((Date.now()-S.t0)/1000),tot=0,fst=0,td=function(t){return mk("td",0,t)};
+ var tb=mk("table"),hr=mk("tr");["Блок","Задания","С 1-й попытки","Ошибок"].forEach(function(h){hr.append(mk("th",0,h))});tb.append(hr);
+ ["T","S","D","C"].forEach(function(k){var it=LOG.filter(function(e){return e.k===k}),f=it.filter(function(e){return!e.w.length}).length,
+  er=it.reduce(function(a,e){return a+e.w.length},0),tr=mk("tr");tot+=it.length;fst+=f;
+  tr.append(td(KIND[k].n),td((it.length>=KIND[k].max?"✅ ":"⚠️ ")+it.length+"/"+KIND[k].max),td(f+" из "+it.length),td(er));tb.append(tr)});
+ var br=mk("tr");br.append(td("Босс Крипер"),td("✅ побеждён"),td("попыток: "+S.bt),td(S.be));tb.append(br);
+ var mis=LOG.filter(function(e){return e.w.length}),c=mk("div","card center"),rep=mk("div");
+ var pct=tot?Math.round(fst/tot*100):0,id=Date.now().toString(36).slice(-5).toUpperCase();
+ rep.append(mk("h2",0,"📋 Отчёт о домашнем задании"),mk("div","lab","Minecraft · be going to"),
+  mk("p","big",S.name),mk("div","lab",new Date().toLocaleString("ru-RU",{dateStyle:"short",timeStyle:"short"})+" · время: "+Math.floor(el/60)+" мин "+el%60+" с · ответов: "+S.ans),
+  mk("p","big","⚡ "+S.score+" XP · "+pct+"%"),mk("div","lab","очки · верно с первой попытки"));
+ var sc=mk("div","scroll");sc.append(tb);rep.append(sc);
+ if(mis.length){rep.append(mk("div","lab","Ошибки: вопрос → выбрано · верно"));
+  mis.slice(0,8).forEach(function(e){var m=mk("div","mi");m.append(mk("span",0,e.p+" → "),mk("b",0,e.w[0]),mk("span",0," · верно: "+e.a));rep.append(m)});
+  if(mis.length>8)rep.append(mk("div","mi","…и ещё ошибок: "+(mis.length-8)))}
+ else rep.append(mk("p",0,"🏆 Без единой ошибки!"));
+ rep.append(mk("div","foot","Отчёт № "+id+" · мир пройден, Крипер побеждён ✅"));
+ c.append(rep);app(c,mk("p","foot center","Сделай скриншот этого экрана и отправь учителю."))}
+
+reset();start();
+</script>
+</body>
+</html>
