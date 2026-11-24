@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="ru"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>My school: words</title>
+<style>
+:root{--bg:#f3f6fb;--card:#fff;--tx:#14213d;--mu:#5a6780;--ac:#2457d6;--on:#fff;--ok:#15803d;--no:#c62828;--ln:#d9e1ef;--hi:#fff1c2;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;--bg:#0f1626;--card:#18233b;--tx:#edf2fc;--mu:#a3b0c8;--ac:#8fb0ff;--on:#0b1220;--ok:#4ade80;--no:#ff8a8a;--ln:#2a3957;--hi:#4a3d12}}
+:root[data-theme="dark"]{color-scheme:dark;--bg:#0f1626;--card:#18233b;--tx:#edf2fc;--mu:#a3b0c8;--ac:#8fb0ff;--on:#0b1220;--ok:#4ade80;--no:#ff8a8a;--ln:#2a3957;--hi:#4a3d12}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:18px/1.5 "Trebuchet MS","Segoe UI",system-ui,-apple-system,sans-serif}
+main{max-width:760px;margin:0 auto;padding:16px}
+h1{margin:.2em 0 0;font-size:30px}h2{margin:.5em 0 .2em;font-size:24px}
+.mu{color:var(--mu);font-size:15px;margin:.2em 0}
+.xp{display:inline-block;background:var(--hi);color:var(--tx);border-radius:20px;padding:2px 14px;font-weight:700;margin-top:6px}
+nav{display:flex;gap:6px;overflow-x:auto;padding:10px 0}
+button{font:inherit;cursor:pointer}
+button:disabled{opacity:.5;cursor:not-allowed}
+nav button,.btn,.tile{border:2px solid var(--ac);background:var(--card);color:var(--ac);border-radius:12px;padding:8px 14px;white-space:nowrap}
+nav button.on,.btn{background:var(--ac);color:var(--on)}
+.btn.alt{background:var(--card);color:var(--ac)}
+.tile.no{border-color:var(--no);color:var(--no)}
+.st[hidden]{display:none}.st>.btn{margin-top:16px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.card{border:2px solid var(--ln);background:var(--card);color:var(--tx);border-radius:16px;padding:10px;text-align:center;font:inherit}
+.card .em{font-size:36px}.card .w{font-weight:700}
+.card .ru,.card .ex{color:var(--mu);font-size:15px;display:none}
+.card.open .ru,.card.open .ex{display:block}.card.open{border-color:var(--ac)}
+.card.done{border-color:var(--ok);opacity:.55}.card.no{border-color:var(--no)}
+.big{font-size:22px;font-weight:600;margin:.5em 0}.big.no{color:var(--no)}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:8px 0}
+input{font:inherit;padding:8px;border:2px solid var(--ln);border-radius:10px;background:var(--bg);color:var(--tx);max-width:100%;width:180px}
+.res{background:var(--card);border-left:6px solid var(--ac);border-radius:12px;padding:10px 16px;margin:12px 0}
+.rep{background:var(--card);border:3px solid var(--ok);border-radius:16px;padding:12px 18px}
+.ok{color:var(--ok)}
+</style></head><body><main>
+<h1>My school: words and verbs 🎒</h1>
+<p class="mu">Домашнее задание 4 · 50 слов и фраз с урока · уровни открываются по порядку</p>
+<div class="xp" id="xp">⭐ 0</div>
+<nav id="nav"></nav>
+
+<section class="st"><h2>Learn</h2>
+<p class="mu">Открой все 50 карточек: услышишь слово и пример. Пока не откроешь все, дальше не пустит.</p>
+<p class="big" id="lp">Открыто: 0 / 50</p>
+<div id="tabs" class="row"></div><div id="cards" class="grid"></div></section>
+
+<section class="st"><h2>Match</h2><p class="mu">Найди пары: слово и перевод. Нужно пройти 3 раунда.</p><div id="mt"></div></section>
+<section class="st"><h2>Listen</h2><p class="mu">Послушай слово и выбери его.</p><div id="s2"></div></section>
+<section class="st"><h2>Translate</h2><p class="mu">Выбери английское слово по переводу.</p><div id="s3"></div></section>
+<section class="st"><h2>Spell</h2><p class="mu">Напиши слово по-английски.</p><div id="s4"></div></section>
+<section class="st"><h2>Sentences</h2><p class="mu">Вставь слово в предложение.</p><div id="s5"></div></section>
+<section class="st"><h2>Boss 😈</h2><p class="mu">15 вопросов: слух, перевод, написание, предложения. У тебя 3 жизни.</p><div id="bs"></div></section>
+<section class="st"><h2>Report 🏅</h2><div class="rep" id="rp"></div></section>
+
+<script>
+const $=s=>document.querySelector(s),E=(t,c,h)=>{const e=document.createElement(t);if(c)e.className=c;if(h!=null)e.textContent=h;return e};
+const MIS=[];const sh=a=>[...a].sort(()=>Math.random()-.5);
+const say=t=>{try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang="en-GB";u.rate=.85;speechSynthesis.speak(u)}catch(e){}};
+let xpv=0;const xp=n=>{xpv+=n;$("#xp").textContent="⭐ "+xpv};
+const S={l:0,t:0,p:0,n:0,b:0},ok=[];
+const G=["Subjects","Places and things","School life","Opinions","Instructions","Past verbs"];
+const W=[
+[0,"➗","Maths","математика","We have Maths on Monday."],
+[0,"🇬🇧","English","английский","We read a story in English."],
+[0,"🔬","Science","естествознание","We do an experiment in Science."],
+[0,"🏰","History","история","History is about the past."],
+[0,"🗺️","Geography","география","We look at a map in Geography."],
+[0,"🎨","Art","рисование","I draw a picture in Art."],
+[0,"🎵","Music","музыка","We sing a song in Music."],
+[0,"🏃","PE","физкультура","We play football in PE."],
+[0,"💻","Computing","информатика","We use a computer in Computing."],
+[0,"🇪🇸","Spanish","испанский","I learn new words in Spanish."],
+[0,"🇷🇺","Russian","русский","We write a text in Russian."],
+[0,"📖","Literature","литература","We read a poem in Literature."],
+[1,"🏫","classroom","класс","We study in the classroom."],
+[1,"🛝","playground","площадка","We play on the playground."],
+[1,"🍽️","canteen","столовая","We eat lunch in the canteen."],
+[1,"📚","library","библиотека","I read a book in the library."],
+[1,"🏋️","gym","спортзал","We play basketball in the gym."],
+[1,"🎒","school bag","рюкзак","My school bag is blue."],
+[1,"✏️","pencil case","пенал","My pencil case has pens."],
+[1,"📓","notebook","тетрадь","I write in my notebook."],
+[1,"📘","textbook","учебник","Open your textbook, please."],
+[1,"🧑‍🏫","board","доска","The teacher writes on the board."],
+[2,"🗓️","timetable","расписание","Look at the timetable."],
+[2,"🔔","lesson","урок","The lesson starts at nine."],
+[2,"🥪","break","перемена","We play at break."],
+[2,"📝","homework","домашнее задание","I do my homework at home."],
+[2,"✅","test","контрольная","We have a test on Friday."],
+[2,"👔","uniform","школьная форма","We wear a uniform."],
+[3,"🤩","interesting","интересно","History is interesting."],
+[3,"🥱","boring","скучно","Waiting is boring."],
+[3,"😓","difficult","трудно","This test is difficult."],
+[3,"👍","easy","легко","This task is easy."],
+[4,"⭕","circle","обведи","Please circle the correct word."],
+[4,"🔗","match","соедини","Now match the words with the pictures."],
+[4,"✔️","tick","отметь галочкой","Please tick the right box."],
+[4,"✍️","fill in the gaps","вставь пропуски","Now fill in the gaps."],
+[4,"🧩","complete","закончи","Please complete the sentences."],
+[4,"👆","choose","выбери","Please choose the correct answer."],
+[5,"🚶","went","ходил (go)","I went to a school in Russia."],
+[5,"🔔","had","были, имел (have)","We had lessons in the morning."],
+[5,"📝","did","делал (do)","I did my homework."],
+[5,"🤝","made","делал, создал (make)","I made friends with my classmates."],
+[5,"🍎","ate","ел (eat)","I ate lunch in the canteen."],
+[5,"✍️","wrote","писал (write)","We wrote tests."],
+[5,"⚽","played","играл (play)","We played football at break."],
+[5,"❤️","liked","нравился, любил (like)","I liked Maths."],
+[5,"📚","studied","учился (study)","I studied English."],
+[5,"💡","learned","узнавал, учил (learn)","I learned new words."],
+[5,"🙌","helped","помогал (help)","I helped my classmates."],
+[5,"🥾","walked","шёл пешком (walk)","I walked to school."]
+];
+const names=["Learn","Match","Listen","Translate","Spell","Sentences","Boss","Report"],secs=[...document.querySelectorAll(".st")],L=names.length-1;
+function nav(){[...$("#nav").children].forEach((b,i)=>{const lk=i>0&&!ok[i-1];b.disabled=lk;b.textContent=(lk?"🔒 ":ok[i]?"✅ ":"")+(i+1)+". "+names[i]})}
+function go(i){if(i>0&&!ok[i-1])return;secs.forEach((s,k)=>s.hidden=k!==i);[...$("#nav").children].forEach((b,k)=>b.classList.toggle("on",k===i));if(i===L)report();window.scrollTo(0,0)}
+function fin(i){if(ok[i])return;ok[i]=1;nav();if(i<L){const b=E("button","btn","Дальше: "+names[i+1]+" →");b.onclick=()=>go(i+1);secs[i].append(b)}}
+names.forEach((n,i)=>{const b=E("button");b.onclick=()=>go(i);$("#nav").append(b)});nav();
+
+const seen=new Set();let gi=0;
+function learn(){const c=$("#cards");c.replaceChildren();
+W.filter(w=>w[0]===gi).forEach(([g,e,w,r,x])=>{const k=E("button","card");k.append(E("div","em",e),E("div","w",w),E("div","ru",r),E("div","ex",x));if(seen.has(w))k.classList.add("open");
+k.onclick=()=>{k.classList.add("open");say(w+". "+x);seen.add(w);$("#lp").textContent="Открыто: "+seen.size+" / "+W.length;if(seen.size===W.length)fin(0)};c.append(k)})}
+G.forEach((n,i)=>{const b=E("button","btn alt",n);b.onclick=()=>{gi=i;learn()};$("#tabs").append(b)});learn();
+
+let rd=0;
+function match(){const b=$("#mt");b.replaceChildren();
+const set=sh(W).slice(0,6),tiles=[];
+set.forEach(w=>{tiles.push({k:w[2],t:w[2],en:1});tiles.push({k:w[2],t:w[3],en:0})});
+let sel=null,left=6;const g=E("div","grid"),msg=E("p","big");
+sh(tiles).forEach(t=>{const x=E("button","card",t.t);x.onclick=()=>{
+if(x.disabled||(sel&&sel.x===x))return;if(t.en)say(t.t);
+if(!sel){sel={t,x};x.classList.add("open");return}
+const o=sel;sel=null;
+if(o.t.k===t.k&&o.t.en!==t.en){[x,o.x].forEach(y=>{y.disabled=true;y.classList.remove("open");y.classList.add("done")});xp(5);
+if(--left===0){rd++;msg.classList.add("ok");if(rd>=3){msg.textContent="Уровень пройден! 🎉";fin(1)}else{msg.textContent="Раунд "+rd+" из 3 готов 🎉 ";const n=E("button","btn","Следующий раунд");n.onclick=match;msg.append(n)}}}
+else{x.classList.add("no");setTimeout(()=>{x.classList.remove("no");o.x.classList.remove("open")},600)}};g.append(x)});
+b.append(E("p","mu","Раунд "+(rd+1)+" из 3"),g,msg)}
+match();
+
+function run(b,items,o){let i=0,sc=0,lv=o.lives||0;const lvn=b.closest("section").querySelector("h2").textContent;
+const end=()=>{b.replaceChildren();const lost=o.lives&&lv<=0;b.append(E("p","big",lost?"Босс победил 😈 Попробуй ещё раз":"Готово: "+sc+" из "+items.length+" с первого раза ✅"));
+if(lost){const r=E("button","btn","Ещё раз");r.onclick=()=>run(b,o.mk(),o);b.append(r)}else o.done(sc,lv)};
+const draw=()=>{b.replaceChildren();if(i>=items.length||(o.lives&&lv<=0))return end();
+const [s,a,op,m,h]=items[i];let miss=false;const hd=E("p","mu",(i+1)+" / "+items.length+(o.lives?"  "+"❤️".repeat(lv):""));
+const p=E("p","big",s),row=E("div","row"),full=s.includes("___")?s.replace("___",a):a,shown=s.includes("___")?full:(s&&op?s+" → "+a:s?s+" → "+a:a);
+const nx=()=>{const n=E("button","btn","Дальше");n.onclick=()=>{i++;draw()};row.replaceChildren(n)};
+const good=()=>{if(!miss){sc++;xp(o.lives?15:10)}p.textContent="✅ "+shown;p.classList.add("ok");say(full);nx()};
+const bad=(x,v)=>{miss=true;MIS.push({l:lvn,q:items[i][3]==="hear"?"🔊 "+a:s,w:v,r:a});if(o.lives){lv--;p.textContent="❌ "+shown;p.classList.add("no");say(full);nx()}else if(x)x.classList.add("no")};
+const chk=(v,x)=>{const t=v.trim().toLowerCase();t===a.toLowerCase()||(a==="mum"&&t==="mom")?good():bad(x,v)};
+if(m==="hear"){const h=E("button","btn alt","🔊 Listen");h.onclick=()=>say(a);row.append(h);say(a)}
+if(op)row.append(...sh(op).map(t=>{const x=E("button","tile",t);x.onclick=()=>chk(t,x);return x}));
+else{const inp=E("input");inp.placeholder="…";const c=E("button","btn","Check");c.onclick=()=>chk(inp.value,null);row.append(inp,c)}
+b.append(hd,p,...(h?[E("p","","Нужное слово по-русски: «"+h+"»")]:[]),row)};draw()}
+
+const op=w=>[w,...sh(W.filter(x=>x!==w&&x[0]===w[0])).slice(0,3)].map(x=>x[2]);
+const hr=w=>["",w[2],op(w),"hear"],tr=w=>[w[1]+" "+w[3],w[2],op(w)],sp=w=>[w[1]+" "+w[3],w[2],null],sn=w=>[w[4].replace(w[2],"___"),w[2],op(w),null,w[3]];
+const lvl=(id,g,k,i)=>{const mk=()=>sh(W).slice(0,12).map(g);run($(id),mk(),{mk,done:s=>{S[k]=s;fin(i)}})};
+lvl("#s2",hr,"l",2);lvl("#s3",tr,"t",3);lvl("#s4",sp,"p",4);lvl("#s5",sn,"n",5);
+const mkB=()=>sh(W).slice(0,15).map((w,i)=>[hr,tr,sp,sn][i%4](w));
+run($("#bs"),mkB(),{lives:3,mk:mkB,done:(s,l)=>{S.b=l;xp(50);fin(6)}});
+
+function report(){report0();const R=$("#rp"),sn2=new Set(),ls=[];MIS.forEach(m=>{const t=m.l+": "+m.q+" → выбрал «"+m.w+"», верно «"+m.r+"»";if(!sn2.has(t)){sn2.add(t);ls.push(t)}});const blk=E("div","res");blk.append(E("h3","","Ошибки в игре: "+ls.length));(ls.length?ls:["Ошибок не было 🎉"]).forEach(t=>blk.append(E("p","mu",t)));const st=[...R.children].find(c=>c.textContent.startsWith("✅"));(st||R.lastChild).after(blk)}
+function report0(){const R=$("#rp"),nm=E("input");nm.placeholder="Your name";const d=E("p","",new Date().toLocaleDateString("ru-RU"));nm.oninput=()=>{d.textContent=nm.value+" · "+new Date().toLocaleDateString("ru-RU")};
+R.replaceChildren(E("h3","","🏅 Report: My school, words and verbs"),nm,d,
+E("p","","✅ Learn 50 / 50 · ✅ Match 3 / 3 · ✅ Listen "+S.l+" / 12 · ✅ Translate "+S.t+" / 12 · ✅ Spell "+S.p+" / 12 · ✅ Sentences "+S.n+" / 12 · ✅ Boss "+"❤️".repeat(S.b)+" · ⭐ "+xpv),
+E("p","","Устное задание: проговори вслух все 50 слов. В начале следующего урока назови учителю слова по картинкам и ответь на вопросы."),
+E("p","mu","Впиши имя, сделай скриншот этого экрана и пришли учителю."))}
+go(0);
+</script></main></body></html>

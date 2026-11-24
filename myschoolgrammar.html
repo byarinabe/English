@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="ru"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>My school: grammar and story</title>
+<style>
+:root{--bg:#f3f6fb;--card:#fff;--tx:#14213d;--mu:#5a6780;--ac:#2457d6;--on:#fff;--ok:#15803d;--no:#c62828;--ln:#d9e1ef;--hi:#fff1c2;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;--bg:#0f1626;--card:#18233b;--tx:#edf2fc;--mu:#a3b0c8;--ac:#8fb0ff;--on:#0b1220;--ok:#4ade80;--no:#ff8a8a;--ln:#2a3957;--hi:#4a3d12}}
+:root[data-theme="dark"]{color-scheme:dark;--bg:#0f1626;--card:#18233b;--tx:#edf2fc;--mu:#a3b0c8;--ac:#8fb0ff;--on:#0b1220;--ok:#4ade80;--no:#ff8a8a;--ln:#2a3957;--hi:#4a3d12}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:18px/1.5 "Trebuchet MS","Segoe UI",system-ui,-apple-system,sans-serif}
+main{max-width:760px;margin:0 auto;padding:16px}
+h1{margin:.2em 0 0;font-size:30px}h2{margin:.5em 0 .2em;font-size:24px}h3{margin:1em 0 .3em}
+.mu{color:var(--mu);font-size:15px;margin:.2em 0}
+.xp{display:inline-block;background:var(--hi);color:var(--tx);border-radius:20px;padding:2px 14px;font-weight:700;margin-top:6px}
+nav{display:flex;gap:6px;overflow-x:auto;padding:10px 0}
+button,select{font:inherit;cursor:pointer}
+button:disabled{opacity:.5;cursor:not-allowed}
+nav button,.btn,.tile{border:2px solid var(--ac);background:var(--card);color:var(--ac);border-radius:12px;padding:8px 14px;white-space:nowrap}
+nav button.on,.btn{background:var(--ac);color:var(--on)}
+.btn.alt{background:var(--card);color:var(--ac)}
+.tile.no{border-color:var(--no);color:var(--no)}.tile.alt{border-color:var(--ln);color:var(--tx)}
+.st[hidden]{display:none}.st>.btn{margin-top:16px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:10px}
+.card{border:2px solid var(--ln);background:var(--card);color:var(--tx);border-radius:16px;padding:10px;text-align:center;font:inherit}
+.card .em{font-size:36px}.card .w{font-weight:700}
+.card .ru,.card .ex{color:var(--mu);font-size:15px;display:none}
+.card.open .ru,.card.open .ex{display:block}.card.open{border-color:var(--ac)}
+.big{font-size:22px;font-weight:600;margin:.5em 0}.big.no{color:var(--no)}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:8px 0}
+input,select{padding:8px;border:2px solid var(--ln);border-radius:10px;background:var(--bg);color:var(--tx);max-width:100%}
+input{font:inherit;width:150px}
+.line{min-height:56px;border:2px dashed var(--ln);border-radius:12px;padding:8px;display:flex;flex-wrap:wrap;gap:8px}
+.res{background:var(--card);border-left:6px solid var(--ac);border-radius:12px;padding:10px 16px;margin:12px 0}
+.rep{background:var(--card);border:3px solid var(--ok);border-radius:16px;padding:12px 18px}
+.ok{color:var(--ok)}ol,ul{padding-left:22px}
+</style></head><body><main>
+<h1>My school: grammar and story 📘</h1>
+<p class="mu">Домашнее задание 4 · was / were, глаголы в прошедшем, didn’t · уровни открываются по порядку</p>
+<div class="xp" id="xp">⭐ 0</div>
+<nav id="nav"></nav>
+
+<section class="st"><h2>Learn</h2>
+<p class="mu">Открой все 18 карточек: правила и 12 глаголов. Пока не откроешь все, дальше не пустит.</p>
+<p class="big" id="lp">Открыто: 0 / 18</p>
+<div id="tabs" class="row"></div><div id="cards" class="grid"></div></section>
+<section class="st"><h2>was / were</h2><div id="q1"></div></section>
+<section class="st"><h2>Past forms</h2><p class="mu">Выбери форму глагола в прошедшем времени.</p><div id="q2"></div></section>
+<section class="st"><h2>Spell the verb</h2><p class="mu">Напиши глагол в прошедшем времени.</p><div id="q3"></div></section>
+<section class="st"><h2>didn’t · Did you…?</h2><div id="q4"></div></section>
+<section class="st"><h2>Past or present?</h2><p class="mu">Определи, о каком времени вопрос.</p><div id="q5"></div></section>
+<section class="st"><h2>Build</h2><p class="mu">Собери предложение из слов. Нажми на слово в рамке, чтобы убрать его.</p><div id="q6"></div></section>
+<section class="st"><h2>Answers</h2><p class="mu">Выбери правильный ответ на вопрос.</p><div id="q7"></div></section>
+<section class="st"><h2>My story</h2>
+<p class="mu">Выбери слова во всех полях, и получится рассказ «My old school». В своём рассказе ты расскажешь про свою школу.</p>
+<div id="pf"></div><div class="res" id="res"></div>
+<div class="row"><button class="btn alt" id="hear">🔊 Listen</button></div></section>
+<section class="st"><h2>Boss 😈</h2><p class="mu">10 вопросов из всех уровней. У тебя 3 жизни.</p><div id="bs"></div></section>
+<section class="st"><h2>Report 🏅</h2><div class="rep" id="rp"></div></section>
+
+<script>
+const $=s=>document.querySelector(s),E=(t,c,h)=>{const e=document.createElement(t);if(c)e.className=c;if(h!=null)e.textContent=h;return e};
+const MIS=[];const sh=a=>[...a].sort(()=>Math.random()-.5);
+const say=t=>{try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang="en-GB";u.rate=.85;speechSynthesis.speak(u)}catch(e){}};
+let xpv=0;const xp=n=>{xpv+=n;$("#xp").textContent="⭐ "+xpv};
+const S={a:0,b:0,c:0,d:0,e:0,f:0,g:0},ok=[],G=["Rules","Verbs"];
+const W=[
+[0,"🕰️","was / were","was: I, he, she, it · were: you, we, they","My school was big. The lessons were interesting."],
+[0,"🚫","wasn’t / weren’t","не был, не были","The test wasn’t easy. We weren’t late."],
+[0,"❓","Was…? Were…?","вопрос. Ответ: Yes, it was. / No, they weren’t.","Was your school big? Yes, it was."],
+[0,"⛔","didn’t + verb","не делал. Глагол без изменений","I didn’t like History. I didn’t go."],
+[0,"🙋","Did you…?","вопрос о прошлом. Глагол без изменений","Did you like your school? Yes, I did."],
+[0,"📅","time words","yesterday, last year, at my old school","Last year I went to school in Russia."],
+[1,"🚶","go → went","ходить","I went to a school in Russia."],
+[1,"🔔","have → had","иметь, быть (уроки)","We had lessons in the morning."],
+[1,"📝","do → did","делать","I did my homework."],
+[1,"🤝","make → made","делать, создавать","I made friends with my classmates."],
+[1,"🍎","eat → ate","есть","I ate lunch in the canteen."],
+[1,"✍️","write → wrote","писать","We wrote tests."],
+[1,"⚽","play → played","играть","We played football at break."],
+[1,"❤️","like → liked","нравиться","I liked Maths."],
+[1,"📚","study → studied","учиться","I studied English."],
+[1,"💡","learn → learned","узнавать, учить","I learned new words."],
+[1,"🙌","help → helped","помогать","I helped my classmates."],
+[1,"🥾","walk → walked","ходить пешком","I walked to school."]
+];
+const names=["Learn","was / were","Past forms","Spell the verb","didn’t · Did you","Past or present","Build","Answers","My story","Boss","Report"],secs=[...document.querySelectorAll(".st")],L=names.length-1;
+function nav(){[...$("#nav").children].forEach((b,i)=>{const lk=i>0&&!ok[i-1];b.disabled=lk;b.textContent=(lk?"🔒 ":ok[i]?"✅ ":"")+(i+1)+". "+names[i]})}
+function go(i){if(i>0&&!ok[i-1])return;secs.forEach((s,k)=>s.hidden=k!==i);[...$("#nav").children].forEach((b,k)=>b.classList.toggle("on",k===i));if(i===L)report();window.scrollTo(0,0)}
+function fin(i){if(ok[i])return;ok[i]=1;nav();if(i<L){const b=E("button","btn","Дальше: "+names[i+1]+" →");b.onclick=()=>go(i+1);secs[i].append(b)}}
+names.forEach((n,i)=>{const b=E("button");b.onclick=()=>go(i);$("#nav").append(b)});nav();
+
+const seen=new Set();let gi=0;
+function learn(){const c=$("#cards");c.replaceChildren();
+W.filter(w=>w[0]===gi).forEach(([g,e,w,r,x])=>{const k=E("button","card");k.append(E("div","em",e),E("div","w",w),E("div","ru",r),E("div","ex",x));if(seen.has(w))k.classList.add("open");
+k.onclick=()=>{k.classList.add("open");say(x);seen.add(w);$("#lp").textContent="Открыто: "+seen.size+" / "+W.length;if(seen.size===W.length)fin(0)};c.append(k)})}
+G.forEach((n,i)=>{const b=E("button","btn alt",n);b.onclick=()=>{gi=i;learn()};$("#tabs").append(b)});learn();
+
+function run(b,items,o){let i=0,sc=0,lv=o.lives||0;const lvn=b.closest("section").querySelector("h2").textContent;
+const end=()=>{b.replaceChildren();const lost=o.lives&&lv<=0;b.append(E("p","big",lost?"Босс победил 😈 Попробуй ещё раз":"Готово: "+sc+" из "+items.length+" с первого раза ✅"));
+if(lost){const r=E("button","btn","Ещё раз");r.onclick=()=>run(b,o.mk(),o);b.append(r)}else o.done(sc,lv)};
+const draw=()=>{b.replaceChildren();if(i>=items.length||(o.lives&&lv<=0))return end();
+const [s,a,op]=items[i];let miss=false;const hd=E("p","mu",(i+1)+" / "+items.length+(o.lives?"  "+"❤️".repeat(lv):""));
+const p=E("p","big",s),row=E("div","row"),full=s.includes("___")?s.replace("___",a):a,shown=s.includes("___")?full:s+" → "+a;
+const nx=()=>{const n=E("button","btn","Дальше");n.onclick=()=>{i++;draw()};row.replaceChildren(n)};
+const good=()=>{if(!miss){sc++;xp(o.lives?15:10)}p.textContent="✅ "+shown;p.classList.add("ok");say(full);nx()};
+const bad=(x,v)=>{miss=true;MIS.push({l:lvn,q:s,w:v,r:a});if(o.lives){lv--;p.textContent="❌ "+shown;p.classList.add("no");say(full);nx()}else if(x)x.classList.add("no")};
+const chk=(v,x)=>v.trim().toLowerCase()===a.toLowerCase()?good():bad(x,v);
+if(op)row.append(...sh(op).map(t=>{const x=E("button","tile",t);x.onclick=()=>chk(t,x);return x}));
+else{const inp=E("input");inp.placeholder="…";const c=E("button","btn","Check");c.onclick=()=>chk(inp.value,null);row.append(inp,c)}
+b.append(hd,p,row)};draw()}
+
+const Q1=[
+["Last year my school ___ big.","was",["was","were","is"]],
+["At my old school the teachers ___ kind.","were",["was","were","are"]],
+["Yesterday I ___ at school.","was",["was","were","am"]],
+["We ___ in the library yesterday.","were",["was","were","are"]],
+["___ your school big? Yes, it was.","Was",["Was","Were","Is"]],
+["___ your classmates friendly? Yes, they were.","Were",["Were","Was","Are"]],
+["The lesson ___ boring. It was interesting.","wasn’t",["wasn’t","weren’t","isn’t"]],
+["The tests ___ difficult. They were easy.","weren’t",["weren’t","wasn’t","aren’t"]],
+["I ___ born in Russia.","was",["was","were","am"]],
+["Maths ___ my favourite subject last year.","was",["was","were","is"]],
+["The students ___ in the classroom last Monday.","were",["was","were","are"]],
+["She ___ not at school yesterday. She was ill.","was",["was","were","is"]]];
+const Q2=[
+["Yesterday I ___ (go) to school.","went",["went","goed","gone"]],
+["We ___ (have) Maths yesterday.","had",["had","haved","has"]],
+["I ___ (do) my homework last night.","did",["did","done","doed"]],
+["She ___ (make) a new friend.","made",["made","maked","make"]],
+["He ___ (eat) lunch in the canteen.","ate",["ate","eated","eat"]],
+["We ___ (write) a test yesterday.","wrote",["wrote","writed","write"]],
+["They ___ (play) football at break.","played",["played","plays","playd"]],
+["I ___ (like) my old school.","liked",["liked","likeed","like"]],
+["She ___ (study) English last year.","studied",["studied","studyed","studies"]],
+["We ___ (learn) new words.","learned",["learned","learn","learnes"]],
+["He ___ (help) his friends.","helped",["helped","helpt","help"]],
+["Yesterday I ___ (walk) to school.","walked",["walked","walk","walkd"]]];
+const Q3=[
+["Last year I ___ (go) to a school in Russia.","went",null],["We ___ (have) lunch at one o’clock yesterday.","had",null],["I ___ (do) my homework yesterday.","did",null],["I ___ (make) friends at school.","made",null],["She ___ (eat) an apple at break.","ate",null],
+["We ___ (write) a test last week.","wrote",null],["We ___ (play) basketball in the gym.","played",null],["I ___ (study) Maths last year.","studied",null],["I ___ (learn) a new song in Music.","learned",null],["He ___ (help) me with my homework.","helped",null]];
+const Q4=[
+["I ___ like History. It was boring.","didn’t",["didn’t","don’t","wasn’t"]],
+["___ you like your school? Yes, I did.","Did",["Did","Do","Were"]],
+["She didn’t ___ to school.","go",["go","went","goes"]],
+["Did he ___ his homework?","do",["do","did","does"]],
+["We ___ wear a uniform. Everyone wore normal clothes.","didn’t",["didn’t","weren’t","don’t"]],
+["Did you ___ friends at school?","make",["make","made","makes"]],
+["I didn’t ___ lunch at school.","eat",["eat","ate","eaten"]],
+["___ she study English? Yes, she did.","Did",["Did","Does","Was"]],
+["Did they play football? No, they ___.","didn’t",["didn’t","weren’t","don’t"]],
+["He didn’t ___ a test.","write",["write","wrote","writes"]],
+["Did you ___ your teacher?","like",["like","liked","likes"]],
+["Did you go to school in Russia? Yes, I ___.","did",["did","was","do"]]];
+const T=["past","present"];
+const Q5=[
+["What did you do at your old school?","past",T],["What do you do at break?","present",T],["Was your school big?","past",T],["Do you like Maths?","present",T],["Did you have homework?","past",T],
+["What subjects do you study?","present",T],["Were your teachers kind?","past",T],["What is your favourite subject?","present",T],["Where did you go to school?","past",T],["Who is your best friend?","present",T]];
+const Q7=[
+["What school did you go to before?","I went to a school in Russia.",["I went to a school in Russia.","I go to a school in Russia.","I was go to school in Russia."]],
+["Was your school big?","Yes, it was.",["Yes, it was.","Yes, it is.","Yes, it did."]],
+["What was your favourite subject?","My favourite subject was Maths.",["My favourite subject was Maths.","My favourite subject is Maths.","My favourite subject were Maths."]],
+["What did you do at break?","I played football with my friends.",["I played football with my friends.","I play football with my friends.","I did play football."]],
+["Did you like your school?","Yes, I did.",["Yes, I did.","Yes, I was.","Yes, I liked."]],
+["Were your teachers kind?","Yes, they were.",["Yes, they were.","Yes, they did.","Yes, they was."]],
+["What did you do at your previous school?","I had lessons and I did my homework.",["I had lessons and I did my homework.","I have lessons and I do my homework.","I haved lessons and I doed homework."]],
+["What subjects do you study?","I study Maths, English and Art.",["I study Maths, English and Art.","I studied Maths, English and Art.","I am study Maths."]]];
+run($("#q1"),Q1,{done:s=>{S.a=s;fin(1)}});
+run($("#q2"),Q2,{done:s=>{S.b=s;fin(2)}});
+run($("#q3"),Q3,{done:s=>{S.c=s;fin(3)}});
+run($("#q4"),Q4,{done:s=>{S.d=s;fin(4)}});
+run($("#q5"),Q5,{done:s=>{S.e=s;fin(5)}});
+
+const P=[["Моя школа была большой.","My school was big."],["Мои учителя были добрыми.","My teachers were kind."],["Я ходил в школу в России.","I went to a school in Russia."],["У нас были уроки утром.","We had lessons in the morning."],["На перемене мы играли в футбол.","We played football at break."],["Я не любил историю.","I didn’t like History."],["Ты любил свою школу?","Did you like your school?"],["Я ел обед в столовой.","I ate lunch in the canteen."]];
+let i3=0;
+function q6(){const b=$("#q6");b.replaceChildren();
+if(i3>=P.length){b.append(E("p","big","Все предложения собраны! 🎉"));fin(6);return}
+const [ru,en]=P[i3],ws=en.split(" "),got=[],line=E("div","line"),pool=E("div","row"),msg=E("p","big");
+const tiles=sh(ws.map((w,k)=>({w,k})));
+const draw=()=>{
+line.replaceChildren(...got.map(t=>{const x=E("button","tile",t.w);x.onclick=()=>{got.splice(got.indexOf(t),1);draw()};return x}));
+pool.replaceChildren(...tiles.filter(t=>!got.includes(t)).map(t=>{const x=E("button","tile alt",t.w);x.onclick=()=>{got.push(t);draw()};return x}));
+msg.textContent="";msg.className="big";
+if(got.length===ws.length){if(got.map(t=>t.w).join(" ")===en){msg.textContent="✅ "+en+" ";msg.classList.add("ok");say(en);xp(10);const n=E("button","btn","Дальше");n.onclick=()=>{i3++;q6()};msg.append(n)}else{msg.textContent="Почти. Попробуй ещё раз 🙂";MIS.push({l:"Build",q:ru,w:got.map(t=>t.w).join(" "),r:en})}}};
+draw();b.append(E("p","mu",(i3+1)+" / "+P.length),E("p","big",ru),line,pool,msg)}
+q6();
+run($("#q7"),Q7,{done:s=>{S.f=s;fin(7)}});
+
+const AJ=["friendly","kind","funny","helpful","cheerful"],SB=["Maths","English","Science","Art","Music","PE","History","Geography","Computing"],WY=["easy","interesting","fun","relaxing"],LS=["Maths and English","Science and Art","History and Geography","Music and PE"],BR=["played football","played basketball","talked to my friends","ate lunch","went to the playground"],LG=["English","Spanish","Russian"],DS=["History","Literature","Geography","Maths","Music"],TC=["kind","funny","serious","helpful","clever"],FE=["excited","nervous","happy","proud"];
+const FLD=[["sz","I went to a school in Russia. It was",["big","small"]],["aj","and my classmates were",AJ],["sb","My favourite subject was",SB],["wy","because it was",WY],["ls","We had",LS],["b1","At break I",BR],["b2","and",BR],["lg","I learned new words in",LG],["ds","I didn’t like",DS],["t1","My teacher was",TC],["t2","and",TC],["fe","Now I am in a new school and I am",FE]];
+const F={};let story="";
+const out=()=>{const f=k=>F[k]||"…";
+story="I went to a school in Russia. It was "+f("sz")+" and my classmates were "+f("aj")+". My favourite subject was "+f("sb")+" because it was "+f("wy")+". We had "+f("ls")+" in the morning and I did my homework at home. At break I "+f("b1")+" and "+f("b2")+". I learned new words in "+f("lg")+", but it was difficult. I didn’t like "+f("ds")+". My teacher was "+f("t1")+" and "+f("t2")+". Now I am in a new school and I am "+f("fe")+".";
+$("#res").textContent=story;if(FLD.every(x=>F[x[0]]))fin(8);return story};
+FLD.forEach(([k,l,o])=>{const r=E("div","row"),c=E("select");c.append(new Option("…",""),...o.map(x=>new Option(x,x)));c.onchange=()=>{F[k]=c.value;out()};r.append(E("span","",l),c);$("#pf").append(r)});
+$("#hear").onclick=()=>say(out());out();
+
+const MODEL="I went to a school in Russia. It was big and my classmates were friendly. My favourite subject was Maths because it was easy and interesting. We had lessons in the morning and I did my homework at home. At break I played football and ate lunch in the canteen. I learned new words in English, but it was difficult. I didn’t like History. My teacher was kind and funny. Now I am in a new school and I am excited.";
+const PLAN=["School: I went to a school in … It was big or small.","People: My classmates were … My teacher was …","Favourite subject: My favourite subject was … because it was …","Lessons: We had … in the morning. I did my homework.","Break: At break I played … and ate …","I didn’t like … / … was difficult.","Now: Now I am in a new school and I am …"];
+const mkB=()=>sh([...Q1,...Q2,...Q3,...Q4,...Q5,...Q7]).slice(0,10);
+run($("#bs"),mkB(),{lives:3,mk:mkB,done:(s,l)=>{S.g=l;xp(50);fin(9)}});
+
+function report0(){const R=$("#rp"),pl=E("ol"),nm=E("input"),d=E("p","",new Date().toLocaleDateString("ru-RU"));nm.placeholder="Your name";nm.oninput=()=>{d.textContent=nm.value+" · "+new Date().toLocaleDateString("ru-RU")};
+PLAN.forEach(x=>pl.append(E("li","",x)));
+R.replaceChildren(E("h3","","🏅 Report: my school, grammar and story"),nm,d,
+E("p","","✅ Learn 18 / 18 · ✅ was / were "+S.a+" / 12 · ✅ Past forms "+S.b+" / 12 · ✅ Spell the verb "+S.c+" / 10 · ✅ didn’t · Did you "+S.d+" / 12 · ✅ Past or present "+S.e+" / 10 · ✅ Build 8 / 8 · ✅ Answers "+S.f+" / 8 · ✅ My story · ✅ Boss "+"❤️".repeat(S.g)+" · ⭐ "+xpv),
+E("h3","","Мой рассказ из тренировки"),E("p","res",story),
+E("h3","","Образец"),E("p","res",MODEL),
+E("h3","","План рассказа"),pl,
+E("h3","","Задание"),E("p","","По такому же образцу и плану подготовь свой рассказ о своей прежней школе (8–10 предложений). Используй was / were и глаголы в прошедшем времени, которые мы учили. Расскажи его сам, без текста, в начале следующего урока."),
+E("p","mu","Впиши имя, сделай скриншот этого экрана и пришли учителю."))}
+function report(){report0();const R=$("#rp"),sn2=new Set(),ls=[];MIS.forEach(m=>{const t=m.l+": "+m.q+" → выбрал «"+m.w+"», верно «"+m.r+"»";if(!sn2.has(t)){sn2.add(t);ls.push(t)}});const blk=E("div","res");blk.append(E("h3","","Ошибки в игре: "+ls.length));(ls.length?ls:["Ошибок не было 🎉"]).forEach(t=>blk.append(E("p","mu",t)));const st=[...R.children].find(c=>c.textContent.startsWith("✅"));(st||R.lastChild).after(blk)}
+go(0);
+</script></main></body></html>
