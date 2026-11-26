@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Phrase Riders</title>
+<style>
+:root{--bg:#e8eef4;--bgimg:linear-gradient(#cfe3f5,#f6ede3);--card:#fff;--ink:#16202c;--mute:#5d6b7a;--acc:#f26a1b;--acc2:#c24e0c;--hl:#c24e0c;--ok:#16a34a;--bad:#dc2626;--line:#d3dde8;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;--bg:#0c1118;--bgimg:linear-gradient(#0c1118,#1a1410);--card:#161d27;--ink:#eef3f8;--mute:#9aa8b8;--acc:#ff7a2e;--acc2:#e0560f;--hl:#ffb347;--ok:#4ade80;--bad:#f87171;--line:#2a3544}}
+:root[data-theme="dark"]{color-scheme:dark;--bg:#0c1118;--bgimg:linear-gradient(#0c1118,#1a1410);--card:#161d27;--ink:#eef3f8;--mute:#9aa8b8;--acc:#ff7a2e;--acc2:#e0560f;--hl:#ffb347;--ok:#4ade80;--bad:#f87171;--line:#2a3544}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background-color:var(--bg);background-image:var(--bgimg);background-attachment:fixed;color:var(--ink);font:18px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;min-height:100vh}
+.wrap{max-width:760px;margin:0 auto;padding:12px}
+.hud{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:10px}
+.pill{background:var(--card);border:2px solid var(--line);border-radius:999px;padding:3px 14px;font-weight:800}
+.card{background:var(--card);border:2px solid var(--line);border-radius:16px;padding:16px;margin-bottom:12px}
+.center{text-align:center}
+h1,h2{margin:0 0 8px;text-transform:uppercase;font-style:italic;letter-spacing:.03em}
+p{margin:8px 0}
+b{font-weight:900;color:var(--hl)}
+.lab{color:var(--mute);font-size:13px;text-transform:uppercase;letter-spacing:.05em;margin:4px 0}
+.prompt{font-size:24px;font-weight:800}
+.sub{color:var(--mute)}
+.big{font-size:32px;font-weight:900;margin:4px 0}
+.bigE{font-size:84px;line-height:1.1}
+.btn{background:var(--acc);color:#fff;border:0;border-radius:12px;padding:12px 22px;font:inherit;font-weight:900;font-style:italic;text-transform:uppercase;cursor:pointer;margin:10px 4px 0;box-shadow:0 4px 0 var(--acc2)}
+.btn:active:not(:disabled){transform:translateY(3px);box-shadow:0 1px 0 var(--acc2)}
+.btn:disabled{opacity:.4}
+.btn.alt{background:var(--card);color:var(--acc);border:2px solid var(--acc);box-shadow:none}
+.inp{width:100%;box-sizing:border-box;padding:12px;font:inherit;border:2px solid var(--line);border-radius:12px;background:var(--card);color:var(--ink)}
+.cv{display:block;width:100%;height:auto;border-radius:10px;margin:8px 0;touch-action:manipulation}
+.q{min-height:70px}
+.lanes{display:flex;gap:8px}
+.lane{flex:1;font:inherit;font-weight:800;padding:12px 6px;border:2px solid var(--line);border-left:10px solid;border-radius:10px;background:var(--card);color:var(--ink);cursor:pointer}
+.lane.on{outline:3px solid var(--acc)}
+.info{display:flex;gap:10px;align-items:center;margin-top:8px}
+.bst,.pro{flex:1;height:14px;background:var(--line);border-radius:9px;position:relative;overflow:hidden}
+.pro{margin-top:4px;height:16px}
+.bst i{display:block;height:100%;width:0;background:linear-gradient(90deg,#22d3ee,#a78bfa)}
+.pro i{position:absolute;left:0;top:0;height:100%;width:0;background:var(--acc)}
+.pro u{position:absolute;top:0;height:100%;width:6px;background:var(--bad);text-decoration:none}
+.vc{font-size:26px;font-weight:800;margin:6px 0}
+.scroll{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:15px;margin:10px 0}
+th,td{text-align:left;padding:6px 4px;border-bottom:1px solid var(--line)}
+th{color:var(--mute);font-weight:600}
+.mi{font-size:15px;margin:6px 0;text-align:left}
+.mi b{color:var(--bad)}
+.foot{color:var(--mute);font-size:14px;margin-top:10px}
+</style>
+</head>
+<body>
+<div class="wrap" id="app"></div>
+<script>
+var $=function(s){return document.querySelector(s)};
+function mk(t,c,x){var e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e}
+function R(t,c,x){var e=mk(t,c);x.split("**").forEach(function(s,i){if(s)e.append(i%2?mk("b",0,s):document.createTextNode(s))});return e}
+function strip(s){return s.replace(/\*\*/g,"")}
+function sh(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.random()*(i+1)|0;var t=a[i];a[i]=a[j];a[j]=t}return a}
+function nb(l,f,c){var b=mk("button","btn"+(c?" "+c:""),l);b.onclick=f;return b}
+function speak(t){try{speechSynthesis.cancel();var u=new SpeechSynthesisUtterance(t);u.lang="en-US";u.rate=.9;speechSynthesis.speak(u)}catch(e){}}
+var AC;function beep(f,d,ty){try{AC=AC||new(window.AudioContext||window.webkitAudioContext)();var o=AC.createOscillator(),g=AC.createGain();o.type=ty||"square";o.frequency.value=f;g.gain.value=.05;o.connect(g);g.connect(AC.destination);o.start();o.stop(AC.currentTime+d)}catch(e){}}
+
+var P=[
+{v:"make / change",ru:"строить / менять",a:"plans",p1:"**make** plans",t1:"строить планы",p2:"**change** plans",t2:"менять планы",w:["abroad","home"],e:"🗓️"},
+{v:"travel / live",ru:"путешествовать / жить",a:"abroad",p1:"**travel** abroad",t1:"путешествовать за границей",p2:"**live** abroad",t2:"жить за границей",w:["a hotel","a bag"],e:"🌍"},
+{v:"stay at / go back",ru:"оставаться (в) / возвращаться",a:"home",p1:"**stay at** home",t1:"оставаться дома",p2:"**go back** home",t2:"возвращаться домой",w:["plans","holiday"],e:"🏠"},
+{v:"plan a / go on",ru:"планировать / ехать в",a:"holiday",p1:"**plan** a holiday",t1:"планировать отпуск",p2:"**go on** holiday",t2:"ехать в отпуск",w:["a bag","abroad"],e:"🏖️"},
+{v:"book / stay in",ru:"бронировать / останавливаться в",a:"a hotel",p1:"**book** a hotel",t1:"бронировать отель",p2:"**stay in** a hotel",t2:"останавливаться в отеле",w:["home","abroad"],e:"🏨"},
+{v:"pack / unpack",ru:"собирать / разбирать",a:"a bag",p1:"**pack** a bag",t1:"собирать сумку",p2:"**unpack** a bag",t2:"разбирать сумку",w:["plans","holiday"],e:"🎒"}
+];
+var PH=[];P.forEach(function(q,i){PH.push({p:strip(q.p1),ru:q.t1,pi:i,sib:strip(q.p2)},{p:strip(q.p2),ru:q.t2,pi:i,sib:strip(q.p1)})});
+function rng(n){var a=[];for(var i=0;i<n;i++)a.push(i);return a}
+
+var W=720,H=420,HY=170,RH=W*.46,SP=380,LC=["#2f7de1","#f08a24","#2fa84f"],MED=["🥇","🥈","🥉"];
+function cur(z){return Math.sin(z/300)*1.1+Math.sin(z/130)*.4}
+var cv=mk("canvas","cv");cv.width=W;cv.height=H;var cx2=cv.getContext("2d");
+var S,G,eQ,eC,eSpd,eB,ePB,eRv;
+
+function reset(){S={name:"",xp:0,streak:0,t0:Date.now(),st:0,sl:"",ans:0,bt:1,stats:[{},{},{}],mis:[]}}
+function hud(){var d=mk("div","hud");d.append(mk("span","pill","⚡ "+S.xp+" XP"),mk("span","pill","🔥 "+S.streak),mk("span","pill",S.sl||"Старт"));return d}
+function app(){var a=$("#app");a.replaceChildren.apply(a,[hud()].concat([].slice.call(arguments)));window.scrollTo(0,0)}
+
+function start(){var n=S?S.name:"";reset();var c=mk("div","card center"),inp=mk("input","inp");
+ inp.type="text";inp.placeholder="Как тебя зовут?";inp.value=n;
+ c.append(mk("div","bigE","🚴"),mk("h1",0,"Phrase Riders"),mk("p",0,"Сначала изучи фразы, потом лети по трассе и выбирай правильную полосу. В конце босс-заезд и отчёт: сделай скриншот и отправь учителю."),mk("p","lab","Имя гонщика"),inp,document.createElement("br"),
+  nb("К карточкам",function(){if(!inp.value.trim()){inp.focus();return}S.name=inp.value.trim();S.t0=Date.now();study(0)}));app(c)}
+
+function study(i){S.sl="Изучение "+(i+1)+"/6";var q=P[i],c=mk("div","card center");
+ c.append(mk("div","lab","Карточка "+(i+1)+" из 6"),mk("div","bigE",q.e),mk("div","lab",q.v+" + "+q.a));
+ [[q.p1,q.t1],[q.p2,q.t2]].forEach(function(x){var r=mk("div");r.append(R("div","vc",x[0]),mk("div","sub",x[1]));
+  var s=mk("button","btn alt","🔊");s.onclick=function(){speak(strip(x[0]))};r.append(s);c.append(r)});
+ if(i>0)c.append(nb("◀ Назад",function(){study(i-1)},"alt"));
+ c.append(i<5?nb("Дальше ▶",function(){study(i+1)}):nb("К заездам 🚴",function(){S.st=0;stageIntro()}));app(c)}
+
+var STG=[["Этап 1 · Тропа","Подбери слово к паре глаголов, например make / change → ? Выбирай полосу с верным словом. 6 ворот. Ошибочные ворота вернутся."],
+["Этап 2 · Спуск","Выбери полосу с правильной английской фразой для русского перевода. 12 ворот. Ошибочные ворота вернутся."],
+["Этап 3 · Босс-заезд","Обгони соперника Rival! Верные ответы дают буст, ошибки замедляют. Если Rival финиширует первым, заезд начнётся заново."]];
+function stageIntro(){S.sl=STG[S.st][0];var c=mk("div","card center");
+ c.append(mk("div","bigE",["🚵","⛰️","🏁"][S.st]),mk("h2",0,STG[S.st][0]),mk("p",0,STG[S.st][1]),mk("p","lab","Управление: ← → или A / D, либо цветные кнопки под трассой"),nb("Старт 🚴",race));app(c)}
+
+function items(st){var a=[];
+ if(st===0)rng(6).forEach(function(i){a.push({k:1,i:i})});
+ else if(st===1)rng(12).forEach(function(i){a.push({k:2,i:i})});
+ else{sh(rng(6)).slice(0,4).forEach(function(i){a.push({k:1,i:i})});sh(rng(12)).slice(0,6).forEach(function(i){a.push({k:2,i:i})})}
+ return sh(a)}
+function mkGate(it,again,z){var g;
+ if(it.k===1){var q=P[it.i];g={p:q.v+" ___",hint:q.ru+" …",c:q.a,opts:sh([q.a].concat(q.w)),say:strip(q.p1)+". "+strip(q.p2)}}
+ else{var h=PH[it.i],r=sh(PH.filter(function(y){return y.pi!==h.pi}))[0];g={p:h.ru,hint:"",c:h.p,opts:sh([h.p,h.sib,r.p]),say:h.p}}
+ g.ans=g.opts.indexOf(g.c);g.it=it;g.again=again;g.z=z;return g}
+
+function race(){var st=S.st;if(G)G.stop=true;
+ G={pos:0,v:0,px:0,tx:0,boost:0,gi:0,t:0,jump:0,toast:"",toastT:0,shake:0,crashT:0,rival:0,boss:st===2,stop:false,last:0,gates:[]};
+ items(st).forEach(function(it,i){G.gates.push(mkGate(it,false,SP*(i+1)))});
+ G.fz=G.gates[G.gates.length-1].z+260;S.stats[st]={tot:0,first:0,err:0,crash:0};
+ var c=mk("div","card"),ln=mk("div","lanes"),info=mk("div","info"),pr=mk("div","pro");
+ eQ=mk("div","q");eC=[0,1,2].map(function(i){var b=mk("button","lane");b.style.borderLeftColor=LC[i];b.onclick=function(){G.tx=i-1};ln.append(b);return b});
+ eSpd=mk("span","pill","0 км/ч");eB=mk("div","bst");eB.append(mk("i"));ePB=mk("i");eRv=mk("u");eRv.style.display=G.boss?"block":"none";pr.append(ePB,eRv);
+ info.append(eSpd,mk("span","lab","⚡ буст"),eB);
+ c.append(eQ,cv,ln,info,mk("div","lab",G.boss?"трасса · красная метка = Rival":"трасса"),pr);app(c);setQ();
+ requestAnimationFrame(function(ts){G.last=ts;frame(ts)})}
+function setQ(){var g=G.gates[G.gi];eQ.replaceChildren();
+ if(!g){eQ.append(mk("div","prompt","🏁 Финиш впереди!"));eC.forEach(function(b){b.textContent="🏁"});return}
+ eQ.append(mk("div","lab","Ворота "+(G.gi+1)+" из "+G.gates.length),mk("div","prompt",g.p),mk("div","sub",g.hint));
+ eC.forEach(function(b,i){b.textContent=g.opts[i]})}
+cv.onpointerdown=function(e){if(!G||G.stop)return;var r=cv.getBoundingClientRect();G.tx=Math.max(-1,Math.min(1,G.tx+(e.clientX-r.left<r.width/2?-1:1)))};
+document.addEventListener("keydown",function(e){if(!G||G.stop)return;var d={ArrowLeft:-1,a:-1,A:-1,ArrowRight:1,d:1,D:1}[e.key];if(d){e.preventDefault();G.tx=Math.max(-1,Math.min(1,G.tx+d))}});
+
+function frame(ts){if(!G||G.stop)return;var dt=Math.min(.05,(ts-G.last)/1000||0);G.last=ts;update(dt);draw();requestAnimationFrame(frame)}
+function update(dt){G.t+=dt;var base=G.boss?50:44,tg=G.boost>0?82:base;
+ if(G.boost>0)G.boost=Math.max(0,G.boost-dt*.25);
+ if(G.crashT>0){G.crashT-=dt;G.v+=(8-G.v)*Math.min(1,dt*6)}else G.v+=(tg-G.v)*Math.min(1,dt*3);
+ G.pos+=G.v*dt;G.px+=(G.tx-G.px)*Math.min(1,dt*9);
+ if(G.jump>0)G.jump-=dt;if(G.shake>0)G.shake-=dt;if(G.toastT>0)G.toastT-=dt;if(G.boss)G.rival+=52*dt;
+ var g=G.gates[G.gi];if(g&&G.pos>=g.z)resolve(g);
+ eSpd.textContent=Math.round(G.v*2.2)+" км/ч";eB.firstChild.style.width=G.boost*100+"%";
+ ePB.style.width=Math.min(100,G.pos/G.fz*100)+"%";if(G.boss)eRv.style.left=Math.min(98,G.rival/G.fz*100)+"%";
+ eC.forEach(function(b,i){b.classList.toggle("on",i-1===G.tx)});
+ if(G.gi>=G.gates.length&&G.pos>=G.fz){G.stop=true;endRace(true)}
+ else if(G.boss&&G.rival>=G.fz&&G.pos<G.fz){G.stop=true;endRace(false)}}
+
+function resolve(g){var lane=Math.max(0,Math.min(2,Math.round(G.px)+1)),pick=g.opts[lane],ok=lane===g.ans,st=S.stats[S.st];S.ans++;
+ if(!g.again){st.tot++;if(ok)st.first++;else st.err++}
+ if(ok){S.xp+=10+Math.min(S.streak,4)*5+25;S.streak++;G.boost=Math.min(1,G.boost+.4);G.jump=.9;G.toast="✅ "+g.c+" · 🌀 TRICK +25";G.toastT=1.6;beep(660,.12);beep(880,.15)}
+ else{S.streak=0;G.boost=0;G.crashT=1.1;G.shake=.6;G.toast="💥 CRASH! Верно: "+g.c;G.toastT=2.2;st.crash++;beep(110,.35,"sawtooth");
+  S.mis.push({p:g.p+(g.hint?" ("+g.hint+")":""),w:pick,a:g.c});
+  if(!G.boss){G.gates.push(mkGate(g.it,true,G.gates[G.gates.length-1].z+SP));G.fz=G.gates[G.gates.length-1].z+260}}
+ speak(g.say);G.gi++;$(".hud").replaceWith(hud());setQ()}
+
+function rider(x,y,s,col,j,rot){var c=cx2;c.save();c.translate(x,y-(j||0));c.rotate(rot||0);c.scale(s,s);
+ c.fillStyle="rgba(0,0,0,.3)";c.beginPath();c.ellipse(0,(j||0)/s+2,30,8,0,0,7);c.fill();
+ c.fillStyle="#1b1b1b";c.beginPath();c.ellipse(0,-22,9,24,0,0,7);c.fill();
+ c.fillStyle=col;c.beginPath();c.moveTo(-18,-40);c.lineTo(18,-40);c.lineTo(12,-82);c.lineTo(-12,-82);c.fill();
+ c.fillStyle="#222";c.fillRect(-26,-64,52,6);
+ c.fillStyle="#f2c9a0";c.beginPath();c.arc(0,-92,11,0,7);c.fill();
+ c.fillStyle="#ffd23f";c.beginPath();c.arc(0,-96,12,Math.PI,0);c.fill();c.restore()}
+function pine(x,y,s){var c=cx2;c.fillStyle="#4a3320";c.fillRect(x-4*s,y-20*s,8*s,20*s);c.fillStyle="#1f5a34";
+ c.beginPath();c.moveTo(x-30*s,y-20*s);c.lineTo(x+30*s,y-20*s);c.lineTo(x,y-90*s);c.fill();
+ c.beginPath();c.moveTo(x-24*s,y-60*s);c.lineTo(x+24*s,y-60*s);c.lineTo(x,y-120*s);c.fill()}
+function gateD(g){var c=cx2,dz=g.z-G.pos;if(dz<=2||dz>1500)return;
+ var t=12/dz,y=HY+t*(H-HY),cx=W/2+(cur(g.z)-cur(G.pos))*RH*t*1.2,hf=RH*t,hh=H*.62*t;
+ c.fillStyle="#2b2b2b";c.fillRect(cx-hf-5*t,y-hh,6*t+2,hh);c.fillRect(cx+hf-t,y-hh,6*t+2,hh);c.fillRect(cx-hf,y-hh-3*t,hf*2,5*t+2);
+ g.opts.forEach(function(o,i){var lx=cx+(i-1)*hf*2/3,sw=hf*2/3*.9,sy=y-hh*.96;c.fillStyle=LC[i];c.fillRect(lx-sw/2,sy,sw,hh*.38);
+  if(sw>46){var fs=sw*.2,k=0;c.font="bold "+fs+"px system-ui";while(c.measureText(o).width>sw*.92&&k++<6){fs*=.88;c.font="bold "+fs+"px system-ui"}
+   c.fillStyle="#fff";c.textAlign="center";c.textBaseline="middle";c.fillText(o,lx,sy+hh*.19)}})}
+
+function draw(){var c=cx2,sx=G.shake>0?(Math.random()-.5)*G.shake*16:0,sy=G.shake>0?(Math.random()-.5)*G.shake*10:0;c.save();c.translate(sx,sy);
+ var g=c.createLinearGradient(0,0,0,HY);g.addColorStop(0,"#1f5fc4");g.addColorStop(1,"#f7c98e");c.fillStyle=g;c.fillRect(-20,-20,W+40,HY+22);
+ c.fillStyle="#fff6c8";c.beginPath();c.arc(560,70,26,0,7);c.fill();
+ var off=G.pos*.03+cur(G.pos)*70;
+ [{m:.4,c:"#6a7aa6",b:30,A:70,f:90},{m:1,c:"#4a587f",b:14,A:50,f:60}].forEach(function(l){c.fillStyle=l.c;c.beginPath();c.moveTo(-20,HY);
+  for(var i=-20;i<=W+20;i+=10)c.lineTo(i,HY-l.b-Math.abs(Math.sin((i+off*l.m)/l.f))*l.A);c.lineTo(W+20,HY);c.fill()});
+ for(var y=HY;y<H;y+=2){var t=(y-HY+1)/(H-HY),wz=G.pos+12/t,seg=Math.floor(wz/36)%2,cx=W/2+(cur(wz)-cur(G.pos))*RH*t*1.2,hf=RH*t;
+  c.fillStyle=seg?"#b4603b":"#a65433";c.fillRect(-20,y,W+40,2);
+  c.fillStyle=seg?"#8a6a4a":"#7d5f42";c.fillRect(cx-hf,y,hf*2,2);
+  if(seg){c.fillStyle="rgba(255,255,255,.35)";var lw=Math.max(1,4*t);c.fillRect(cx-hf/3-lw/2,y,lw,2);c.fillRect(cx+hf/3-lw/2,y,lw,2)}}
+ var hz=c.createLinearGradient(0,HY,0,HY+70);hz.addColorStop(0,"rgba(247,201,142,.9)");hz.addColorStop(1,"rgba(247,201,142,0)");c.fillStyle=hz;c.fillRect(-20,HY,W+40,70);
+ var n0=Math.floor(G.pos/70)+1;
+ for(var k=n0+20;k>=n0;k--){var z=k*70,dz=z-G.pos,s=12/dz,yy=HY+s*(H-HY),cc=W/2+(cur(z)-cur(G.pos))*RH*s*1.2,h2=RH*s;
+  pine(cc-h2*(1.3+(k*7%5)*.12),yy,s*1.3);pine(cc+h2*(1.35+(k*3%5)*.12),yy,s*1.3)}
+ if(G.fz-G.pos<1500&&G.fz>G.pos){var dz2=G.fz-G.pos,t2=12/dz2,y2=HY+t2*(H-HY),c2=W/2+(cur(G.fz)-cur(G.pos))*RH*t2*1.2,h3=RH*t2;
+  c.fillStyle="#fff";c.fillRect(c2-h3,y2-H*.5*t2,h3*2,H*.1*t2+2);c.fillStyle="#d62828";for(var q=0;q<10;q+=2)c.fillRect(c2-h3+q*h3/5,y2-H*.5*t2,h3/5,H*.1*t2+2)}
+ for(var gi=G.gates.length-1;gi>=G.gi;gi--)gateD(G.gates[gi]);
+ if(G.boss&&G.rival>G.pos){var dr=G.rival-G.pos;if(dr<1200){var tr=12/dr,yr=HY+tr*(H-HY),xr=W/2+(cur(G.rival)-cur(G.pos))*RH*tr*1.2+Math.sin(G.t*1.5)*RH*tr*.3;rider(xr,yr,tr*1.1,"#d62828",0,0)}}
+ if(G.v>60){c.strokeStyle="rgba(255,255,255,.3)";c.lineWidth=2;for(var i=0;i<14;i++){var a=Math.random()*6.28,r1=120+Math.random()*80;c.beginPath();c.moveTo(W/2+Math.cos(a)*r1,HY+Math.sin(a)*r1*.6);c.lineTo(W/2+Math.cos(a)*(r1+90),HY+Math.sin(a)*(r1+90)*.6);c.stroke()}}
+ var jh=G.jump>0?Math.sin(Math.PI*(1-G.jump/.9))*70:0;
+ rider(W/2+G.px*RH*2/3*.88,H-26,.95,"#2f7de1",jh,G.crashT>0?Math.sin(G.crashT*20)*.5:0);
+ if(G.crashT>0){c.fillStyle="rgba(220,38,38,.25)";c.fillRect(-20,-20,W+40,H+40)}
+ if(G.toastT>0){c.font="bold 22px system-ui";var tw=c.measureText(G.toast).width+30;c.fillStyle="rgba(0,0,0,.65)";c.fillRect(W/2-tw/2,40,tw,40);c.fillStyle="#fff";c.textAlign="center";c.textBaseline="middle";c.fillText(G.toast,W/2,60)}
+ c.restore()}
+
+function endRace(win){var st=S.st,s=S.stats[st],c=mk("div","card center");S.sl=STG[st][0];
+ if(!win){c.append(mk("div","bigE","💀"),mk("h2",0,"Rival финишировал первым"),mk("p",0,"Повтори заезд: отвечай внимательно, буст даётся за верные ответы подряд."),nb("Реванш 🚴",function(){S.bt++;race()}));app(c);return}
+ s.medal=s.crash===0?MED[0]:s.crash<=2?MED[1]:MED[2];
+ c.append(mk("div","bigE",s.medal),mk("h2",0,st===2?"Победа в босс-заезде!":"Финиш!"),mk("p",0,"Верно с первой попытки: "+s.first+" из "+s.tot+" · аварий: "+s.crash),
+  st<2?nb("Дальше →",function(){S.st++;stageIntro()}):nb("Показать отчёт →",report));app(c)}
+
+function report(){S.sl="Отчёт";var el=Math.round((Date.now()-S.t0)/1000),tot=0,fst=0,td=function(t){return mk("td",0,t)};
+ var tb=mk("table"),hr=mk("tr");["Этап","Ворота","С 1-й попытки","Ошибок","Медаль"].forEach(function(h){hr.append(mk("th",0,h))});tb.append(hr);
+ S.stats.forEach(function(s,i){tot+=s.tot;fst+=s.first;var tr=mk("tr");tr.append(td(STG[i][0].replace(" · ",". ")),td(s.tot),td(s.first+" из "+s.tot),td(s.err),td(s.medal||"—"));tb.append(tr)});
+ var c=mk("div","card center"),rep=mk("div"),pct=tot?Math.round(fst/tot*100):0,id=Date.now().toString(36).slice(-5).toUpperCase();
+ rep.append(mk("h2",0,"📋 Отчёт об уроке"),mk("div","lab","Phrase Riders · make / change plans, travel / live abroad…"),mk("p","big",S.name),
+  mk("div","lab",new Date().toLocaleString("ru-RU",{dateStyle:"short",timeStyle:"short"})+" · время: "+Math.floor(el/60)+" мин "+el%60+" с · ворот: "+S.ans),
+  mk("p","big","⚡ "+S.xp+" XP · "+pct+"%"),mk("div","lab","очки · верно с первой попытки"));
+ var sc=mk("div","scroll");sc.append(tb);rep.append(sc);
+ if(S.mis.length){rep.append(mk("div","lab","Ошибки: вопрос → выбрано · верно"));
+  S.mis.slice(0,8).forEach(function(e){var m=mk("div","mi");m.append(mk("span",0,e.p+" → "),mk("b",0,e.w),mk("span",0," · верно: "+e.a));rep.append(m)});
+  if(S.mis.length>8)rep.append(mk("div","mi","…и ещё ошибок: "+(S.mis.length-8)))}
+ else rep.append(mk("p",0,"🏆 Без единой ошибки!"));
+ rep.append(mk("div","foot","Отчёт № "+id+" · 3 этапа пройдены, Rival побеждён ✅"));
+ c.append(rep);app(c,mk("p","foot center","Сделай скриншот этого экрана и отправь учителю."))}
+
+reset();start();
+</script>
+</body>
+</html>
