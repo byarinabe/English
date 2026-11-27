@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Passport to Banja Luka: Week 3</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600&family=Nunito:wght@400;700;800&display=swap">
+<style>
+:root{--bg:#fff3f7;--card:#fff;--ink:#3b1f3a;--muted:#8a6a86;--line:#f3c9d9;--pink:#e5487f;--pink-t:#fff;--lilac:#8e6bd8;--gold:#f5b83d;--ok:#2f9e6a;--okbg:#e0f6ea;--bad:#c9363e;--badbg:#fde5e7;--cov:#5b3a8e;--cov-t:#fff;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1e1220;--card:#2b1b2e;--ink:#f8e9f1;--muted:#c7a4bd;--line:#4a2c4b;--pink:#ff7ba9;--pink-t:#3b0f20;--lilac:#b79cff;--gold:#f7c95c;--ok:#6fe0a5;--okbg:#1e3a2d;--bad:#ff9aa0;--badbg:#44222a;--cov:#3a2559;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#1e1220;--card:#2b1b2e;--ink:#f8e9f1;--muted:#c7a4bd;--line:#4a2c4b;--pink:#ff7ba9;--pink-t:#3b0f20;--lilac:#b79cff;--gold:#f7c95c;--ok:#6fe0a5;--okbg:#1e3a2d;--bad:#ff9aa0;--badbg:#44222a;--cov:#3a2559;color-scheme:dark}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.45 Nunito,ui-rounded,system-ui,-apple-system,"Segoe UI",sans-serif}
+button,input{font:inherit;color:inherit}
+button:focus-visible,input:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+h1,h2,h3{font-family:Fredoka,ui-rounded,system-ui,sans-serif;font-weight:600;margin:0}
+.wrap{max-width:560px;margin:0 auto;padding:18px 16px 44px}
+.sub{color:var(--muted);font-size:.93rem;margin:4px 0 0}
+.cover{background:var(--cov);color:var(--cov-t);border-radius:22px;padding:26px 22px;border:3px solid var(--gold);text-align:center}
+.cover h1{font-size:2rem;line-height:1.1;margin:8px 0 4px}
+.cover p{margin:10px 0}
+.cover .sub{color:var(--gold);font-weight:700}
+.cover label{display:block;margin:16px 0 6px;font-weight:700}
+.cover input{width:100%;padding:13px;border-radius:12px;border:0;background:#fff;color:#3b1f3a;text-align:center;font-size:1.1rem}
+.crest{font-size:2.6rem}
+.btn{border:0;border-radius:14px;padding:13px 18px;font-weight:800;cursor:pointer;background:var(--pink);color:var(--pink-t)}
+.cover .btn{margin-top:14px;width:100%;background:var(--gold);color:#3b1f3a}
+.btn.alt{background:transparent;color:var(--ink);border:2px solid var(--line)}
+.btn.big{width:100%;margin-top:16px;padding:16px}
+.row{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}.row .btn{flex:1 1 130px}
+.stamps{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px}
+.lvl{background:var(--card);border:2px dashed var(--line);border-radius:18px;padding:14px 10px;text-align:center;cursor:pointer;display:flex;flex-direction:column;gap:2px;align-items:center}
+.lvl:not(.off){border:2px solid var(--pink)}
+.lvl.done{background:var(--okbg);border-color:var(--ok)}
+.lvl.off{opacity:.55;cursor:default}
+.lvl .ic{font-size:1.9rem}.lvl b{font-family:Fredoka,ui-rounded,sans-serif;font-weight:600}.lvl small{color:var(--muted)}
+.st{color:var(--gold);letter-spacing:2px;font-size:1.1rem}
+.panel{background:var(--card);border:2px solid var(--line);border-radius:20px;padding:18px}
+.center{text-align:center}
+.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;font-family:Fredoka,ui-rounded,sans-serif}
+.back{background:none;border:0;color:var(--muted);cursor:pointer;padding:6px 0}
+.bar{height:8px;background:var(--line);border-radius:8px;overflow:hidden;margin-bottom:14px}.bar i{display:block;height:100%;background:var(--pink);transition:width .25s}
+.h{color:var(--muted);font-size:.9rem;margin-bottom:6px}
+.p{font-size:1.45rem;font-weight:800;line-height:1.3;margin-bottom:16px}
+.p u{display:inline-block;min-width:3.4ch;border-bottom:3px solid var(--gold);text-decoration:none;text-align:center;color:var(--pink)}
+.bub{background:var(--bg);border:2px solid var(--line);border-radius:18px 18px 18px 4px;padding:12px 14px;font-size:1.2rem}
+.opts{display:grid;gap:10px}
+.opt{border:2px solid var(--line);background:var(--bg);border-radius:14px;padding:13px;text-align:left;cursor:pointer;font-weight:700}
+.opt.ok{border-color:var(--ok);background:var(--okbg)}.opt.no{border-color:var(--bad);background:var(--badbg)}
+.fb{margin-top:12px;padding:11px 13px;border-radius:14px;font-weight:700}
+.fb.ok{background:var(--okbg);color:var(--ok)}.fb.no{background:var(--badbg);color:var(--bad)}.fb small{display:block;color:var(--ink);font-weight:400;margin-top:3px}
+.listen{display:flex;gap:10px;margin-bottom:14px}.listen .btn{flex:1;padding:18px 10px;font-size:1.05rem}
+.slot{min-height:62px;border:2px dashed var(--line);border-radius:14px;padding:8px;display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
+.words{display:flex;flex-wrap:wrap;gap:8px}
+.w{border:2px solid var(--line);background:var(--bg);border-radius:12px;padding:9px 13px;font-weight:800;cursor:pointer}.w.used{opacity:.25;pointer-events:none}
+.stamp{width:78px;height:78px;border:4px solid var(--pink);border-radius:50%;display:grid;place-items:center;font-size:2rem;color:var(--pink);transform:rotate(-9deg);margin:0 auto 10px}
+.pop{animation:pop .5s ease-out}
+@keyframes pop{from{transform:scale(2.2) rotate(-25deg);opacity:0}to{transform:scale(1) rotate(-9deg);opacity:1}}
+.stars{color:var(--gold);font-size:2rem;letter-spacing:4px}
+.fld{display:block;margin:12px 0 4px;font-weight:700}
+.in{width:100%;padding:12px;border-radius:12px;border:2px solid var(--line);background:var(--bg)}
+.pre{margin-top:14px;padding:12px;border-radius:14px;background:var(--bg);border:2px dashed var(--line);font-weight:700}
+.rep{background:var(--card);border:3px solid var(--lilac);border-radius:22px;padding:18px}
+.rh{display:flex;justify-content:space-between;align-items:center;gap:10px}.rh .stamp{margin:0;flex:0 0 auto;width:62px;height:62px;font-size:1.6rem}
+.bn{font-family:Fredoka,ui-rounded,sans-serif;font-size:2.6rem;color:var(--pink);line-height:1.1;margin-top:12px}.bn small{display:block;font:400 .9rem Nunito,sans-serif;color:var(--muted)}
+.rw{display:flex;justify-content:space-between;gap:8px;padding:7px 0;border-bottom:1px dashed var(--line)}
+.rep h3{margin:16px 0 4px;font-size:1.1rem}
+.rep ul{margin:4px 0;padding-left:18px}.rep li{margin:3px 0}
+.todo{margin-top:16px;padding:12px;border-radius:14px;background:var(--gold);color:#3b1f3a;font-weight:800}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+.in{width:100%}select.in{font-weight:700}.mis{padding:8px 0;border-bottom:1px dashed var(--line)}.mis small{display:block;color:var(--muted)}.mis b{color:var(--ok)}.mis s{color:var(--bad)}
+</style>
+</head>
+<body>
+<div class="wrap" id="app"></div>
+<script>
+function $(s){return document.querySelector(s)}
+function sh(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=a[i];a[i]=a[j];a[j]=t}return a}
+function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;")}
+var E=[["read books","читать книги"],["watch films / TV series","смотреть фильмы / сериалы"],["listen to music","слушать музыку"],["play video games","играть в видеоигры"],["draw / paint","рисовать"],["take photos","фотографировать"],["cook / bake","готовить / печь"],["go for a walk","гулять"],["go shopping","ходить по магазинам"],["go to the gym","ходить в спортзал"],["dance","танцевать"],["play a musical instrument","играть на музыкальном инструменте"],
+["be interested in","интересоваться"],["be keen on","увлекаться"],["be good at","хорошо уметь"],["spend time doing something","проводить время за чем-либо"],["join a club","вступить в клуб / кружок"],["try something new","пробовать что-то новое"],["practise a hobby","заниматься хобби"],["relax","расслабляться"],
+["spend time with friends","проводить время с друзьями"],["hang out with friends","проводить время с друзьями"],["meet up with friends","встречаться с друзьями"],["get along with someone","ладить с кем-либо"],["keep in touch","поддерживать связь"],["make new friends","заводить новых друзей"],["have a lot in common","иметь много общего"],["go out together","куда-нибудь ходить вместе"]];
+var G=[["Я часто смотрю сериалы вечером.","I often ___ in the evening.","watch TV series","play video games","cook"],
+["Мы гуляем в парке по выходным.","We ___ in the park at the weekend.","go for a walk","take photos","dance"],
+["Я хорошо умею рисовать.","I’m ___ drawing.","good at","keen on","relax"],
+["Мы с подругой часто ходим куда-нибудь вместе.","My friend and I often ___.","go out together","keep in touch","make new friends"],
+["Мы живём в разных городах, но поддерживаем связь.","We live in different cities, but we ___.","keep in touch","go out together","join a club"],
+["Я хочу вступить в клуб.","I want to ___.","join a club","try something new","relax"],
+["У нас с сестрой много общего.","My sister and I ___.","have a lot in common","go shopping","play video games"],
+["Я хочу заводить новых друзей.","I want to ___.","make new friends","meet up with friends","keep in touch"],
+["Мы встречаемся с друзьями в кафе.","We ___ in a café.","meet up with friends","relax","practise a hobby"]];
+var B=[["Я провожу время с друзьями по выходным.","I spend time with my friends at the weekend."],["Мы проводим время в парке после занятий.","We hang out in the park after classes."],["У нас с лучшей подругой много общего.","My best friend and I have a lot in common."],["Я хочу вступить в клуб и завести новых друзей.","I want to join a club and make new friends."],["Я хорошо рисую, но плохо танцую.","I’m good at drawing, but I’m not good at dancing."],["Я хожу в спортзал два раза в неделю.","I go to the gym twice a week."]];
+var LV=[{n:"Words",s:"Слова и выражения",i:"🧳"},{n:"Sentences",s:"Подставь выражение",i:"💬"},{n:"Word order",s:"Собери предложение",i:"✈️"},{n:"Your story",s:"Guided speaking",i:"💖"}];
+function uniq(ru){return E.filter(function(x){return x[1]===ru}).length===1}
+function q1(){return sh(E).slice(0,10).map(function(e,i){var rev=i%2===1&&uniq(e[1]),p=sh(E.filter(function(x){return x[1]!==e[1]&&x[0]!==e[0]})).slice(0,2);return rev?{k:"c",h:"Как сказать по-английски?",p:e[1],o:[e[0],p[0][0],p[1][0]],r:e[1]}:{k:"c",h:"Что это значит?",p:e[0],o:[e[1],p[0][1],p[1][1]],r:e[0]}})}
+function q2(){return sh(G).slice(0,8).map(function(g){return{k:"c",h:"Переведи: "+g[0],p:g[1],o:[g[2],g[3],g[4]],g:1,r:g[0]+" → "+g[1]}})}
+function q3(){return sh(B).slice(0,5).map(function(b){return{k:"b",h:"Собери предложение: "+b[0],p:b[1],r:b[0]}})}
+var S={name:"",lv:{},talk:[]},L=0,Q=[],qi=0,first=0,tot=0,miss=[],t0=0,ans=[],pool=[],busy=false;
+function cover(){$("#app").innerHTML='<div class="cover"><div class="crest">💖</div><h1>Passport to Banja Luka</h1><p class="sub">Week 3 · Friends &amp; hobbies</p><p>Домашняя игра из 4 уровней: слова, предложения, порядок слов и твой рассказ о хобби и друзьях. В конце получишь отчёт. Сделай скриншот и отправь преподавателю.</p><label for="nm">Как тебя зовут?</label><input id="nm" autocomplete="off" maxlength="30" placeholder="Имя"><button class="btn" onclick="begin()">Начать</button></div>'}
+function begin(){var v=$("#nm").value.trim();if(!v){$("#nm").focus();return}S.name=v;map()}
+function map(){var h='<h2>Привет, '+esc(S.name)+'!</h2><p class="sub">Проходи уровни по порядку, каждый даёт штамп.</p><div class="stamps">';
+LV.forEach(function(d,i){var r=S.lv[i],open=i===0||S.lv[i-1];h+='<button class="lvl'+(r?' done':'')+(open?'':' off')+'" '+(open?'onclick="go('+i+')"':'disabled')+'><span class="ic">'+(open?d.i:'🔒')+'</span><b>'+d.n+'</b><small>'+d.s+'</small>'+(r&&r.s?'<span class="st">'+"★".repeat(r.s)+"☆".repeat(3-r.s)+'</span>':'')+'</button>'});
+h+='</div>';if(S.lv[3])h+='<button class="btn big" onclick="report()">Открыть мой отчёт</button>';$("#app").innerHTML=h;window.scrollTo(0,0)}
+function go(n){L=n;if(n===3)return story();Q=n===0?q1():n===1?q2():q3();qi=0;first=0;tot=Q.length;miss=[];t0=Date.now();show()}
+function show(){if(qi>=Q.length)return endLevel();var q=Q[qi];busy=false;ans=[];
+var h='<div class="top"><button class="back" onclick="map()">← Карта</button><span>'+LV[L].i+' '+LV[L].n+'</span></div><div class="bar"><i style="width:'+Math.round(qi/Q.length*100)+'%"></i></div><div class="h">'+esc(q.h)+(q.retry?' (повторим ещё раз)':'')+'</div>';
+if(q.k==="b"){pool=sh(q.p.split(" ").map(function(w,i){return{w:w,i:i}}));h+='<div id="bz"></div>'}
+else{q.so=sh([0,1,2]);h+='<div class="p">'+esc(q.p).replace("___",'<u id="bl">&nbsp;</u>')+'</div><div class="opts">'+q.so.map(function(ix,k){return '<button class="opt" onclick="pickO('+k+')">'+esc(q.o[ix])+'</button>'}).join("")+'</div>'}
+h+='<div id="fb"></div>';$("#app").innerHTML=h;if(q.k==="b")drawB()}
+function fb(ok,chosen,fix,note){var q=Q[qi];busy=true;
+if(!q.retry){if(ok)first++;else miss.push({q:q.r,c:chosen,a:fix})}
+if(!ok&&!q.retry)Q.push(Object.assign({},q,{retry:true,so:null}));
+$("#fb").innerHTML='<div class="fb '+(ok?'ok':'no')+'">'+(ok?'Верно!':'Правильный ответ: '+esc(fix))+(note?'<small>'+esc(note)+'</small>':'')+'</div><button class="btn big" onclick="qi++;show()">Дальше</button>'}
+function pickO(k){if(busy)return;var q=Q[qi],ok=q.so[k]===0;document.querySelectorAll(".opt").forEach(function(b,i){b.disabled=true;if(q.so[i]===0)b.classList.add("ok");else if(i===k)b.classList.add("no")});
+if(q.g&&$("#bl"))$("#bl").textContent=q.o[0];fb(ok,q.o[q.so[k]],q.o[0],"")}
+function drawB(){if(busy)return;$("#bz").innerHTML='<div class="slot">'+ans.map(function(o,k){return '<button class="w" onclick="unW('+k+')">'+esc(o.w)+'</button>'}).join("")+'</div><div class="words">'+pool.map(function(o,k){return '<button class="w'+(ans.indexOf(o)>-1?' used':'')+'" onclick="addW('+k+')">'+esc(o.w)+'</button>'}).join("")+'</div><div class="row"><button class="btn" onclick="chkB()">Проверить</button><button class="btn alt" onclick="ans=[];drawB()">Сбросить</button></div>'}
+function addW(k){if(busy)return;if(ans.indexOf(pool[k])<0){ans.push(pool[k]);drawB()}}
+function unW(k){if(busy)return;ans.splice(k,1);drawB()}
+function chkB(){if(busy)return;var q=Q[qi];if(ans.length<pool.length){$("#fb").innerHTML='<div class="fb no">Поставь все слова в строку.</div>';return}
+var s=ans.map(function(o){return o.w}).join(" ");$("#bz").innerHTML='<div class="slot">'+esc(s)+'</div>';fb(s===q.p,s,q.p,"")}
+function endLevel(){var pct=Math.round(first/tot*100),s=pct>=90?3:pct>=70?2:1;S.lv[L]={c:first,t:tot,s:s,m:miss};
+$("#app").innerHTML='<div class="panel center"><div class="stamp pop">'+LV[L].i+'</div><h2>'+LV[L].n+' пройден!</h2><div class="stars">'+"★".repeat(s)+"☆".repeat(3-s)+'</div><p>С первого раза верно: '+first+' из '+tot+' ('+pct+'%)</p><p class="sub">'+(miss.length?'Ошибки мы повторили в конце уровня. Они попадут в отчёт.':'Без единой ошибки!')+'</p><div class="row"><button class="btn" onclick="map()">На карту</button><button class="btn alt" onclick="go('+L+')">Ещё раз</button></div></div>';window.scrollTo(0,0)}
+function sel(id,a){return '<select class="in" id="'+id+'" onchange="pv()">'+a.map(function(x){return '<option>'+esc(x)+'</option>'}).join("")+'</select>'}
+var ACT=E.slice(0,12).map(function(x){return x[0]});
+function story(){$("#app").innerHTML='<div class="panel"><div class="top"><button class="back" onclick="map()">← Карта</button><span>💖 Your story</span></div><h2>Guided speaking</h2><p class="sub">Собери рассказ о себе из выражений недели. Потом прочитай его, а затем расскажи без текста и запиши голосовое.</p>'+
+'<label class="fld">In my free time I like to…</label>'+sel("s1",ACT)+
+'<label class="fld">I’m…</label>'+sel("s2",["interested in","keen on","good at"])+'<input class="in" id="t2" maxlength="40" placeholder="по-английски: music / photography / drawing" oninput="pv()" style="margin-top:8px">'+
+'<label class="fld">At the weekend I…</label>'+sel("s3",["spend time with friends","hang out with friends","meet up with friends"])+
+'<label class="fld">My best friend and I…</label>'+sel("s4",["have a lot in common","get along well","go out together"])+'<input class="in" id="t4" maxlength="40" placeholder="We both… (например: like music)" oninput="pv()" style="margin-top:8px">'+
+'<label class="fld">I want to…</label>'+sel("s5",["try something new","join a club","make new friends"])+
+'<div class="pre" id="pvw"></div><p class="sub" id="er"></p><button class="btn big" onclick="fin()">Получить отчёт</button></div>';pv();window.scrollTo(0,0)}
+function v(id){return $("#"+id).value.trim()}
+function mk(){return["In my free time I like to "+v("s1")+".","I’m "+v("s2")+" "+(v("t2")||"…")+".","At the weekend I "+v("s3")+".","My best friend and I "+v("s4")+". We both "+(v("t4")||"…")+".","I want to "+v("s5")+"."]}
+function pv(){$("#pvw").textContent=mk().join(" ")}
+function fin(){if(!v("t2")||!v("t4")){$("#er").textContent="Заполни оба поля по-английски, чтобы получить отчёт.";return}S.talk=mk();S.lv[3]={done:1};report()}
+function report(){var c=0,t=0,ms=[],h='<div class="rep"><div class="rh"><div><h2>Паспорт готов, '+esc(S.name)+'!</h2><p class="sub">Week 3 · Friends &amp; hobbies</p></div><div class="stamp">✓</div></div>',rows="";
+[0,1,2].forEach(function(i){var r=S.lv[i];if(!r)return;c+=r.c;t+=r.t;r.m.forEach(function(m){ms.push(m)});rows+='<div class="rw"><span>'+LV[i].i+' '+LV[i].n+' · '+LV[i].s+'</span><b>'+Math.round(r.c/r.t*100)+'% '+"★".repeat(r.s)+'</b></div>'});
+h+='<div class="bn">'+(t?Math.round(c/t*100):0)+'%<small>верно с первого раза: '+c+' из '+t+'</small></div><h3>Уровни</h3>'+rows+'<div class="rw"><span>💖 Your story · Guided speaking</span><b>готово</b></div><h3>Над чем ещё поработать</h3>';
+if(ms.length){ms.slice(0,8).forEach(function(m){h+='<div class="mis">'+esc(m.q)+'<small>Мой ответ: <s>'+esc(m.c)+'</s></small><small>Верно: <b>'+esc(m.a)+'</b></small></div>'});if(ms.length>8)h+='<p class="sub">И ещё ошибок: '+(ms.length-8)+'</p>'}else h+='<p>Ошибок с первого раза не было, отличная работа!</p>';
+h+='<h3>Мой рассказ</h3><p>'+S.talk.map(esc).join(" ")+'</p><div class="todo">1) Сделай скриншот этого экрана и отправь преподавателю. 2) Запиши голосовое без текста: ответь на вопросы What do you do in your free time? What are you interested in? What do you do with friends at the weekend?</div></div><div class="row"><button class="btn alt" onclick="map()">На карту</button></div>';$("#app").innerHTML=h;window.scrollTo(0,0)}
+cover();
+</script>
+</body>
+</html>
