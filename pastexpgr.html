@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="ru"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>My last weekend: grammar and story</title>
+<style>
+:root{--bg:#f3f6fb;--card:#fff;--tx:#14213d;--mu:#5a6780;--ac:#2457d6;--on:#fff;--ok:#15803d;--no:#c62828;--ln:#d9e1ef;--hi:#fff1c2;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;--bg:#0f1626;--card:#18233b;--tx:#edf2fc;--mu:#a3b0c8;--ac:#8fb0ff;--on:#0b1220;--ok:#4ade80;--no:#ff8a8a;--ln:#2a3957;--hi:#4a3d12}}
+:root[data-theme="dark"]{color-scheme:dark;--bg:#0f1626;--card:#18233b;--tx:#edf2fc;--mu:#a3b0c8;--ac:#8fb0ff;--on:#0b1220;--ok:#4ade80;--no:#ff8a8a;--ln:#2a3957;--hi:#4a3d12}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:18px/1.5 "Trebuchet MS","Segoe UI",system-ui,-apple-system,sans-serif}
+main{max-width:760px;margin:0 auto;padding:16px}
+h1{margin:.2em 0 0;font-size:30px}h2{margin:.5em 0 .2em;font-size:24px}h3{margin:1em 0 .3em}
+.mu{color:var(--mu);font-size:15px;margin:.2em 0}
+.xp{display:inline-block;background:var(--hi);color:var(--tx);border-radius:20px;padding:2px 14px;font-weight:700;margin-top:6px}
+nav{display:flex;gap:6px;overflow-x:auto;padding:10px 0}
+button,select{font:inherit;cursor:pointer}
+button:disabled{opacity:.5;cursor:not-allowed}
+nav button,.btn,.tile{border:2px solid var(--ac);background:var(--card);color:var(--ac);border-radius:12px;padding:8px 14px;white-space:nowrap}
+nav button.on,.btn{background:var(--ac);color:var(--on)}
+.btn.alt{background:var(--card);color:var(--ac)}
+.tile.no{border-color:var(--no);color:var(--no)}.tile.alt{border-color:var(--ln);color:var(--tx)}
+.st[hidden]{display:none}.st>.btn{margin-top:16px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:10px}
+.card{border:2px solid var(--ln);background:var(--card);color:var(--tx);border-radius:16px;padding:10px;text-align:center;font:inherit}
+.card .em{font-size:36px}.card .w{font-weight:700}
+.card .ru,.card .ex{color:var(--mu);font-size:15px;display:none}
+.card.open .ru,.card.open .ex{display:block}.card.open{border-color:var(--ac)}
+.big{font-size:22px;font-weight:600;margin:.5em 0}.big.no{color:var(--no)}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:8px 0}
+input,select{padding:8px;border:2px solid var(--ln);border-radius:10px;background:var(--bg);color:var(--tx);max-width:100%}
+input{font:inherit;width:150px}
+.line{min-height:56px;border:2px dashed var(--ln);border-radius:12px;padding:8px;display:flex;flex-wrap:wrap;gap:8px}
+.res{background:var(--card);border-left:6px solid var(--ac);border-radius:12px;padding:10px 16px;margin:12px 0}
+.rep{background:var(--card);border:3px solid var(--ok);border-radius:16px;padding:12px 18px}
+.ok{color:var(--ok)}ol,ul{padding-left:22px}
+</style></head><body><main>
+<h1>My last weekend: grammar and story 🏖️</h1>
+<p class="mu">Домашнее задание 5 · Past Simple: утверждение, отрицание, вопросы · уровни открываются по порядку</p>
+<div class="xp" id="xp">⭐ 0</div>
+<nav id="nav"></nav>
+
+<section class="st"><h2>Learn</h2>
+<p class="mu">Открой все 8 карточек с правилами. Пока не откроешь все, дальше не пустит.</p>
+<p class="big" id="lp">Открыто: 0 / 8</p>
+<div id="tabs" class="row"></div><div id="cards" class="grid"></div></section>
+<section class="st"><h2>Past forms</h2><p class="mu">Выбери форму глагола в прошедшем времени.</p><div id="q1"></div></section>
+<section class="st"><h2>Spell the verb</h2><p class="mu">Напиши глагол в прошедшем времени.</p><div id="q2"></div></section>
+<section class="st"><h2>didn’t · Did you…?</h2><div id="q3"></div></section>
+<section class="st"><h2>Present or past?</h2><p class="mu">Определи, о каком времени предложение или вопрос.</p><div id="q4"></div></section>
+<section class="st"><h2>Right form</h2><p class="mu">Выбери нужную форму: настоящее или прошедшее.</p><div id="q5"></div></section>
+<section class="st"><h2>Build</h2><p class="mu">Собери предложение из слов. Нажми на слово в рамке, чтобы убрать его.</p><div id="q6"></div></section>
+<section class="st"><h2>Answers</h2><p class="mu">Выбери правильный ответ на вопрос.</p><div id="q7"></div></section>
+<section class="st"><h2>My story</h2>
+<p class="mu">Выбери слова во всех полях, и получится рассказ «My last weekend». В своём рассказе ты расскажешь про свои выходные или каникулы.</p>
+<div id="pf"></div><div class="res" id="res"></div>
+<div class="row"><button class="btn alt" id="hear">🔊 Listen</button></div></section>
+<section class="st"><h2>Boss 😈</h2><p class="mu">10 вопросов из всех уровней. У тебя 3 жизни.</p><div id="bs"></div></section>
+<section class="st"><h2>Report 🏅</h2><div class="rep" id="rp"></div></section>
+
+<script>
+const $=s=>document.querySelector(s),E=(t,c,h)=>{const e=document.createElement(t);if(c)e.className=c;if(h!=null)e.textContent=h;return e};
+const MIS=[];const sh=a=>[...a].sort(()=>Math.random()-.5);
+const say=t=>{try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang="en-GB";u.rate=.85;speechSynthesis.speak(u)}catch(e){}};
+let xpv=0;const xp=n=>{xpv+=n;$("#xp").textContent="⭐ "+xpv};
+const S={a:0,b:0,c:0,d:0,e:0,f:0,g:0},ok=[],G=["Rules"];
+const W=[
+[0,"✅","+ verb in the past","утверждение: глагол во второй форме","I watched TV. I went to the park."],
+[0,"🚫","didn’t + verb","отрицание. Глагол без изменений","I didn’t watch TV. I didn’t go."],
+[0,"❓","Did + you + verb?","вопрос. Глагол без изменений","Did you go? Yes, I did. / No, I didn’t."],
+[0,"🗣️","What did you do?","вопросы с what, where, who","What did you do? Where did you go? Who did you meet?"],
+[0,"⏪","past signals","yesterday, last…, ago, during my holidays","I played football yesterday."],
+[0,"🔁","present signals","usually, every day, at the weekend","I usually play football."],
+[0,"😊","was / were","описание: было, были","It was fun. The weather was hot."],
+[0,"🔊","-ed sounds","/t/ watched · /d/ cleaned · /ɪd/ visited","I visited my grandma."]
+];
+const names=["Learn","Past forms","Spell the verb","didn’t · Did you","Present or past","Right form","Build","Answers","My story","Boss","Report"],secs=[...document.querySelectorAll(".st")],L=names.length-1;
+function nav(){[...$("#nav").children].forEach((b,i)=>{const lk=i>0&&!ok[i-1];b.disabled=lk;b.textContent=(lk?"🔒 ":ok[i]?"✅ ":"")+(i+1)+". "+names[i]})}
+function go(i){if(i>0&&!ok[i-1])return;secs.forEach((s,k)=>s.hidden=k!==i);[...$("#nav").children].forEach((b,k)=>b.classList.toggle("on",k===i));if(i===L)report();window.scrollTo(0,0)}
+function fin(i){if(ok[i])return;ok[i]=1;nav();if(i<L){const b=E("button","btn","Дальше: "+names[i+1]+" →");b.onclick=()=>go(i+1);secs[i].append(b)}}
+names.forEach((n,i)=>{const b=E("button");b.onclick=()=>go(i);$("#nav").append(b)});nav();
+
+const seen=new Set();let gi=0;
+function learn(){const c=$("#cards");c.replaceChildren();
+W.filter(w=>w[0]===gi).forEach(([g,e,w,r,x])=>{const k=E("button","card");k.append(E("div","em",e),E("div","w",w),E("div","ru",r),E("div","ex",x));if(seen.has(w))k.classList.add("open");
+k.onclick=()=>{k.classList.add("open");say(x);seen.add(w);$("#lp").textContent="Открыто: "+seen.size+" / "+W.length;if(seen.size===W.length)fin(0)};c.append(k)})}
+G.forEach((n,i)=>{const b=E("button","btn alt",n);b.onclick=()=>{gi=i;learn()};$("#tabs").append(b)});learn();
+
+function run(b,items,o){let i=0,sc=0,lv=o.lives||0;const lvn=b.closest("section").querySelector("h2").textContent;
+const end=()=>{b.replaceChildren();const lost=o.lives&&lv<=0;b.append(E("p","big",lost?"Босс победил 😈 Попробуй ещё раз":"Готово: "+sc+" из "+items.length+" с первого раза ✅"));
+if(lost){const r=E("button","btn","Ещё раз");r.onclick=()=>run(b,o.mk(),o);b.append(r)}else o.done(sc,lv)};
+const draw=()=>{b.replaceChildren();if(i>=items.length||(o.lives&&lv<=0))return end();
+const [s,a,op]=items[i];let miss=false;const hd=E("p","mu",(i+1)+" / "+items.length+(o.lives?"  "+"❤️".repeat(lv):""));
+const p=E("p","big",s),row=E("div","row"),full=s.includes("___")?s.replace("___",a):a,shown=s.includes("___")?full:s+" → "+a;
+const nx=()=>{const n=E("button","btn","Дальше");n.onclick=()=>{i++;draw()};row.replaceChildren(n)};
+const good=()=>{if(!miss){sc++;xp(o.lives?15:10)}p.textContent="✅ "+shown;p.classList.add("ok");say(full);nx()};
+const bad=(x,v)=>{miss=true;MIS.push({l:lvn,q:s,w:v,r:a});if(o.lives){lv--;p.textContent="❌ "+shown;p.classList.add("no");say(full);nx()}else if(x)x.classList.add("no")};
+const chk=(v,x)=>v.trim().toLowerCase()===a.toLowerCase()?good():bad(x,v);
+if(op)row.append(...sh(op).map(t=>{const x=E("button","tile",t);x.onclick=()=>chk(t,x);return x}));
+else{const inp=E("input");inp.placeholder="…";const c=E("button","btn","Check");c.onclick=()=>chk(inp.value,null);row.append(inp,c)}
+b.append(hd,p,row)};draw()}
+
+const T=["past","present"];
+const Q1=[
+["Yesterday I ___ (see) my friends.","saw",["saw","seed","seen"]],
+["We ___ (swim) in the sea last summer.","swam",["swam","swimmed","swum"]],
+["I ___ (buy) an ice cream yesterday.","bought",["bought","buyed","buy"]],
+["She ___ (take) photos last weekend.","took",["took","taked","taken"]],
+["I ___ (meet) my cousin last weekend.","met",["met","meeted","meet"]],
+["He ___ (ride) his bike on Sunday.","rode",["rode","rided","ridden"]],
+["We ___ (watch) a film last night.","watched",["watched","watch","watchd"]],
+["I ___ (visit) my grandparents last weekend.","visited",["visited","visit","visitted"]],
+["We ___ (stay) at home yesterday.","stayed",["stayed","stay","stayd"]],
+["I ___ (clean) my room on Saturday.","cleaned",["cleaned","clean","cleant"]],
+["We ___ (go) to the beach last summer.","went",["went","goed","gone"]],
+["I ___ (eat) pizza in the evening yesterday.","ate",["ate","eated","eaten"]]];
+const Q2=[
+["Last summer we ___ (go) to the sea.","went",null],["Yesterday I ___ (see) a big fish.","saw",null],["Last summer we ___ (swim) every day.","swam",null],["I ___ (buy) a hat yesterday.","bought",null],
+["She ___ (take) a lot of photos last weekend.","took",null],["During my holidays I ___ (meet) new friends.","met",null],["We ___ (ride) bikes in the park on Sunday.","rode",null],["Last weekend I ___ (have) a great time.","had",null],
+["Yesterday I ___ (make) a cake.","made",null],["Last weekend we ___ (visit) our grandma.","visited",null],["I ___ (clean) my room last night.","cleaned",null],["I ___ (do) my homework yesterday.","did",null]];
+const Q3=[
+["I ___ watch TV last night. I read a book.","didn’t",["didn’t","don’t","wasn’t"]],
+["___ you go to the beach last summer?","Did",["Did","Do","Were"]],
+["Did you ___ your homework yesterday?","do",["do","did","done"]],
+["She didn’t ___ photos.","take",["take","took","taken"]],
+["We ___ swim. The water was cold.","didn’t",["didn’t","don’t","weren’t"]],
+["Did he ___ his grandma last weekend?","visit",["visit","visited","visits"]],
+["Did they ___ football? No, they didn’t.","play",["play","played","plays"]],
+["I didn’t ___ my friends yesterday.","see",["see","saw","seen"]],
+["___ she buy an ice cream? Yes, she did.","Did",["Did","Does","Was"]],
+["Did you ___ a good time?","have",["have","had","has"]],
+["He ___ ride his bike. It was broken.","didn’t",["didn’t","doesn’t","wasn’t"]],
+["Where did you ___ last summer?","go",["go","went","goes"]]];
+const Q4=[
+["I usually play football after school.","present",T],["I played football yesterday.","past",T],["What do you do at the weekend?","present",T],["What did you do last weekend?","past",T],["We went to the beach last summer.","past",T],
+["She watches TV every day.","present",T],["Did you watch TV last night?","past",T],["Do you like ice cream?","present",T],["I didn’t see my friends yesterday.","past",T],["They visit their grandma on Sundays.","present",T]];
+const Q5=[
+["Yesterday I ___ football with my friends.","played",["played","play","plays"]],
+["I usually ___ football after school.","play",["play","played","plays"]],
+["What ___ you do last weekend?","did",["did","do","does"]],
+["What ___ you do at the weekend?","do",["do","did","does"]],
+["She ___ to school every day.","goes",["goes","went","go"]],
+["She ___ to the beach last summer.","went",["went","goes","go"]],
+["Where ___ you go every summer?","do",["do","did","does"]],
+["Where ___ you go last summer?","did",["did","do","does"]],
+["___ you watch TV every day?","Do",["Do","Did","Does"]],
+["___ you watch TV last night?","Did",["Did","Do","Does"]],
+["We ___ lunch at school yesterday.","had",["had","have","has"]],
+["My friend ___ lunch at school every day.","has",["has","had","have"]]];
+const Q7=[
+["What did you do yesterday?","Yesterday I played football.",["Yesterday I played football.","Yesterday I play football.","Yesterday I did played football."]],
+["What did you do last weekend?","Last weekend I visited my grandparents.",["Last weekend I visited my grandparents.","Last weekend I visit my grandparents.","Last weekend I visiting my grandparents."]],
+["Where did you go last summer?","Last summer I went to the beach.",["Last summer I went to the beach.","Last summer I goed to the beach.","Last summer I go to the beach."]],
+["Did you play football yesterday?","Yes, I did.",["Yes, I did.","Yes, I played.","Yes, I do."]],
+["Did you watch TV last night?","No, I didn’t.",["No, I didn’t.","No, I don’t.","No, I wasn’t."]],
+["What did you do during your last holidays?","I swam in the sea and met new friends.",["I swam in the sea and met new friends.","I swim in the sea and meet new friends.","I swimmed in the sea and meeted friends."]],
+["What did you do at your previous school?","I had lessons and I played football at break.",["I had lessons and I played football at break.","I have lessons and I play football.","I haved lessons and I playd football."]],
+["Did you have a good time?","Yes, I did. It was fun.",["Yes, I did. It was fun.","Yes, I had. It is fun.","Yes, I was. It did fun."]]];
+run($("#q1"),Q1,{done:s=>{S.a=s;fin(1)}});
+run($("#q2"),Q2,{done:s=>{S.b=s;fin(2)}});
+run($("#q3"),Q3,{done:s=>{S.c=s;fin(3)}});
+run($("#q4"),Q4,{done:s=>{S.d=s;fin(4)}});
+run($("#q5"),Q5,{done:s=>{S.e=s;fin(5)}});
+
+const P=[["Вчера я играл в футбол.","Yesterday I played football."],["Мы ходили на пляж прошлым летом.","We went to the beach last summer."],["Я смотрел фильм вчера вечером.","I watched a film last night."],["Я не делал домашнее задание.","I didn’t do my homework."],["Ты видел своих друзей?","Did you see your friends?"],["Что ты делал в прошлые выходные?","What did you do last weekend?"],["Мы плавали в море.","We swam in the sea."],["Я купил мороженое.","I bought an ice cream."]];
+let i3=0;
+function q6(){const b=$("#q6");b.replaceChildren();
+if(i3>=P.length){b.append(E("p","big","Все предложения собраны! 🎉"));fin(6);return}
+const [ru,en]=P[i3],ws=en.split(" "),got=[],line=E("div","line"),pool=E("div","row"),msg=E("p","big");
+const tiles=sh(ws.map((w,k)=>({w,k})));
+const draw=()=>{
+line.replaceChildren(...got.map(t=>{const x=E("button","tile",t.w);x.onclick=()=>{got.splice(got.indexOf(t),1);draw()};return x}));
+pool.replaceChildren(...tiles.filter(t=>!got.includes(t)).map(t=>{const x=E("button","tile alt",t.w);x.onclick=()=>{got.push(t);draw()};return x}));
+msg.textContent="";msg.className="big";
+if(got.length===ws.length){if(got.map(t=>t.w).join(" ")===en){msg.textContent="✅ "+en+" ";msg.classList.add("ok");say(en);xp(10);const n=E("button","btn","Дальше");n.onclick=()=>{i3++;q6()};msg.append(n)}else{msg.textContent="Почти. Попробуй ещё раз 🙂";MIS.push({l:"Build",q:ru,w:got.map(t=>t.w).join(" "),r:en})}}};
+draw();b.append(E("p","mu",(i3+1)+" / "+P.length),E("p","big",ru),line,pool,msg)}
+q6();
+run($("#q7"),Q7,{done:s=>{S.f=s;fin(7)}});
+
+const S1=["played football","played basketball","rode my bike","played tennis"],S2=["went to the beach","went to the cinema","went to the park","visited my cousin"],S3=["watched a film","ate pizza","did my homework","cleaned my room","took photos"],S5=["visited my grandparents","met my friends","went to the park","stayed at home"],N1=["watch TV","do my homework","clean my room","play computer games"],N2=["played football","visited my grandma","rode my bike","helped my mum","took photos"],AJ=["fun","great","busy","relaxing"],WE=["sunny","hot","rainy","cold"];
+const FLD=[["s1","On Saturday I",S1],["s2","Then we",S2],["w","The weather was",WE],["s3","In the evening I",S3],["s4","and",S3],["s5","On Sunday I",S5],["n1","I didn’t",N1],["n2","but I",N2],["aj","It was a … weekend!",AJ]];
+const F={};let story="";
+const out=()=>{const f=k=>F[k]||"…";
+story="Last weekend I had a great time. On Saturday I "+f("s1")+" with my friends in the park. Then we "+f("s2")+". The weather was "+f("w")+". In the evening I "+f("s3")+" and "+f("s4")+". On Sunday I "+f("s5")+". We had lunch together. I didn’t "+f("n1")+", but I "+f("n2")+". It was a "+f("aj")+" weekend!";
+$("#res").textContent=story;if(FLD.every(x=>F[x[0]]))fin(8);return story};
+FLD.forEach(([k,l,o])=>{const r=E("div","row"),c=E("select");c.append(new Option("…",""),...o.map(x=>new Option(x,x)));c.onchange=()=>{F[k]=c.value;out()};r.append(E("span","",l),c);$("#pf").append(r)});
+$("#hear").onclick=()=>say(out());out();
+
+const MODEL="Last weekend I had a great time. On Saturday I played football with my friends in the park. Then we went to the beach and swam in the sea. In the evening I watched a film and ate pizza. On Sunday I visited my grandparents. We had lunch together and I helped my grandma. I didn’t do my homework on Saturday, but I did it on Sunday. It was a fun weekend!";
+const PLAN=["Overall: Last weekend I had a great time.","Saturday: On Saturday I played / went / rode …","Then: Then we went to … and … (swam, visited, met)","Evening: In the evening I watched … and ate …","Sunday: On Sunday I visited / met / stayed …","I didn’t … but I … It was a … weekend."];
+const mkB=()=>sh([...Q1,...Q2,...Q3,...Q4,...Q5,...Q7]).slice(0,10);
+run($("#bs"),mkB(),{lives:3,mk:mkB,done:(s,l)=>{S.g=l;xp(50);fin(9)}});
+
+function report0(){const R=$("#rp"),pl=E("ol"),nm=E("input"),d=E("p","",new Date().toLocaleDateString("ru-RU"));nm.placeholder="Your name";nm.oninput=()=>{d.textContent=nm.value+" · "+new Date().toLocaleDateString("ru-RU")};
+PLAN.forEach(x=>pl.append(E("li","",x)));
+R.replaceChildren(E("h3","","🏅 Report: my last weekend, grammar and story"),nm,d,
+E("p","","✅ Learn 8 / 8 · ✅ Past forms "+S.a+" / 12 · ✅ Spell the verb "+S.b+" / 12 · ✅ didn’t · Did you "+S.c+" / 12 · ✅ Present or past "+S.d+" / 10 · ✅ Right form "+S.e+" / 12 · ✅ Build 8 / 8 · ✅ Answers "+S.f+" / 8 · ✅ My story · ✅ Boss "+"❤️".repeat(S.g)+" · ⭐ "+xpv),
+E("h3","","Мой рассказ из тренировки"),E("p","res",story),
+E("h3","","Образец"),E("p","res",MODEL),
+E("h3","","План рассказа"),pl,
+E("h3","","Задание"),E("p","","По такому же образцу и плану подготовь свой рассказ о прошлых выходных или каникулах (8–10 предложений). Используй глаголы в прошедшем времени, didn’t и слова времени, которые мы учили. Расскажи его сам, без текста, в начале следующего урока."),
+E("p","mu","Впиши имя, сделай скриншот этого экрана и пришли учителю."))}
+function report(){report0();const R=$("#rp"),sn2=new Set(),ls=[];MIS.forEach(m=>{const t=m.l+": "+m.q+" → выбрал «"+m.w+"», верно «"+m.r+"»";if(!sn2.has(t)){sn2.add(t);ls.push(t)}});const blk=E("div","res");blk.append(E("h3","","Ошибки в игре: "+ls.length));(ls.length?ls:["Ошибок не было 🎉"]).forEach(t=>blk.append(E("p","mu",t)));const st=[...R.children].find(c=>c.textContent.startsWith("✅"));(st||R.lastChild).after(blk)}
+go(0);
+</script></main></body></html>
